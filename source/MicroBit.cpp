@@ -133,7 +133,7 @@ void MicroBit::init()
     sleep(100);
     // Animation
     uint8_t x = 0; uint8_t y = 0;
-    while ((buttonA.isPressed() && buttonB.isPressed() && i<25) || RebootMode != NULL || flashIncomplete != NULL)
+    while ((buttonA.isPressed()  && i<25) || RebootMode != NULL || flashIncomplete != NULL)
     {
         display.image.setPixelValue(x,y,255);
         sleep(50);
@@ -186,6 +186,7 @@ void MicroBit::init()
         ble = bleManager.ble;
     }
 #endif
+    //display.rotateTo(MICROBIT_DISPLAY_ROTATION_270);
 }
 
 /**
