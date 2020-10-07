@@ -27,7 +27,7 @@ DEALINGS IN THE SOFTWARE.
 #define MES_EVENTS_H
 
 //
-// MicroBit Event Service Event ID's and values
+// AKHILAFLEX Event Service Event ID's and values
 //
 
 //

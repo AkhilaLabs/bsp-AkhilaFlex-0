@@ -29,9 +29,9 @@ DEALINGS IN THE SOFTWARE.
  */
 #include "MAG3110.h"
 #include "ErrorNo.h"
-#include "MicroBitEvent.h"
-#include "MicroBitCompat.h"
-#include "MicroBitFiber.h"
+#include "AKHILAFLEXEvent.h"
+#include "AKHILAFLEXCompat.h"
+#include "AKHILAFLEXFiber.h"
 
 //
 // Configuration table for available data update frequency.
@@ -59,7 +59,7 @@ CREATE_KEY_VALUE_TABLE(magnetometerPeriod, magnetometerPeriodData);
  * that are supported by the hardware. The instance variables are then
  * updated to reflect reality.
  *
- * @return MICROBIT_OK on success, MICROBIT_I2C_ERROR if the compass could not be configured.
+ * @return AKHILAFLEX_OK on success, AKHILAFLEX_I2C_ERROR if the compass could not be configured.
  */
 int MAG3110::configure()
 {
@@ -68,8 +68,11 @@ int MAG3110::configure()
 
     // First, take the device offline, so it can be configured.
     result = i2c.writeRegister(address, MAG_CTRL_REG1, 0x00);
-    if (result != MICROBIT_OK)
-        return MICROBIT_I2C_ERROR;
+    if (result != AKHILAFLEX_OK)
+        return AKHILAFLEX_I2C_ERROR;
+/*    if (result != AKHILAFLEX_OK)
+        return AKHILAFLEX_I2C_ERROR; */
+    
 
     // Wait for the part to enter standby mode...
     while(1)
@@ -77,8 +80,11 @@ int MAG3110::configure()
         // Read the status of the part...
         // If we can't communicate with it over I2C, pass on the error.
         result = i2c.readRegister(address,MAG_SYSMOD, &value, 1);
-        if (result == MICROBIT_I2C_ERROR)
-            return MICROBIT_I2C_ERROR;
+        if (result == AKHILAFLEX_I2C_ERROR)
+            return AKHILAFLEX_I2C_ERROR;
+       /* if (result == AKHILAFLEX_I2C_ERROR)    
+            return AKHILAFLEX_I2C_ERROR; */
+
 
         // if the part in in standby, we're good to carry on.
         if((value & 0x03) == 0)
@@ -94,16 +100,16 @@ int MAG3110::configure()
     // Now configure the magnetometer accordingly.
     // Enable automatic reset after each sample;
     result = i2c.writeRegister(address, MAG_CTRL_REG2, 0xA0);
-    if (result != MICROBIT_OK)
-        return MICROBIT_I2C_ERROR;
+    if (result != AKHILAFLEX_OK)
+        return AKHILAFLEX_I2C_ERROR;
 
 
     // Bring the device online, with the requested sample frequency.
     result = i2c.writeRegister(address, MAG_CTRL_REG1, magnetometerPeriod.get(samplePeriod * 1000) | 0x01);
-    if (result != MICROBIT_OK)
-        return MICROBIT_I2C_ERROR;
+    if (result != AKHILAFLEX_OK)
+        return AKHILAFLEX_I2C_ERROR;
 
-    return MICROBIT_OK;
+    return AKHILAFLEX_OK;
 }
 
 /**
@@ -115,7 +121,7 @@ int MAG3110::configure()
   * @param address the default I2C address of the magnetometer. Defaults to: FXS8700_DEFAULT_ADDR.
   *
  */
-MAG3110::MAG3110(MicroBitI2C &_i2c, MicroBitPin _int1, CoordinateSpace &coordinateSpace, uint16_t address, uint16_t id) : MicroBitCompass(coordinateSpace, id), i2c(_i2c), int1(_int1)
+MAG3110::MAG3110(AKHILAFLEXI2C &_i2c, AKHILAFLEXPin _int1, CoordinateSpace &coordinateSpace, uint16_t address, uint16_t id) : AKHILAFLEXCompass(coordinateSpace, id), i2c(_i2c), int1(_int1)
 {
     // Store our identifiers.
     this->address = address;
@@ -131,7 +137,7 @@ MAG3110::MAG3110(MicroBitI2C &_i2c, MicroBitPin _int1, CoordinateSpace &coordina
  * (it normally happens in the background when the scheduler is idle), but a check is performed
  * if the user explicitly requests up to date data.
  *
- * @return MICROBIT_OK on success, MICROBIT_I2C_ERROR if the update fails.
+ * @return AKHILAFLEX_OK on success, AKHILAFLEX_I2C_ERROR if the update fails.
  *
  * @note This method should be overidden by the hardware driver to implement the requested
  * changes in hardware.
@@ -139,10 +145,10 @@ MAG3110::MAG3110(MicroBitI2C &_i2c, MicroBitPin _int1, CoordinateSpace &coordina
 int MAG3110::requestUpdate()
 {
     // Ensure we're scheduled to update the data periodically
-    if(!(status & MICROBIT_COMPASS_STATUS_ADDED_TO_IDLE))
+    if(!(status & AKHILAFLEX_COMPASS_STATUS_ADDED_TO_IDLE))
     {
         fiber_add_idle_component(this);
-        status |= MICROBIT_COMPASS_STATUS_ADDED_TO_IDLE;
+        status |= AKHILAFLEX_COMPASS_STATUS_ADDED_TO_IDLE;
     }
 
     // Poll interrupt line from device (ACTIVE HI)
@@ -158,7 +164,7 @@ int MAG3110::requestUpdate()
         result = i2c.readRegister(address, MAG_OUT_X_MSB, data, 6);
 
         if (result !=0)
-            return MICROBIT_I2C_ERROR;
+            return AKHILAFLEX_I2C_ERROR;
         // Scale the 14 bit data (packed into 16 bits) into SI units (milli-g) and translate into signed little endian, and align to ENU coordinate system
         *msb = data[0];
         *lsb = data[1];
@@ -176,7 +182,7 @@ int MAG3110::requestUpdate()
         update();
     }
 
-    return MICROBIT_OK;
+    return AKHILAFLEX_OK;
 }
 
 
@@ -195,7 +201,7 @@ void MAG3110::idleTick()
  *
  * @return true if the WHO_AM_I value is succesfully read. false otherwise.
  */
-int MAG3110::isDetected(MicroBitI2C &i2c, uint16_t address)
+int MAG3110::isDetected(AKHILAFLEXI2C &i2c, uint16_t address)
 {
     return i2c.readRegister(address, MAG_WHOAMI) == MAG3110_WHOAMI_VAL;
 }

@@ -29,9 +29,9 @@ DEALINGS IN THE SOFTWARE.
  */
 #include "LSM303Magnetometer.h"
 #include "ErrorNo.h"
-#include "MicroBitEvent.h"
-#include "MicroBitCompat.h"
-#include "MicroBitFiber.h"
+#include "AKHILAFLEXEvent.h"
+#include "AKHILAFLEXCompat.h"
+#include "AKHILAFLEXFiber.h"
 
 //
 // Configuration table for available data update frequency.
@@ -52,7 +52,7 @@ CREATE_KEY_VALUE_TABLE(magnetometerPeriod, magnetometerPeriodData);
  * that are supported by the hardware. The instance variables are then
  * updated to reflect reality.
  *
- * @return MICROBIT_OK on success, MICROBIT_I2C_ERROR if the compass could not be configured.
+ * @return AKHILAFLEX_OK on success, AKHILAFLEX_I2C_ERROR if the compass could not be configured.
  */
 int LSM303Magnetometer::configure()
 {
@@ -64,15 +64,15 @@ int LSM303Magnetometer::configure()
     // Now configure the magnetometer for the requested sample rate, low power continuous mode with temperature compensation disabled
     // TODO: Review if temperature compensation improves performance.
     result = i2c.writeRegister(address, LSM303_CFG_REG_A_M, magnetometerPeriod.get(samplePeriod * 1000));
-    if (result != MICROBIT_OK)
-        return MICROBIT_I2C_ERROR;
+    if (result != AKHILAFLEX_OK)
+        return AKHILAFLEX_I2C_ERROR;
 
     // Enable Data Ready interrupt, with buffering of data to avoid race conditions.
     result = i2c.writeRegister(address, LSM303_CFG_REG_C_M, 0x01);
-    if (result != MICROBIT_OK)
-        return MICROBIT_I2C_ERROR;
+    if (result != AKHILAFLEX_OK)
+        return AKHILAFLEX_I2C_ERROR;
 
-    return MICROBIT_OK;
+    return AKHILAFLEX_OK;
 }
 
 /**
@@ -84,7 +84,7 @@ int LSM303Magnetometer::configure()
   * @param address the default I2C address of the magnetometer. Defaults to: FXS8700_DEFAULT_ADDR.
   *
  */
-LSM303Magnetometer::LSM303Magnetometer(MicroBitI2C &_i2c, MicroBitPin _int1, CoordinateSpace &coordinateSpace, uint16_t address, uint16_t id) : MicroBitCompass(coordinateSpace, id), i2c(_i2c), int1(_int1)
+LSM303Magnetometer::LSM303Magnetometer(AKHILAFLEXI2C &_i2c, AKHILAFLEXPin _int1, CoordinateSpace &coordinateSpace, uint16_t address, uint16_t id) : AKHILAFLEXCompass(coordinateSpace, id), i2c(_i2c), int1(_int1)
 {
     // Store our identifiers.
     this->address = address;
@@ -100,7 +100,7 @@ LSM303Magnetometer::LSM303Magnetometer(MicroBitI2C &_i2c, MicroBitPin _int1, Coo
  * (it normally happens in the background when the scheduler is idle), but a check is performed
  * if the user explicitly requests up to date data.
  *
- * @return MICROBIT_OK on success, MICROBIT_I2C_ERROR if the update fails.
+ * @return AKHILAFLEX_OK on success, AKHILAFLEX_I2C_ERROR if the update fails.
  *
  * @note This method should be overidden by the hardware driver to implement the requested
  * changes in hardware.
@@ -108,10 +108,10 @@ LSM303Magnetometer::LSM303Magnetometer(MicroBitI2C &_i2c, MicroBitPin _int1, Coo
 int LSM303Magnetometer::requestUpdate()
 {
     // Ensure we're scheduled to update the data periodically
-    if(!(status & MICROBIT_COMPASS_STATUS_ADDED_TO_IDLE))
+    if(!(status & AKHILAFLEX_COMPASS_STATUS_ADDED_TO_IDLE))
     {
         fiber_add_idle_component(this);
-        status |= MICROBIT_COMPASS_STATUS_ADDED_TO_IDLE;
+        status |= AKHILAFLEX_COMPASS_STATUS_ADDED_TO_IDLE;
     }
 
     // Poll interrupt line from device (ACTIVE LO)
@@ -128,7 +128,7 @@ int LSM303Magnetometer::requestUpdate()
         result = i2c.readRegister(address, LSM303_OUTX_L_REG_M | 0x80, data, 6);
 
         if (result !=0)
-            return MICROBIT_I2C_ERROR;
+            return AKHILAFLEX_I2C_ERROR;
 
         // Read in each reading as a 16 bit little endian value, and scale to 10 bits.
         x = ((int16_t *) &data[0]);
@@ -146,7 +146,7 @@ int LSM303Magnetometer::requestUpdate()
         update();
     }
 
-    return MICROBIT_OK;
+    return AKHILAFLEX_OK;
 }
 
 
@@ -165,7 +165,7 @@ void LSM303Magnetometer::idleTick()
  *
  * @return true if the WHO_AM_I value is succesfully read. false otherwise.
  */
-int LSM303Magnetometer::isDetected(MicroBitI2C &i2c, uint16_t address)
+int LSM303Magnetometer::isDetected(AKHILAFLEXI2C &i2c, uint16_t address)
 {
     return i2c.readRegister(address, LSM303_WHO_AM_I_M) == LSM303_M_WHOAMI_VAL;
 }

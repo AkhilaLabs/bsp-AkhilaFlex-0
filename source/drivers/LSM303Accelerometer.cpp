@@ -28,12 +28,12 @@ DEALINGS IN THE SOFTWARE.
  * Represents an implementation of the LSM303 3 axis accelerometer
  * Also includes basic data caching and on demand activation.
  */
-#include "MicroBitConfig.h"
+#include "AKHILAFLEXConfig.h"
 #include "LSM303Accelerometer.h"
 #include "ErrorNo.h"
-#include "MicroBitEvent.h"
-#include "MicroBitCompat.h"
-#include "MicroBitFiber.h"
+#include "AKHILAFLEXEvent.h"
+#include "AKHILAFLEXCompat.h"
+#include "AKHILAFLEXFiber.h"
 
 //
 // Configuration table for available g force ranges.
@@ -70,10 +70,10 @@ CREATE_KEY_VALUE_TABLE(accelerometerPeriod, accelerometerPeriodData);
  * Create a software abstraction of an accelerometer.
  *
  * @param coordinateSpace The orientation of the sensor. Defaults to: SIMPLE_CARTESIAN
- * @param id The unique EventModel id of this component. Defaults to: MICROBIT_ID_ACCELEROMETER
+ * @param id The unique EventModel id of this component. Defaults to: AKHILAFLEX_ID_ACCELEROMETER
  *
  */
-LSM303Accelerometer::LSM303Accelerometer(MicroBitI2C& _i2c, MicroBitPin _int1, CoordinateSpace &coordinateSpace, uint16_t address, uint16_t id) : MicroBitAccelerometer(coordinateSpace, id), i2c(_i2c), int1(_int1)
+LSM303Accelerometer::LSM303Accelerometer(AKHILAFLEXI2C& _i2c, AKHILAFLEXPin _int1, CoordinateSpace &coordinateSpace, uint16_t address, uint16_t id) : AKHILAFLEXAccelerometer(coordinateSpace, id), i2c(_i2c), int1(_int1)
 {
     // Store our identifiers.
     this->status = 0;
@@ -89,7 +89,7 @@ LSM303Accelerometer::LSM303Accelerometer(MicroBitI2C& _i2c, MicroBitPin _int1, C
  * that are supported by the hardware. The instance variables are then
  * updated to reflect reality.
  *
- * @return MICROBIT_OK on success, MICROBIT_I2C_ERROR if the accelerometer could not be configured.
+ * @return AKHILAFLEX_OK on success, AKHILAFLEX_I2C_ERROR if the accelerometer could not be configured.
  *
  * @note This method should be overidden by the hardware driver to implement the requested
  * changes in hardware.
@@ -107,19 +107,19 @@ int LSM303Accelerometer::configure()
     // Place the device into normal (10 bit) mode, with all axes enabled at the nearest supported data rate to that  requested.
     result = i2c.writeRegister(address, LSM303_CTRL_REG1_A, accelerometerPeriod.get(samplePeriod * 1000) | 0x07);
     if (result != 0)
-        return MICROBIT_I2C_ERROR;
+        return AKHILAFLEX_I2C_ERROR;
 
     // Enable the DRDY1 interrupt on INT1 pin.
     result = i2c.writeRegister(address, LSM303_CTRL_REG3_A, 0x10);
     if (result != 0)
-        return MICROBIT_I2C_ERROR;
+        return AKHILAFLEX_I2C_ERROR;
 
     // Select the g range to that requested, using little endian data format and disable self-test and high rate functions.
     result = i2c.writeRegister(address, LSM303_CTRL_REG4_A, 0x80 | accelerometerRange.get(sampleRange));
     if (result != 0)
-        return MICROBIT_I2C_ERROR;
+        return AKHILAFLEX_I2C_ERROR;
 
-    return MICROBIT_OK;
+    return AKHILAFLEX_OK;
 }
 
 /**
@@ -128,7 +128,7 @@ int LSM303Accelerometer::configure()
  * (it normally happens in the background when the scheduler is idle), but a check is performed
  * if the user explicitly requests up to date data.
  *
- * @return MICROBIT_OK on success, MICROBIT_I2C_ERROR if the update fails.
+ * @return AKHILAFLEX_OK on success, AKHILAFLEX_I2C_ERROR if the update fails.
  *
  * @note This method should be overidden by the hardware driver to implement the requested
  * changes in hardware.
@@ -137,10 +137,10 @@ int LSM303Accelerometer::requestUpdate()
 {
     // Ensure we're scheduled to update the data periodically
 
-    if(!(status & MICROBIT_ACCEL_ADDED_TO_IDLE))
+    if(!(status & AKHILAFLEX_ACCEL_ADDED_TO_IDLE))
     {
         fiber_add_idle_component(this);
-        status |= MICROBIT_ACCEL_ADDED_TO_IDLE;
+        status |= AKHILAFLEX_ACCEL_ADDED_TO_IDLE;
     }
 
     // Poll interrupt line from device (ACTIVE HI)
@@ -157,7 +157,7 @@ int LSM303Accelerometer::requestUpdate()
         result = i2c.readRegister(address, LSM303_OUT_X_L_A | 0x80, data, 6);
 
         if (result !=0)
-            return MICROBIT_I2C_ERROR;
+            return AKHILAFLEX_I2C_ERROR;
 
         // Read in each reading as a 16 bit little endian value, and scale to 10 bits.
         x = ((int16_t *) &data[0]);
@@ -177,7 +177,7 @@ int LSM303Accelerometer::requestUpdate()
         update();
     }
 
-    return MICROBIT_OK;
+    return AKHILAFLEX_OK;
 }
 
 /**
@@ -195,7 +195,7 @@ void LSM303Accelerometer::idleTick()
  *
  * @return true if the WHO_AM_I value is succesfully read. false otherwise.
  */
-int LSM303Accelerometer::isDetected(MicroBitI2C &i2c, uint16_t address)
+int LSM303Accelerometer::isDetected(AKHILAFLEXI2C &i2c, uint16_t address)
 {
     return i2c.readRegister(address, LSM303_WHO_AM_I_A) == LSM303_A_WHOAMI_VAL;
 }

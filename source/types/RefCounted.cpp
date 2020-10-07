@@ -24,13 +24,13 @@ DEALINGS IN THE SOFTWARE.
 */
 
 /**
-  * Base class for payload for ref-counted objects. Used by ManagedString and MicroBitImage.
+  * Base class for payload for ref-counted objects. Used by ManagedString and AKHILAFLEXImage.
   * There is no constructor, as this struct is typically malloc()ed.
   */
 #include "mbed.h"
-#include "MicroBitConfig.h"
+#include "AKHILAFLEXConfig.h"
 #include "RefCounted.h"
-#include "MicroBitDisplay.h"
+#include "AKHILAFLEXDisplay.h"
 
 /**
   * Initializes for one outstanding reference.
@@ -58,7 +58,7 @@ static inline bool isReadOnlyInline(RefCounted *t)
     // Do some sanity checking while we're here
     if (refCount == 1 ||        // object should have been deleted
         (refCount & 1) == 0)    // refCount doesn't look right
-        microbit_panic(MICROBIT_HEAP_ERROR);
+        AKHILAFLEX_panic(AKHILAFLEX_HEAP_ERROR);
 
     // Not read only
     return false;

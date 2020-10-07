@@ -30,12 +30,12 @@ DEALINGS IN THE SOFTWARE.
   * This provides the ability for a neat, clean swap between PWM channels.
   */
 
-#include "MicroBitConfig.h"
+#include "AKHILAFLEXConfig.h"
 #include "DynamicPwm.h"
-#include "MicroBitPin.h"
+#include "AKHILAFLEXPin.h"
 #include "ErrorNo.h"
 
-uint32_t DynamicPwm::period = MICROBIT_DEFAULT_PWM_PERIOD;
+uint32_t DynamicPwm::period = AKHILAFLEX_DEFAULT_PWM_PERIOD;
 
 /**
   * An internal constructor used when allocating a new DynamicPwm instance.
@@ -68,7 +68,7 @@ DynamicPwm::~DynamicPwm()
   *
   * @param value the duty cycle percentage in floating point format.
   *
-  * @return MICROBIT_OK on success, MICROBIT_INVALID_PARAMETER if value is out of range
+  * @return AKHILAFLEX_OK on success, AKHILAFLEX_INVALID_PARAMETER if value is out of range
   *
   * @code
   * DynamicPwm* pwm = DynamicPwm::allocate();
@@ -78,12 +78,12 @@ DynamicPwm::~DynamicPwm()
 int DynamicPwm::write(float value){
 
     if(value < 0)
-        return MICROBIT_INVALID_PARAMETER;
+        return AKHILAFLEX_INVALID_PARAMETER;
 
     PwmOut::write(value);
     lastValue = value;
 
-    return MICROBIT_OK;
+    return AKHILAFLEX_OK;
 }
 
 /**
@@ -118,7 +118,7 @@ PinName DynamicPwm::getPinName()
   */
 int DynamicPwm::getValue()
 {
-    return (float)lastValue * float(MICROBIT_PIN_MAX_OUTPUT);
+    return (float)lastValue * float(AKHILAFLEX_PIN_MAX_OUTPUT);
 }
 
 /**
@@ -157,7 +157,7 @@ uint32_t DynamicPwm::getPeriod()
   *
   * @param period the desired period in microseconds.
   *
-  * @return MICROBIT_OK on success, MICROBIT_INVALID_PARAMETER if period is out of range
+  * @return AKHILAFLEX_OK on success, AKHILAFLEX_INVALID_PARAMETER if period is out of range
   *
   * Example:
   * @code
@@ -176,7 +176,7 @@ int DynamicPwm::setPeriodUs(uint32_t period)
 
     this->period = period;
 
-    return MICROBIT_OK;
+    return AKHILAFLEX_OK;
 }
 
 /**
@@ -184,7 +184,7 @@ int DynamicPwm::setPeriodUs(uint32_t period)
   *
   * @param period the desired period in milliseconds.
   *
-  * @return MICROBIT_OK on success, MICROBIT_INVALID_PARAMETER if period is out of range
+  * @return AKHILAFLEX_OK on success, AKHILAFLEX_INVALID_PARAMETER if period is out of range
   *
   * Example:
   * @code

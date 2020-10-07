@@ -5,67 +5,67 @@ cmake_minimum_required(VERSION 2.8.12)
 
 enable_language(ASM)
 
-set(YOTTA_AUTO_MICROBIT-DAL_CPP_FILES
-    "MicroBit.cpp"
+set(YOTTA_AUTO_AKHILAFLEX-DAL_CPP_FILES
+    "AKHILAFLEX.cpp"
     "core/MemberFunctionCallback.cpp"
-    "core/MicroBitCompat.cpp"
-    "core/MicroBitDevice.cpp"
-    "core/MicroBitFiber.cpp"
-    "core/MicroBitFont.cpp"
-    "core/MicroBitHeapAllocator.cpp"
-    "core/MicroBitListener.cpp"
-    "core/MicroBitSystemTimer.cpp"
-    "core/MicroBitUtil.cpp"
+    "core/AKHILAFLEXCompat.cpp"
+    "core/AKHILAFLEXDevice.cpp"
+    "core/AKHILAFLEXFiber.cpp"
+    "core/AKHILAFLEXFont.cpp"
+    "core/AKHILAFLEXHeapAllocator.cpp"
+    "core/AKHILAFLEXListener.cpp"
+    "core/AKHILAFLEXSystemTimer.cpp"
+    "core/AKHILAFLEXUtil.cpp"
 
     "types/CoordinateSystem.cpp"
     "types/ManagedString.cpp"
-    "types/MicroBitEvent.cpp"
-    "types/MicroBitImage.cpp"
+    "types/AKHILAFLEXEvent.cpp"
+    "types/AKHILAFLEXImage.cpp"
     "types/PacketBuffer.cpp"
     "types/RefCounted.cpp"
 
     "drivers/DynamicPwm.cpp"
-    "drivers/MicroBitAccelerometer.cpp"
-    "drivers/MicroBitButton.cpp"
-    "drivers/MicroBitCompass.cpp"
-    "drivers/MicroBitCompassCalibrator.cpp"
-    "drivers/MicroBitDisplay.cpp"
-    "drivers/MicroBitI2C.cpp"
-    "drivers/MicroBitIO.cpp"
-    "drivers/MicroBitLightSensor.cpp"
-    "drivers/MicroBitMessageBus.cpp"
-    "drivers/MicroBitMultiButton.cpp"
-    "drivers/MicroBitPin.cpp"
-    "drivers/MicroBitQuadratureDecoder.cpp"
-    "drivers/MicroBitRadio.cpp"
-    "drivers/MicroBitRadioDatagram.cpp"
-    "drivers/MicroBitRadioEvent.cpp"
-    "drivers/MicroBitSerial.cpp"
-    "drivers/MicroBitStorage.cpp"
-    "drivers/MicroBitThermometer.cpp"
+    "drivers/AKHILAFLEXAccelerometer.cpp"
+    "drivers/AKHILAFLEXButton.cpp"
+    "drivers/AKHILAFLEXCompass.cpp"
+    "drivers/AKHILAFLEXCompassCalibrator.cpp"
+    "drivers/AKHILAFLEXDisplay.cpp"
+    "drivers/AKHILAFLEXI2C.cpp"
+    "drivers/AKHILAFLEXIO.cpp"
+    "drivers/AKHILAFLEXLightSensor.cpp"
+    "drivers/AKHILAFLEXMessageBus.cpp"
+    "drivers/AKHILAFLEXMultiButton.cpp"
+    "drivers/AKHILAFLEXPin.cpp"
+    "drivers/AKHILAFLEXQuadratureDecoder.cpp"
+    "drivers/AKHILAFLEXRadio.cpp"
+    "drivers/AKHILAFLEXRadioDatagram.cpp"
+    "drivers/AKHILAFLEXRadioEvent.cpp"
+    "drivers/AKHILAFLEXSerial.cpp"
+    "drivers/AKHILAFLEXStorage.cpp"
+    "drivers/AKHILAFLEXThermometer.cpp"
     "drivers/TimedInterruptIn.cpp"
-    "drivers/MicroBitFlash.cpp"
-    "drivers/MicroBitFile.cpp"
-    "drivers/MicroBitFileSystem.cpp"
+    "drivers/AKHILAFLEXFlash.cpp"
+    "drivers/AKHILAFLEXFile.cpp"
+    "drivers/AKHILAFLEXFileSystem.cpp"
     "drivers/FXOS8700.cpp"
     "drivers/MMA8653.cpp"
     "drivers/MAG3110.cpp"
     "drivers/LSM303Accelerometer.cpp"
     "drivers/LSM303Magnetometer.cpp"
-    "drivers/MicroBitMemoryMap.cpp"
+    "drivers/AKHILAFLEXMemoryMap.cpp"
 
-    "bluetooth/MicroBitAccelerometerService.cpp"
-    "bluetooth/MicroBitBLEManager.cpp"
-    "bluetooth/MicroBitButtonService.cpp"
-    "bluetooth/MicroBitDFUService.cpp"
-    "bluetooth/MicroBitEddystone.cpp"
-    "bluetooth/MicroBitEventService.cpp"
-    "bluetooth/MicroBitIOPinService.cpp"
-    "bluetooth/MicroBitLEDService.cpp"
-    "bluetooth/MicroBitMagnetometerService.cpp"
-    "bluetooth/MicroBitTemperatureService.cpp"
-    "bluetooth/MicroBitUARTService.cpp"
-    "bluetooth/MicroBitPartialFlashingService.cpp"
+    "bluetooth/AKHILAFLEXAccelerometerService.cpp"
+    "bluetooth/AKHILAFLEXBLEManager.cpp"
+    "bluetooth/AKHILAFLEXButtonService.cpp"
+    "bluetooth/AKHILAFLEXDFUService.cpp"
+    "bluetooth/AKHILAFLEXEddystone.cpp"
+    "bluetooth/AKHILAFLEXEventService.cpp"
+    "bluetooth/AKHILAFLEXIOPinService.cpp"
+    "bluetooth/AKHILAFLEXLEDService.cpp"
+    "bluetooth/AKHILAFLEXMagnetometerService.cpp"
+    "bluetooth/AKHILAFLEXTemperatureService.cpp"
+    "bluetooth/AKHILAFLEXUARTService.cpp"
+    "bluetooth/AKHILAFLEXPartialFlashingService.cpp"
 
 )
 
@@ -73,17 +73,17 @@ execute_process(WORKING_DIRECTORY "../../yotta_modules/${PROJECT_NAME}" COMMAND 
 execute_process(WORKING_DIRECTORY "../../yotta_modules/${PROJECT_NAME}" COMMAND "git" "rev-parse" "--abbrev-ref" "HEAD" OUTPUT_VARIABLE git_branch OUTPUT_STRIP_TRAILING_WHITESPACE)
 
 if ("${git_branch}" STREQUAL "master")
-    set(MICROBIT_DAL_VERSION_STRING "${YOTTA_MICROBIT_DAL_VERSION_STRING}")
+    set(AKHILAFLEX_DAL_VERSION_STRING "${YOTTA_AKHILAFLEX_DAL_VERSION_STRING}")
 else()
-    set(MICROBIT_DAL_VERSION_STRING "${YOTTA_MICROBIT_DAL_VERSION_STRING}-${git_branch}-g${git_hash}")
+    set(AKHILAFLEX_DAL_VERSION_STRING "${YOTTA_AKHILAFLEX_DAL_VERSION_STRING}-${git_branch}-g${git_hash}")
 endif()
 
-set(MICROBIT_DAL_VERSION_FLAGS "-DMICROBIT_DAL_VERSION=\\\"${MICROBIT_DAL_VERSION_STRING}\\\"")
+set(AKHILAFLEX_DAL_VERSION_FLAGS "-DAKHILAFLEX_DAL_VERSION=\\\"${AKHILAFLEX_DAL_VERSION_STRING}\\\"")
 
-set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${MICROBIT_DAL_VERSION_FLAGS}")
+set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${AKHILAFLEX_DAL_VERSION_FLAGS}")
 
-if (YOTTA_CFG_MICROBIT_CONFIGFILE)
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${YOTTA_FORCE_INCLUDE_FLAG} \"${YOTTA_CFG_MICROBIT_CONFIGFILE}\"")
+if (YOTTA_CFG_AKHILAFLEX_CONFIGFILE)
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${YOTTA_FORCE_INCLUDE_FLAG} \"${YOTTA_CFG_AKHILAFLEX_CONFIGFILE}\"")
 endif ()
 
 if(CMAKE_COMPILER_IS_GNUCC)
@@ -94,13 +94,13 @@ else()
   configure_file("asm/CortexContextSwitch.s.armcc" "asm/CortexContextSwitch.s" COPYONLY)
 endif()
 
-set(YOTTA_AUTO_MICROBIT-DAL_S_FILES
+set(YOTTA_AUTO_AKHILAFLEX-DAL_S_FILES
     "asm/CortexContextSwitch.s"
 )
 
 add_library(bsp-AkhilaFlex-0
-    ${YOTTA_AUTO_MICROBIT-DAL_CPP_FILES}
-    ${YOTTA_AUTO_MICROBIT-DAL_S_FILES}
+    ${YOTTA_AUTO_AKHILAFLEX-DAL_CPP_FILES}
+    ${YOTTA_AUTO_AKHILAFLEX-DAL_S_FILES}
 )
 
 yotta_postprocess_target(LIBRARY bsp-AkhilaFlex-0)

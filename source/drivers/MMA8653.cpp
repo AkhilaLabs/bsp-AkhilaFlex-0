@@ -28,12 +28,12 @@ DEALINGS IN THE SOFTWARE.
  * Represents an implementation of the MMA8653 3 axis accelerometer
  * Also includes basic data caching and on demand activation.
  */
-#include "MicroBitConfig.h"
+#include "AKHILAFLEXConfig.h"
 #include "MMA8653.h"
 #include "ErrorNo.h"
-#include "MicroBitEvent.h"
-#include "MicroBitCompat.h"
-#include "MicroBitFiber.h"
+#include "AKHILAFLEXEvent.h"
+#include "AKHILAFLEXCompat.h"
+#include "AKHILAFLEXFiber.h"
 
 //
 // Configuration table for available g force ranges.
@@ -68,10 +68,12 @@ CREATE_KEY_VALUE_TABLE(accelerometerPeriod, accelerometerPeriodData);
  * Create a software abstraction of an accelerometer.
  *
  * @param coordinateSpace The orientation of the sensor. Defaults to: SIMPLE_CARTESIAN
- * @param id The unique EventModel id of this component. Defaults to: MICROBIT_ID_ACCELEROMETER
+ * @param id The unique EventModel id of this component. Defaults to: AKHILAFLEX_ID_ACCELEROMETER
  *
  */
-MMA8653::MMA8653(MicroBitI2C& _i2c, MicroBitPin _int1, CoordinateSpace &coordinateSpace, uint16_t address, uint16_t id) : MicroBitAccelerometer(coordinateSpace, id), i2c(_i2c), int1(_int1)
+MMA8653::MMA8653(AKHILAFLEXI2C& _i2c, AKHILAFLEXPin _int1, CoordinateSpace &coordinateSpace, uint16_t address, uint16_t id) : AKHILAFLEXAccelerometer(coordinateSpace, id), i2c(_i2c), int1(_int1)
+/*MMA8653::MMA8653(AKHILAFLEXI2C& _i2c, AKHILAFLEXPin _int1, CoordinateSpace &coordinateSpace, uint16_t address, uint16_t id) : AKHILAFLEXAccelerometer(coordinateSpace, id), i2c(_i2c), int1(_int1)
+*/
 {
     // Store our identifiers.
     this->status = 0;
@@ -87,7 +89,7 @@ MMA8653::MMA8653(MicroBitI2C& _i2c, MicroBitPin _int1, CoordinateSpace &coordina
  * that are supported by the hardware. The instance variables are then
  * updated to reflect reality.
  *
- * @return MICROBIT_OK on success, MICROBIT_I2C_ERROR if the accelerometer could not be configured.
+ * @return AKHILAFLEX_OK on success, AKHILAFLEX_I2C_ERROR if the accelerometer could not be configured.
  *
  * @note This method should be overidden by the hardware driver to implement the requested
  * changes in hardware.
@@ -106,36 +108,43 @@ int MMA8653::configure()
     // First place the device into standby mode, so it can be configured.
     result = i2c.writeRegister(address, MMA8653_CTRL_REG1, 0x00);
     if (result != 0)
-        return MICROBIT_I2C_ERROR;
+        return AKHILAFLEX_I2C_ERROR;
+      /*  return AKHILAFLEX_I2C_ERROR; */
 
     // Enable high precisiosn mode. This consumes a bit more power, but still only 184 uA!
     result = i2c.writeRegister(address, MMA8653_CTRL_REG2, 0x10);
     if (result != 0)
-        return MICROBIT_I2C_ERROR;
+        return AKHILAFLEX_I2C_ERROR;
+        /*  return AKHILAFLEX_I2C_ERROR; */
 
     // Enable the INT1 interrupt pin.
     result = i2c.writeRegister(address, MMA8653_CTRL_REG4, 0x01);
     if (result != 0)
-        return MICROBIT_I2C_ERROR;
+        return AKHILAFLEX_I2C_ERROR;
+        /*  return AKHILAFLEX_I2C_ERROR; */
 
     // Select the DATA_READY event source to be routed to INT1
     result = i2c.writeRegister(address, MMA8653_CTRL_REG5, 0x01);
     if (result != 0)
-        return MICROBIT_I2C_ERROR;
+        return AKHILAFLEX_I2C_ERROR;
+        /*  return AKHILAFLEX_I2C_ERROR; */
 
     // Configure for the selected g range.
     value = accelerometerRange.get(sampleRange);
     result = i2c.writeRegister(address, MMA8653_XYZ_DATA_CFG, value);
     if (result != 0)
-        return MICROBIT_I2C_ERROR;
+        return AKHILAFLEX_I2C_ERROR;
+        /*  return AKHILAFLEX_I2C_ERROR; */
 
     // Bring the device back online, with 10bit wide samples at the requested frequency.
     value = accelerometerPeriod.get(samplePeriod * 1000);
     result = i2c.writeRegister(address, MMA8653_CTRL_REG1, value | 0x01);
     if (result != 0)
-        return MICROBIT_I2C_ERROR;
+        return AKHILAFLEX_I2C_ERROR;
+        /*  return AKHILAFLEX_I2C_ERROR; */
 
-    return MICROBIT_OK;
+    return AKHILAFLEX_OK;
+  /*  return AKHILAFLEX_OK; */
 }
 
 /**
@@ -144,7 +153,7 @@ int MMA8653::configure()
  * (it normally happens in the background when the scheduler is idle), but a check is performed
  * if the user explicitly requests up to date data.
  *
- * @return MICROBIT_OK on success, MICROBIT_I2C_ERROR if the update fails.
+ * @return AKHILAFLEX_OK on success, AKHILAFLEX_I2C_ERROR if the update fails.
  *
  * @note This method should be overidden by the hardware driver to implement the requested
  * changes in hardware.
@@ -152,10 +161,12 @@ int MMA8653::configure()
 int MMA8653::requestUpdate()
 {
     // Ensure we're scheduled to update the data periodically
-    if(!(status & MICROBIT_ACCEL_ADDED_TO_IDLE))
+    if(!(status & AKHILAFLEX_ACCEL_ADDED_TO_IDLE))
+   /* if(!(status & AKHILAFLEX_ACCEL_ADDED_TO_IDLE)) */
     {
         fiber_add_idle_component(this);
-        status |= MICROBIT_ACCEL_ADDED_TO_IDLE;
+        status |= AKHILAFLEX_ACCEL_ADDED_TO_IDLE;
+       /* status |= AKHILAFLEX_ACCEL_ADDED_TO_IDLE; */
     }
 
     // Poll interrupt line from device (ACTIVE LO)
@@ -169,7 +180,9 @@ int MMA8653::requestUpdate()
         result = i2c.readRegister(address, MMA8653_OUT_X_MSB, (uint8_t *)data, 6);
 
         if (result !=0)
-            return MICROBIT_I2C_ERROR;
+            return AKHILAFLEX_I2C_ERROR;
+           /* return AKHILAFLEX_I2C_ERROR; */
+
 
         // read MSB values and normalize the data in the -1024...1024 range
         s.x = 8 * data[0];
@@ -192,7 +205,8 @@ int MMA8653::requestUpdate()
         update();
     }
 
-    return MICROBIT_OK;
+    return AKHILAFLEX_OK;
+   /* return AKHILAFLEX_OK; */
 }
 
 /**
@@ -210,7 +224,8 @@ void MMA8653::idleTick()
  *
  * @return true if the WHO_AM_I value is succesfully read. false otherwise.
  */
-int MMA8653::isDetected(MicroBitI2C &i2c, uint16_t address)
+int MMA8653::isDetected(AKHILAFLEXI2C &i2c, uint16_t address)
+/*int MMA8653::isDetected(AKHILAFLEXI2C &i2c, uint16_t address) */
 {
     return i2c.readRegister(address, MMA8653_WHOAMI) == MMA8653_WHOAMI_VAL;
 }

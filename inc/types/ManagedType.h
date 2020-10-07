@@ -23,10 +23,10 @@ FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 */
 
-#ifndef MICROBIT_MANAGED_TYPE_H
-#define MICROBIT_MANAGED_TYPE_H
+#ifndef AKHILAFLEX_MANAGED_TYPE_H
+#define AKHILAFLEX_MANAGED_TYPE_H
 
-#include "MicroBitConfig.h"
+#include "AKHILAFLEXConfig.h"
 
 /**
   * Class definition for a Generic Managed Type.
@@ -128,7 +128,7 @@ public:
       */
     T* operator->() {
         if (object == NULL)
-            microbit_panic(MICROBIT_NULL_DEREFERENCE);
+            AKHILAFLEX_panic(AKHILAFLEX_NULL_DEREFERENCE);
         return object;
     }
 

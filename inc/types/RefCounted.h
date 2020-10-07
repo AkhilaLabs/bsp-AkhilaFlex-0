@@ -27,11 +27,11 @@ DEALINGS IN THE SOFTWARE.
 #define REF_COUNTED_H
 
 #include "mbed.h"
-#include "MicroBitConfig.h"
-#include "MicroBitDevice.h"
+#include "AKHILAFLEXConfig.h"
+#include "AKHILAFLEXDevice.h"
 
 /**
-  * Base class for payload for ref-counted objects. Used by ManagedString and MicroBitImage.
+  * Base class for payload for ref-counted objects. Used by ManagedString and AKHILAFLEXImage.
   * There is no constructor, as this struct is typically malloc()ed.
   */
 struct RefCounted

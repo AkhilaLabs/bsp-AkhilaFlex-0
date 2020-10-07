@@ -26,7 +26,7 @@ DEALINGS IN THE SOFTWARE.
 #ifndef ERROR_NO_H
 #define ERROR_NO_H
 
-#include "MicroBitConfig.h"
+#include "AKHILAFLEXConfig.h"
 
 /**
   * Error codes used in the micro:bit runtime.
@@ -35,35 +35,47 @@ DEALINGS IN THE SOFTWARE.
 enum ErrorCode{
 
     // No error occurred.
-    MICROBIT_OK = 0,
+   /* MICROBIT_OK = 0,*/
+    AKHILAFLEX_OK = 0, 
 
     // Invalid parameter given.
-    MICROBIT_INVALID_PARAMETER = -1001,
+   /* MICROBIT_INVALID_PARAMETER = -1001,*/
+    AKHILAFLEX_INVALID_PARAMETER = -1001, 
 
     // Requested operation is unsupported.
-    MICROBIT_NOT_SUPPORTED = -1002,
+   /* MICROBIT_NOT_SUPPORTED = -1002, */
+    AKHILAFLEX_NOT_SUPPORTED = -1002, 
 
     // Device calibration errors
-    MICROBIT_CALIBRATION_IN_PROGRESS = -1003,
-    MICROBIT_CALIBRATION_REQUIRED = -1004,
+   /* MICROBIT_CALIBRATION_IN_PROGRESS = -1003,
+    MICROBIT_CALIBRATION_REQUIRED = -1004, */
+     AKHILAFLEX_CALIBRATION_IN_PROGRESS = -1003,
+    AKHILAFLEX_CALIBRATION_REQUIRED = -1004, 
+
 
     // The requested operation could not be performed as the device has run out of some essential resource (e.g. allocated memory)
-    MICROBIT_NO_RESOURCES = -1005,
+   /* MICROBIT_NO_RESOURCES = -1005, */
+    AKHILAFLEX_NO_RESOURCES = -1005, 
 
     // The requested operation could not be performed as some essential resource is busy (e.g. the display)
-    MICROBIT_BUSY = -1006,
+   /* MICROBIT_BUSY = -1006, */
+   AKHILAFLEX_BUSY = -1006, 
+
 
     // The requested operation was cancelled before it completed.
-    MICROBIT_CANCELLED = -1007,
+   /* MICROBIT_CANCELLED = -1007, */
+    AKHILAFLEX_CANCELLED = -1007, 
 
     // I2C Communication error occured (typically I2C module on processor has locked up.)
-    MICROBIT_I2C_ERROR = -1010,
-
+   /* MICROBIT_I2C_ERROR = -1010, */
+    AKHILAFLEX_I2C_ERROR = -1010, 
     // The serial bus is currently in use by another fiber.
-    MICROBIT_SERIAL_IN_USE = -1011,
+   /* MICROBIT_SERIAL_IN_USE = -1011, */
+    AKHILAFLEX_SERIAL_IN_USE = -1011, 
 
     // The requested operation had no data to return.
-    MICROBIT_NO_DATA = -1012
+   /* MICROBIT_NO_DATA = -1012 */
+    AKHILAFLEX_NO_DATA = -1012 
 };
 
 /**
@@ -75,16 +87,23 @@ enum PanicCode{
     // entered where the panic code is diplayed.
 
     // Out out memory error. Heap storage was requested, but is not available.
-    MICROBIT_OOM = 20,
+  /*  MICROBIT_OOM = 20, */
+   AKHILAFLEX_OOM = 20, 
 
     // Corruption detected in the micro:bit heap space
-    MICROBIT_HEAP_ERROR = 30,
+   /* MICROBIT_HEAP_ERROR = 30, */
+   AKHILAFLEX_HEAP_ERROR = 30, 
 
     // Dereference of a NULL pointer through the ManagedType class,
-    MICROBIT_NULL_DEREFERENCE = 40,
+   /* MICROBIT_NULL_DEREFERENCE = 40, */
+  AKHILAFLEX_NULL_DEREFERENCE = 40, 
+
 
     // A requested hardware peripheral could not be found,
-    MICROBIT_HARDWARE_UNAVAILABLE_ACC = 50,
-    MICROBIT_HARDWARE_UNAVAILABLE_MAG = 51,
+ /*   MICROBIT_HARDWARE_UNAVAILABLE_ACC = 50,
+    MICROBIT_HARDWARE_UNAVAILABLE_MAG = 51, */
+    AKHILAFLEX_HARDWARE_UNAVAILABLE_ACC = 50,
+    AKHILAFLEX_HARDWARE_UNAVAILABLE_MAG = 51, 
+
 };
 #endif

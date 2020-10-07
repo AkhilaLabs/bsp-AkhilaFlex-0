@@ -25,17 +25,17 @@ DEALINGS IN THE SOFTWARE.
 #ifndef MMA8653_H
 #define MMA8653_H
 
-#include "MicroBitConfig.h"
-#include "MicroBitComponent.h"
+#include "AKHILAFLEXConfig.h"
+#include "AKHILAFLEXComponent.h"
 #include "CoordinateSystem.h"
-#include "MicroBitAccelerometer.h"
-#include "MicroBitI2C.h"
-#include "MicroBitUtil.h"
+#include "AKHILAFLEXAccelerometer.h"
+#include "AKHILAFLEXI2C.h"
+#include "AKHILAFLEXUtil.h"
 
 /**
   * Relevant pin assignments
   */
-#define MICROBIT_PIN_ACCEL_DATA_READY          P0_28
+#define AKHILAFLEX_PIN_ACCEL_DATA_READY          P0_28
 
 /**
   * I2C constants
@@ -65,10 +65,10 @@ DEALINGS IN THE SOFTWARE.
  * Class definition for MMA8653.
  * This class provides a simple wrapper between the hybrid FXOS8700 accelerometer and higher level accelerometer funcitonality.
  */
-class MMA8653 : public MicroBitAccelerometer
+class MMA8653 : public AKHILAFLEXAccelerometer
 {
-    MicroBitI2C&            i2c;                    // The I2C interface to use.
-    MicroBitPin             int1;                   // Data ready interrupt.
+    AKHILAFLEXI2C&            i2c;                    // The I2C interface to use.
+    AKHILAFLEXPin             int1;                   // Data ready interrupt.
     uint16_t                address;                // I2C address of this accelerometer.
 
     public:
@@ -78,10 +78,10 @@ class MMA8653 : public MicroBitAccelerometer
      * Create a software abstraction of an accelerometer.
      *
      * @param coordinateSpace The orientation of the sensor. Defaults to: SIMPLE_CARTESIAN
-     * @param id The unique EventModel id of this component. Defaults to: MICROBIT_ID_ACCELEROMETER
+     * @param id The unique EventModel id of this component. Defaults to: AKHILAFLEX_ID_ACCELEROMETER
      *
      */
-    MMA8653(MicroBitI2C& _i2c, MicroBitPin _int1, CoordinateSpace &coordinateSpace, uint16_t address = MMA8653_DEFAULT_ADDR, uint16_t id = MICROBIT_ID_ACCELEROMETER);
+    MMA8653(AKHILAFLEXI2C& _i2c, AKHILAFLEXPin _int1, CoordinateSpace &coordinateSpace, uint16_t address = MMA8653_DEFAULT_ADDR, uint16_t id = AKHILAFLEX_ID_ACCELEROMETER);
 
     /**
      * Configures the accelerometer for G range and sample rate defined
@@ -89,7 +89,7 @@ class MMA8653 : public MicroBitAccelerometer
      * that are supported by the hardware. The instance variables are then
      * updated to reflect reality.
      *
-     * @return MICROBIT_OK on success, MICROBIT_I2C_ERROR if the accelerometer could not be configured.
+     * @return AKHILAFLEX_OK on success, AKHILAFLEX_I2C_ERROR if the accelerometer could not be configured.
      *
      * @note This method should be overidden by the hardware driver to implement the requested
      * changes in hardware.
@@ -102,7 +102,7 @@ class MMA8653 : public MicroBitAccelerometer
      * (it normally happens in the background when the scheduler is idle), but a check is performed
      * if the user explicitly requests up to date data.
      *
-     * @return MICROBIT_OK on success, MICROBIT_I2C_ERROR if the update fails.
+     * @return AKHILAFLEX_OK on success, AKHILAFLEX_I2C_ERROR if the update fails.
      *
      * @note This method should be overidden by the hardware driver to implement the requested
      * changes in hardware.
@@ -121,7 +121,7 @@ class MMA8653 : public MicroBitAccelerometer
      *
      * @return true if the WHO_AM_I value is succesfully read. false otherwise.
      */
-    static int isDetected(MicroBitI2C &i2c, uint16_t address = MMA8653_DEFAULT_ADDR);
+    static int isDetected(AKHILAFLEXI2C &i2c, uint16_t address = MMA8653_DEFAULT_ADDR);
 
 
     /**

@@ -25,14 +25,14 @@ DEALINGS IN THE SOFTWARE.
 #ifndef FXOS8700_H
 #define FXOS8700_H
 
-#include "MicroBitConfig.h"
-#include "MicroBitComponent.h"
-#include "MicroBitPin.h"
-#include "MicroBitI2C.h"
-#include "MicroBitAccelerometer.h"
-#include "MicroBitCompass.h"
+#include "AKHILAFLEXConfig.h"
+#include "AKHILAFLEXComponent.h"
+#include "AKHILAFLEXPin.h"
+#include "AKHILAFLEXI2C.h"
+#include "AKHILAFLEXAccelerometer.h"
+#include "AKHILAFLEXCompass.h"
 #include "CoordinateSystem.h"
-#include "MicroBitUtil.h"
+#include "AKHILAFLEXUtil.h"
 
 /**
   * I2C constants
@@ -173,10 +173,10 @@ DEALINGS IN THE SOFTWARE.
 /**
  * Class definition for an FXSO8700 hybrid Accelerometer/Magnetometer
  */
-class FXOS8700 : public MicroBitAccelerometer, public MicroBitCompass
+class FXOS8700 : public AKHILAFLEXAccelerometer, public AKHILAFLEXCompass
 {
-    MicroBitI2C&            i2c;                    // The I2C interface to use.
-    MicroBitPin             int1;                   // Data ready interrupt.
+    AKHILAFLEXI2C&            i2c;                    // The I2C interface to use.
+    AKHILAFLEXPin             int1;                   // Data ready interrupt.
     uint16_t                address;                // I2C address of this accelerometer.
 
     public:
@@ -190,7 +190,7 @@ class FXOS8700 : public MicroBitAccelerometer, public MicroBitCompass
      * @param address the default I2C address of the accelerometer. Defaults to: FXOS8700_DEFAULT_ADDR.
      *
      */
-    FXOS8700(MicroBitI2C &_i2c, MicroBitPin _int1, CoordinateSpace &coordinateSpace, uint16_t address = FXOS8700_DEFAULT_ADDR, uint16_t aid = MICROBIT_ID_ACCELEROMETER, uint16_t cid = MICROBIT_ID_COMPASS);
+    FXOS8700(AKHILAFLEXI2C &_i2c, AKHILAFLEXPin _int1, CoordinateSpace &coordinateSpace, uint16_t address = FXOS8700_DEFAULT_ADDR, uint16_t aid = AKHILAFLEX_ID_ACCELEROMETER, uint16_t cid = AKHILAFLEX_ID_COMPASS);
 
     /**
      * Configures the accelerometer for G range and sample rate defined
@@ -222,7 +222,7 @@ class FXOS8700 : public MicroBitAccelerometer, public MicroBitCompass
      *
      * @return true if the WHO_AM_I value is succesfully read. false otherwise.
      */
-    static int isDetected(MicroBitI2C &i2c, uint16_t address = FXOS8700_DEFAULT_ADDR);
+    static int isDetected(AKHILAFLEXI2C &i2c, uint16_t address = FXOS8700_DEFAULT_ADDR);
 
     /**
      * A periodic callback invoked by the fiber scheduler idle thread.

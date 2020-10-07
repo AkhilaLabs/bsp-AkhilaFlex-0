@@ -30,10 +30,10 @@ DEALINGS IN THE SOFTWARE.
  */
 #include "FXOS8700.h"
 #include "ErrorNo.h"
-#include "MicroBitEvent.h"
-#include "MicroBitCompat.h"
-#include "MicroBitFiber.h"
-#include "MicroBitAccelerometer.h"
+#include "AKHILAFLEXEvent.h"
+#include "AKHILAFLEXCompat.h"
+#include "AKHILAFLEXFiber.h"
+#include "AKHILAFLEXAccelerometer.h"
 
 //
 // Configuration table for available g force ranges.
@@ -69,7 +69,7 @@ CREATE_KEY_VALUE_TABLE(accelerometerPeriod, accelerometerPeriodData);
   * that are supported by the hardware. The instance variables are then
   * updated to reflect reality.
   *
-  * @return MICROBIT_OK on success, MICROBIT_I2C_ERROR if the accelerometer could not be configured.
+  * @return AKHILAFLEX_OK on success, AKHILAFLEX_I2C_ERROR if the accelerometer could not be configured.
   */
 int FXOS8700::configure()
 {
@@ -77,16 +77,16 @@ int FXOS8700::configure()
     uint8_t value;
 
     // First find the nearest sample rate to that specified.
-    MicroBitAccelerometer::samplePeriod = accelerometerPeriod.getKey(MicroBitAccelerometer::samplePeriod * 2000) / 1000;
-    MicroBitAccelerometer::sampleRange = accelerometerRange.getKey(MicroBitAccelerometer::sampleRange);
-    MicroBitCompass::samplePeriod = MicroBitAccelerometer::samplePeriod;
+    AKHILAFLEXAccelerometer::samplePeriod = accelerometerPeriod.getKey(AKHILAFLEXAccelerometer::samplePeriod * 2000) / 1000;
+    AKHILAFLEXAccelerometer::sampleRange = accelerometerRange.getKey(AKHILAFLEXAccelerometer::sampleRange);
+    AKHILAFLEXCompass::samplePeriod = AKHILAFLEXAccelerometer::samplePeriod;
 
     // Now configure the accelerometer accordingly.
     // Firstly, disable the module (as some registers cannot be changed while its running).
     value = 0x00;
     result = i2c.writeRegister(address, FXOS8700_CTRL_REG1, value);
     if (result != 0)
-        return MICROBIT_I2C_ERROR;
+        return AKHILAFLEX_I2C_ERROR;
 
     // Enter hybrid mode (interleave accelerometer and magnetometer samples).
     // Also, select full oversampling on the magnetometer
@@ -94,7 +94,7 @@ int FXOS8700::configure()
     value = 0x1F;
     result = i2c.writeRegister(address, FXOS8700_M_CTRL_REG1, value);
     if (result != 0)
-        return MICROBIT_I2C_ERROR;
+        return AKHILAFLEX_I2C_ERROR;
 
     // Select the auto incremement mode, which allows a contiguous I2C block
     // read of both acceleromter and magnetometer data despite them being non-contguous
@@ -102,14 +102,14 @@ int FXOS8700::configure()
     value = 0x20;
     result = i2c.writeRegister(address, FXOS8700_M_CTRL_REG2, value);
     if (result != 0)
-        return MICROBIT_I2C_ERROR;
+        return AKHILAFLEX_I2C_ERROR;
 
     // Configure Open Drain Active LOW interrupt mode.
     // n.b. This may need to be reconfigured if the interrupt line is shared.
     value = 0x01;
     result = i2c.writeRegister(address, FXOS8700_CTRL_REG3, value);
     if (result != 0)
-        return MICROBIT_I2C_ERROR;
+        return AKHILAFLEX_I2C_ERROR;
 
     // Enable a data ready interrupt.
     // TODO: This is currently PUSHPULL mode. This may nede to be reconfigured
@@ -117,27 +117,27 @@ int FXOS8700::configure()
     value = 0x01;
     result = i2c.writeRegister(address, FXOS8700_CTRL_REG4, value);
     if (result != 0)
-        return MICROBIT_I2C_ERROR;
+        return AKHILAFLEX_I2C_ERROR;
 
     // Route the data ready interrupt to INT1 pin.
     value = 0x01;
     result = i2c.writeRegister(address, FXOS8700_CTRL_REG5, value);
     if (result != 0)
-        return MICROBIT_I2C_ERROR;
+        return AKHILAFLEX_I2C_ERROR;
 
     // Configure acceleromter g range.
-    value = accelerometerRange.get(MicroBitAccelerometer::sampleRange);
+    value = accelerometerRange.get(AKHILAFLEXAccelerometer::sampleRange);
     result = i2c.writeRegister(address, FXOS8700_XYZ_DATA_CFG, value);
     if (result != 0)
-        return MICROBIT_I2C_ERROR;
+        return AKHILAFLEX_I2C_ERROR;
 
     // Configure sample rate and re-enable the sensor.
-    value = accelerometerPeriod.get(MicroBitAccelerometer::samplePeriod * 1000) | 0x01;
+    value = accelerometerPeriod.get(AKHILAFLEXAccelerometer::samplePeriod * 1000) | 0x01;
     result = i2c.writeRegister(address, FXOS8700_CTRL_REG1, value);
     if (result != 0)
-        return MICROBIT_I2C_ERROR;
+        return AKHILAFLEX_I2C_ERROR;
 
-    return MICROBIT_OK;
+    return AKHILAFLEX_OK;
 }
 
 /**
@@ -149,9 +149,9 @@ int FXOS8700::configure()
   * @param address the default I2C address of the accelerometer. Defaults to: FXS8700_DEFAULT_ADDR.
   *
  */
-FXOS8700::FXOS8700(MicroBitI2C &_i2c, MicroBitPin _int1, CoordinateSpace &coordinateSpace, uint16_t address, uint16_t aid, uint16_t cid) : 
-    MicroBitAccelerometer(coordinateSpace, aid),
-    MicroBitCompass(coordinateSpace, cid),
+FXOS8700::FXOS8700(AKHILAFLEXI2C &_i2c, AKHILAFLEXPin _int1, CoordinateSpace &coordinateSpace, uint16_t address, uint16_t aid, uint16_t cid) : 
+    AKHILAFLEXAccelerometer(coordinateSpace, aid),
+    AKHILAFLEXCompass(coordinateSpace, cid),
     i2c(_i2c), int1(_int1)
 {
     // Store our identifiers.
@@ -169,7 +169,7 @@ FXOS8700::FXOS8700(MicroBitI2C &_i2c, MicroBitPin _int1, CoordinateSpace &coordi
  *
  * @return true if the WHO_AM_I value is succesfully read. false otherwise.
  */
-int FXOS8700::isDetected(MicroBitI2C &i2c, uint16_t address)
+int FXOS8700::isDetected(AKHILAFLEXI2C &i2c, uint16_t address)
 {
     return i2c.readRegister(address, FXOS8700_WHO_AM_I) == FXOS8700_WHOAMI_VAL;
 }
@@ -180,7 +180,7 @@ int FXOS8700::isDetected(MicroBitI2C &i2c, uint16_t address)
  * (it normally happens in the background when the scheduler is idle), but a check is performed
  * if the user explicitly requests up to date data.
  *
- * @return MICROBIT_OK on success, MICROBIT_I2C_ERROR if the update fails.
+ * @return AKHILAFLEX_OK on success, AKHILAFLEX_I2C_ERROR if the update fails.
  *
  * @note This method should be overidden by the hardware driver to implement the requested
  * changes in hardware.
@@ -188,10 +188,10 @@ int FXOS8700::isDetected(MicroBitI2C &i2c, uint16_t address)
 int FXOS8700::requestUpdate()
 {
     // Ensure we're scheduled to update the data periodically
-    if(!(MicroBitAccelerometer::status & MICROBIT_ACCEL_ADDED_TO_IDLE))
+    if(!(AKHILAFLEXAccelerometer::status & AKHILAFLEX_ACCEL_ADDED_TO_IDLE))
     {
-        fiber_add_idle_component((MicroBitAccelerometer *)this);
-        MicroBitAccelerometer::status |= MICROBIT_ACCEL_ADDED_TO_IDLE;
+        fiber_add_idle_component((AKHILAFLEXAccelerometer *)this);
+        AKHILAFLEXAccelerometer::status |= AKHILAFLEX_ACCEL_ADDED_TO_IDLE;
     }
 
     // Poll interrupt line from device (ACTIVE LOW)
@@ -209,7 +209,7 @@ int FXOS8700::requestUpdate()
         result = i2c.readRegister(address, FXOS8700_OUT_X_MSB, data, 12);
 
         if (result !=0)
-            return MICROBIT_I2C_ERROR;
+            return AKHILAFLEX_I2C_ERROR;
 
         
         // read sensor data (and translate into signed little endian)
@@ -238,20 +238,20 @@ int FXOS8700::requestUpdate()
         compassSample.z = s;
 
         // scale the 14 bit accelerometer data (packed into 16 bits) into SI units (milli-g), and translate to ENU coordinate system
-        MicroBitAccelerometer::sampleENU.x = (-accelerometerSample.y * MicroBitAccelerometer::sampleRange) / 32;
-        MicroBitAccelerometer::sampleENU.y = (accelerometerSample.x * MicroBitAccelerometer::sampleRange) / 32;
-        MicroBitAccelerometer::sampleENU.z = (accelerometerSample.z * MicroBitAccelerometer::sampleRange) / 32;
+        AKHILAFLEXAccelerometer::sampleENU.x = (-accelerometerSample.y * AKHILAFLEXAccelerometer::sampleRange) / 32;
+        AKHILAFLEXAccelerometer::sampleENU.y = (accelerometerSample.x * AKHILAFLEXAccelerometer::sampleRange) / 32;
+        AKHILAFLEXAccelerometer::sampleENU.z = (accelerometerSample.z * AKHILAFLEXAccelerometer::sampleRange) / 32;
 
         // translate magnetometer data into ENU coordinate system and normalise into nano-teslas
-        MicroBitCompass::sampleENU.x = FXOS8700_NORMALIZE_SAMPLE(-compassSample.y);
-        MicroBitCompass::sampleENU.y = FXOS8700_NORMALIZE_SAMPLE(compassSample.x);
-        MicroBitCompass::sampleENU.z = FXOS8700_NORMALIZE_SAMPLE(compassSample.z);
+        AKHILAFLEXCompass::sampleENU.x = FXOS8700_NORMALIZE_SAMPLE(-compassSample.y);
+        AKHILAFLEXCompass::sampleENU.y = FXOS8700_NORMALIZE_SAMPLE(compassSample.x);
+        AKHILAFLEXCompass::sampleENU.z = FXOS8700_NORMALIZE_SAMPLE(compassSample.z);
 
-        MicroBitAccelerometer::update();
-        MicroBitCompass::update();
+        AKHILAFLEXAccelerometer::update();
+        AKHILAFLEXCompass::update();
     }
 
-    return MICROBIT_OK;
+    return AKHILAFLEX_OK;
 }
 
 

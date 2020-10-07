@@ -46,9 +46,9 @@ DEALINGS IN THE SOFTWARE.
 #include <stdlib.h>
 
 #include "mbed.h"
-#include "MicroBitConfig.h"
+#include "AKHILAFLEXConfig.h"
 #include "ManagedString.h"
-#include "MicroBitCompat.h"
+#include "AKHILAFLEXCompat.h"
 
 static const char empty[] __attribute__ ((aligned (4))) = "\xff\xff\0\0\0";
 

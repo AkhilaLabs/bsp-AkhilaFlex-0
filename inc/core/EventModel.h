@@ -27,10 +27,10 @@ DEALINGS IN THE SOFTWARE.
 #define EVENT_MODEL_H
 
 #include "mbed.h"
-#include "MicroBitConfig.h"
-#include "MicroBitComponent.h"
-#include "MicroBitEvent.h"
-#include "MicroBitListener.h"
+#include "AKHILAFLEXConfig.h"
+#include "AKHILAFLEXComponent.h"
+#include "AKHILAFLEXEvent.h"
+#include "AKHILAFLEXListener.h"
 #include "ErrorNo.h"
 
 /**
@@ -49,13 +49,13 @@ DEALINGS IN THE SOFTWARE.
   * This is an example of a key principle in computing - ABSTRACTION. This is now part of the
   * UK's Computing curriculum in schools... so ask your teacher about it. :-)
   *
-  * An EventModel implementation is provided in the MicroBitMessageBus class.
+  * An EventModel implementation is provided in the AKHILAFLEXMessageBus class.
   */
 class EventModel
 {
     protected:
-    void (*listener_deletion_callback)(MicroBitListener *); // if not null, this function is invoked when a listener is removed.
-
+  /*  void (*listener_deletion_callback)(MicroBitListener *); */ // if not null, this function is invoked when a listener is removed.
+   void (*listener_deletion_callback)(AKHILAFLEXListener *); 
     public:
 
     static EventModel *defaultEventBus;
@@ -71,10 +71,12 @@ class EventModel
       *
       * @return This default implementation simply returns MICROBIT_NOT_SUPPORTED.
 	  */
-	virtual int send(MicroBitEvent evt)
+/*	virtual int send(MicroBitEvent evt) */
+   virtual int send(AKHILAFLEXEvent evt) 
     {
         (void) evt;
-        return MICROBIT_NOT_SUPPORTED;
+      /*  return MICROBIT_NOT_SUPPORTED; */
+        return AKHILAFLEX_NOT_SUPPORTED; 
     }
 
     /**
@@ -84,10 +86,14 @@ class EventModel
      *
      * @return This default implementation simply returns MICROBIT_NOT_SUPPORTED.
      */
-    virtual int add(MicroBitListener *listener)
+   /* virtual int add(MicroBitListener *listener) */
+    virtual int add(AKHILAFLEXListener *listener) 
+
     {
         (void) listener;
-        return MICROBIT_NOT_SUPPORTED;
+      /*  return MICROBIT_NOT_SUPPORTED; */
+        return AKHILAFLEX_NOT_SUPPORTED; 
+
     }
 
     /**
@@ -97,10 +103,13 @@ class EventModel
      *
      * @return This default implementation simply returns MICROBIT_NOT_SUPPORTED.
      */
-    virtual int remove(MicroBitListener *listener)
+   /* virtual int remove(MicroBitListener *listener) */
+   virtual int remove(AKHILAFLEXListener *listener) 
+
     {
         (void) listener;
-        return MICROBIT_NOT_SUPPORTED;
+      /*  return MICROBIT_NOT_SUPPORTED;  */
+        return AKHILAFLEX_NOT_SUPPORTED; 
     }
 
     /**
@@ -110,7 +119,8 @@ class EventModel
       *
       * @return This default implementation simply returns NULL.
       */
-    MicroBitListener *elementAt(int n)
+  /*  MicroBitListener *elementAt(int n) */
+    AKHILAFLEXListener *elementAt(int n) 
     {
         (void) n;
         return NULL;
@@ -133,7 +143,8 @@ class EventModel
 	static int setDefaultEventModel(EventModel &model)
     {
         EventModel::defaultEventBus = &model;
-        return MICROBIT_OK;
+       /* return MICROBIT_OK; */
+         return AKHILAFLEX_OK; 
     }
 
     /**
@@ -141,10 +152,12 @@ class EventModel
       *
       * @returns MICROBIT_OK on success.
       **/
-    int setListenerDeletionCallback(void (*listener_deletion_callback)(MicroBitListener *))
+   /* int setListenerDeletionCallback(void (*listener_deletion_callback)(MicroBitListener *)) */
+   int setListenerDeletionCallback(void (*listener_deletion_callback)(AKHILAFLEXListener *)) 
     {
         this->listener_deletion_callback = listener_deletion_callback;
-        return MICROBIT_OK;
+      /*  return MICROBIT_OK; */
+       return AKHILAFLEX_OK; 
     }
 
 	/**
@@ -178,19 +191,26 @@ class EventModel
       * uBit.messageBus.listen(MICROBIT_ID_BUTTON_B, MICROBIT_BUTTON_EVT_CLICK, onButtonBClick);
       * @endcode
 	  */
-	int listen(int id, int value, void (*handler)(MicroBitEvent), uint16_t flags = EVENT_LISTENER_DEFAULT_FLAGS)
+/*	int listen(int id, int value, void (*handler)(MicroBitEvent), uint16_t flags = EVENT_LISTENER_DEFAULT_FLAGS) */
+   int listen(int id, int value, void (*handler)(AKHILAFLEXEvent), uint16_t flags = EVENT_LISTENER_DEFAULT_FLAGS)
+    
     {
         if (handler == NULL)
-            return MICROBIT_INVALID_PARAMETER;
+           /* return MICROBIT_INVALID_PARAMETER; */
+           return AKHILAFLEX_INVALID_PARAMETER;
 
-        MicroBitListener *newListener = new MicroBitListener(id, value, handler, flags);
+      /*  MicroBitListener *newListener = new MicroBitListener(id, value, handler, flags); */
+       AKHILAFLEXListener *newListener = new AKHILAFLEXListener(id, value, handler, flags); 
 
-        if(add(newListener) == MICROBIT_OK)
-            return MICROBIT_OK;
+       /* if(add(newListener) == MICROBIT_OK) */
+       if(add(newListener) == AKHILAFLEX_OK) 
+          /* return MICROBIT_OK; */ 
+          return AKHILAFLEX_OK; 
 
         delete newListener;
 
-        return MICROBIT_NOT_SUPPORTED;
+       /* return MICROBIT_NOT_SUPPORTED;  */
+         return AKHILAFLEX_NOT_SUPPORTED; 
     }
 
     /**
@@ -226,19 +246,26 @@ class EventModel
       * uBit.messageBus.listen(MICROBIT_ID_BUTTON_B, MICROBIT_BUTTON_EVT_CLICK, onButtonBClick);
       * @endcode
 	  */
-    int listen(int id, int value, void (*handler)(MicroBitEvent, void*), void* arg, uint16_t flags = EVENT_LISTENER_DEFAULT_FLAGS)
+   /* int listen(int id, int value, void (*handler)(MicroBitEvent, void*), void* arg, uint16_t flags = EVENT_LISTENER_DEFAULT_FLAGS) */
+  int listen(int id, int value, void (*handler)(AKHILAFLEXEvent, void*), void* arg, uint16_t flags = EVENT_LISTENER_DEFAULT_FLAGS)
     {
         if (handler == NULL)
-            return MICROBIT_INVALID_PARAMETER;
+           /* return MICROBIT_INVALID_PARAMETER; */
+            return AKHILAFLEX_INVALID_PARAMETER; 
 
-        MicroBitListener *newListener = new MicroBitListener(id, value, handler, arg, flags);
+       /* MicroBitListener *newListener = new MicroBitListener(id, value, handler, arg, flags); */
+        AKHILAFLEXListener *newListener = new AKHILAFLEXListener(id, value, handler, arg, flags); 
 
-        if(add(newListener) == MICROBIT_OK)
-            return MICROBIT_OK;
+       /* if(add(newListener) == MICROBIT_OK)
+            return MICROBIT_OK; */
+        if(add(newListener) == AKHILAFLEX_OK)
+            return AKHILAFLEX_OK; 
+    
 
         delete newListener;
 
-        return MICROBIT_NOT_SUPPORTED;
+      /* return MICROBIT_NOT_SUPPORTED; */
+       return AKHILAFLEX_NOT_SUPPORTED; 
     }
 
 	/**
@@ -270,8 +297,8 @@ class EventModel
       * @endcode
 	  */
     template <typename T>
-	int listen(uint16_t id, uint16_t value, T* object, void (T::*handler)(MicroBitEvent), uint16_t flags = EVENT_LISTENER_DEFAULT_FLAGS);
-
+	/*int listen(uint16_t id, uint16_t value, T* object, void (T::*handler)(MicroBitEvent), uint16_t flags = EVENT_LISTENER_DEFAULT_FLAGS); */
+ int listen(uint16_t id, uint16_t value, T* object, void (T::*handler)(AKHILAFLEXEvent), uint16_t flags = EVENT_LISTENER_DEFAULT_FLAGS); 
 
 	/**
 	  * Unregister a listener function.
@@ -297,15 +324,20 @@ class EventModel
       * uBit.messageBus.ignore(MICROBIT_ID_BUTTON_B, MICROBIT_BUTTON_EVT_CLICK, onButtonBClick);
       * @endcode
 	  */
-	int ignore(int id, int value, void (*handler)(MicroBitEvent))
+	/*int ignore(int id, int value, void (*handler)(MicroBitEvent)) */
+    int ignore(int id, int value, void (*handler)(AKHILAFLEXEvent)) 
     {
         if (handler == NULL)
-            return MICROBIT_INVALID_PARAMETER;
+           /* return MICROBIT_INVALID_PARAMETER; */
+             return AKHILAFLEX_INVALID_PARAMETER; 
 
-        MicroBitListener listener(id, value, handler);
+        /*MicroBitListener listener(id, value, handler); */
+       AKHILAFLEXListener listener(id, value, handler); 
         remove(&listener);
 
-        return MICROBIT_OK;
+      /*  return MICROBIT_OK; */
+       return AKHILAFLEX_OK; 
+
     }
 
     /**
@@ -334,15 +366,19 @@ class EventModel
       * uBit.messageBus.ignore(MICROBIT_ID_BUTTON_B, MICROBIT_BUTTON_EVT_CLICK, onButtonBClick);
       * @endcode
 	  */
-	int ignore(int id, int value, void (*handler)(MicroBitEvent, void*), void* arg = NULL)
+	/*int ignore(int id, int value, void (*handler)(MicroBitEvent, void*), void* arg = NULL) */
+   int ignore(int id, int value, void (*handler)(AKHILAFLEXEvent, void*), void* arg = NULL) 
     {
         if (handler == NULL)
-            return MICROBIT_INVALID_PARAMETER;
+          /*  return MICROBIT_INVALID_PARAMETER; */
+             return AKHILAFLEX_INVALID_PARAMETER; 
 
-        MicroBitListener listener(id, value, handler, arg);
+      /* MicroBitListener listener(id, value, handler, arg);  */
+      AKHILAFLEXListener listener(id, value, handler, arg); 
         remove(&listener);
 
-        return MICROBIT_OK;
+       /* return MICROBIT_OK; */
+        return AKHILAFLEX_OK; 
     }
 
 	/**
@@ -372,7 +408,7 @@ class EventModel
       * @endcode
 	  */
     template <typename T>
-	int ignore(uint16_t id, uint16_t value, T* object, void (T::*handler)(MicroBitEvent));
+	int ignore(uint16_t id, uint16_t value, T* object, void (T::*handler)(AKHILAFLEXEvent)); 
 
 };
 
@@ -394,18 +430,25 @@ class EventModel
   *         pointers are NULL.
   */
 template <typename T>
-int EventModel::listen(uint16_t id, uint16_t value, T* object, void (T::*handler)(MicroBitEvent), uint16_t flags)
+/*int EventModel::listen(uint16_t id, uint16_t value, T* object, void (T::*handler)(MicroBitEvent), uint16_t flags) */
+int EventModel::listen(uint16_t id, uint16_t value, T* object, void (T::*handler)(AKHILAFLEXEvent), uint16_t flags) 
+
 {
 	if (object == NULL || handler == NULL)
-		return MICROBIT_INVALID_PARAMETER;
+	/*	return MICROBIT_INVALID_PARAMETER; */
+        return AKHILAFLEX_INVALID_PARAMETER; 
 
-	MicroBitListener *newListener = new MicroBitListener(id, value, object, handler, flags);
+	/*MicroBitListener *newListener = new MicroBitListener(id, value, object, handler, flags); */
+   AKHILAFLEXListener *newListener = new AKHILAFLEXListener(id, value, object, handler, flags); 
 
-    if(add(newListener) == MICROBIT_OK)
-        return MICROBIT_OK;
+   /* if(add(newListener) == MICROBIT_OK)
+        return MICROBIT_OK; */
+       if(add(newListener) == AKHILAFLEX_OK)
+        return AKHILAFLEX_OK;    
 
     delete newListener;
-    return MICROBIT_NOT_SUPPORTED;
+   /* return MICROBIT_NOT_SUPPORTED; */
+   return AKHILAFLEX_NOT_SUPPORTED;
 }
 
 /**
@@ -435,15 +478,15 @@ int EventModel::listen(uint16_t id, uint16_t value, T* object, void (T::*handler
   * @endcode
   */
 template <typename T>
-int EventModel::ignore(uint16_t id, uint16_t value, T* object, void (T::*handler)(MicroBitEvent))
+int EventModel::ignore(uint16_t id, uint16_t value, T* object, void (T::*handler)(AKHILAFLEXEvent))
 {
 	if (handler == NULL)
-		return MICROBIT_INVALID_PARAMETER;
+		return AKHILAFLEX_INVALID_PARAMETER;
 
-	MicroBitListener listener(id, value, object, handler);
+	AKHILAFLEXListener listener(id, value, object, handler);
     remove(&listener);
 
-    return MICROBIT_OK;
+    return AKHILAFLEX_OK;
 }
 
 #endif

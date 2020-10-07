@@ -30,11 +30,11 @@ DEALINGS IN THE SOFTWARE.
   * This header file contains IDs and event codes use for Bluetooth communication.
   */
 
-#define MICROBIT_ID_BLE             1000
-#define MICROBIT_ID_BLE_UART        1200
+#define AKHILAFLEX_ID_BLE             1000
+#define AKHILAFLEX_ID_BLE_UART        1200
 
-#define MICROBIT_BLE_EVT_CONNECTED      1
-#define MICROBIT_BLE_EVT_DISCONNECTED   2
+#define AKHILAFLEX_BLE_EVT_CONNECTED      1
+#define AKHILAFLEX_BLE_EVT_DISCONNECTED   2
 
 #include "MESEvents.h"
 

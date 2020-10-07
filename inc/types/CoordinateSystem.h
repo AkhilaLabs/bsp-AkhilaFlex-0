@@ -24,7 +24,7 @@ DEALINGS IN THE SOFTWARE.
 
 #ifndef COORDINATE_SYSTEM_H
 #define COORDINATE_SYSTEM_H
-#include "MicroBitConfig.h"
+#include "AKHILAFLEXConfig.h"
 
 /**
  * Co-ordinate systems that can be used.

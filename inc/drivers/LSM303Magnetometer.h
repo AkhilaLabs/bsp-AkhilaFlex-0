@@ -25,12 +25,12 @@ DEALINGS IN THE SOFTWARE.
 #ifndef LSM303_M_H
 #define LSM303_M_H
 
-#include "MicroBitConfig.h"
-#include "MicroBitComponent.h"
+#include "AKHILAFLEXConfig.h"
+#include "AKHILAFLEXComponent.h"
 #include "CoordinateSystem.h"
-#include "MicroBitCompass.h"
-#include "MicroBitI2C.h"
-#include "MicroBitUtil.h"
+#include "AKHILAFLEXCompass.h"
+#include "AKHILAFLEXI2C.h"
+#include "AKHILAFLEXUtil.h"
 
 /**
   * Term to convert sample data into SI units. 
@@ -81,10 +81,10 @@ DEALINGS IN THE SOFTWARE.
  * This class provides the low level driver implementation for the LSM303_M Magnetometer
  *
  */
-class LSM303Magnetometer : public MicroBitCompass
+class LSM303Magnetometer : public AKHILAFLEXCompass
 {
-    MicroBitI2C&            i2c;                    // The I2C interface to use.
-    MicroBitPin             int1;                   // Data ready interrupt.
+    AKHILAFLEXI2C&            i2c;                    // The I2C interface to use.
+    AKHILAFLEXPin             int1;                   // Data ready interrupt.
     uint16_t                address;                // I2C address of this compass.
 
     public:
@@ -94,10 +94,10 @@ class LSM303Magnetometer : public MicroBitCompass
      * Create a software abstraction of an compass.
      *
      * @param coordinateSpace The orientation of the sensor. Defaults to: SIMPLE_CARTESIAN
-     * @param id The unique EventModel id of this component. Defaults to: MICROBIT_ID_ACCELEROMETER
+     * @param id The unique EventModel id of this component. Defaults to: AKHILAFLEX_ID_ACCELEROMETER
      *
      */
-    LSM303Magnetometer(MicroBitI2C& _i2c, MicroBitPin _int1, CoordinateSpace &coordinateSpace, uint16_t address = LSM303_M_DEFAULT_ADDR, uint16_t id = MICROBIT_ID_COMPASS);
+    LSM303Magnetometer(AKHILAFLEXI2C& _i2c, AKHILAFLEXPin _int1, CoordinateSpace &coordinateSpace, uint16_t address = LSM303_M_DEFAULT_ADDR, uint16_t id = AKHILAFLEX_ID_COMPASS);
 
     /**
      * Configures the compass for the sample rate defined in this object. 
@@ -105,7 +105,7 @@ class LSM303Magnetometer : public MicroBitCompass
      * that are supported by the hardware. The instance variables are then
      * updated to reflect reality.
      *
-     * @return MICROBIT_OK on success, MICROBIT_I2C_ERROR if the compass could not be configured.
+     * @return AKHILAFLEX_OK on success, AKHILAFLEX_I2C_ERROR if the compass could not be configured.
      */
     virtual int configure();
 
@@ -115,7 +115,7 @@ class LSM303Magnetometer : public MicroBitCompass
      * (it normally happens in the background when the scheduler is idle), but a check is performed
      * if the user explicitly requests up to date data.
      *
-     * @return MICROBIT_OK on success, MICROBIT_I2C_ERROR if the update fails.
+     * @return AKHILAFLEX_OK on success, AKHILAFLEX_I2C_ERROR if the update fails.
      */
     virtual int requestUpdate();
 
@@ -131,7 +131,7 @@ class LSM303Magnetometer : public MicroBitCompass
      *
      * @return true if the WHO_AM_I value is succesfully read. false otherwise.
      */
-    static int isDetected(MicroBitI2C &i2c, uint16_t address = LSM303_M_DEFAULT_ADDR);
+    static int isDetected(AKHILAFLEXI2C &i2c, uint16_t address = LSM303_M_DEFAULT_ADDR);
 
     /**
      * Destructor.

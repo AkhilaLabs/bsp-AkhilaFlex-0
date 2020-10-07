@@ -34,7 +34,7 @@ DEALINGS IN THE SOFTWARE.
   * events to C++ methods.
   */
 
-#include "MicroBitConfig.h"
+#include "AKHILAFLEXConfig.h"
 #include "MemberFunctionCallback.h"
 
 /**
@@ -42,7 +42,7 @@ DEALINGS IN THE SOFTWARE.
   *
   * @param e The event to deliver to the method
   */
-void MemberFunctionCallback::fire(MicroBitEvent e)
+void MemberFunctionCallback::fire(AKHILAFLEXEvent e)
 {
     invoke(object, method, e);
 }

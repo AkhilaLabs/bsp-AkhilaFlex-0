@@ -24,12 +24,12 @@ DEALINGS IN THE SOFTWARE.
 */
 
 #include "mbed.h"
-#include "MicroBitConfig.h"
+#include "AKHILAFLEXConfig.h"
 
-#ifndef MICROBIT_DYNAMIC_PWM_H
-#define MICROBIT_DYNAMIC_PWM_H
+#ifndef AKHILAFLEX_DYNAMIC_PWM_H
+#define AKHILAFLEX_DYNAMIC_PWM_H
 
-#define MICROBIT_DEFAULT_PWM_PERIOD 20000
+#define AKHILAFLEX_DEFAULT_PWM_PERIOD 20000
 
 /**
   * Class definition for DynamicPwm.
@@ -70,7 +70,7 @@ class DynamicPwm : public PwmOut
       *
       * @param value the duty cycle percentage in floating point format.
       *
-      * @return MICROBIT_OK on success, MICROBIT_INVALID_PARAMETER if value is out of range
+      * @return AKHILAFLEX_OK on success, AKHILAFLEX_INVALID_PARAMETER if value is out of range
       *
       * @code
       * DynamicPwm* pwm = DynamicPwm::allocate();
@@ -138,7 +138,7 @@ class DynamicPwm : public PwmOut
       *
       * @param period the desired period in microseconds.
       *
-      * @return MICROBIT_OK on success, MICROBIT_INVALID_PARAMETER if period is out of range
+      * @return AKHILAFLEX_OK on success, AKHILAFLEX_INVALID_PARAMETER if period is out of range
       *
       * Example:
       * @code
@@ -157,7 +157,7 @@ class DynamicPwm : public PwmOut
       *
       * @param period the desired period in milliseconds.
       *
-      * @return MICROBIT_OK on success, MICROBIT_INVALID_PARAMETER if period is out of range
+      * @return AKHILAFLEX_OK on success, AKHILAFLEX_INVALID_PARAMETER if period is out of range
       *
       * Example:
       * @code
