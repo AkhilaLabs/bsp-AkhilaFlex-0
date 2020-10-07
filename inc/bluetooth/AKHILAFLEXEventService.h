@@ -93,7 +93,7 @@ class AKHILAFLEXEventService : public AKHILAFLEXComponent
     /**
       * Read callback on AKHILAFLEXRequirements characteristic.
       *
-      * Used to iterate through the events that the code on this micro:bit is interested in.
+      * Used to iterate through the events that the code on this AKHILAFLEX is interested in.
       */
     void onRequirementsRead(GattReadAuthCallbackParams *params);
 

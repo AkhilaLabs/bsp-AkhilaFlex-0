@@ -26,10 +26,10 @@ DEALINGS IN THE SOFTWARE.
 /**
  * Device specific funcitons for the nrf51822 device.
  *
- * Provides a degree of platform independence for microbit-dal functionality.
+ * Provides a degree of platform independence for AKHILAFLEX-dal functionality.
  *
  * TODO: Determine if any of this belongs in an mbed target definition.
- * TODO: Review microbit-dal to place all such functions here.
+ * TODO: Review AKHILAFLEX-dal to place all such functions here.
  */
 #ifndef AKHILAFLEX_DEVICE_H
 #define AKHILAFLEX_DEVICE_H
@@ -63,7 +63,7 @@ uint32_t AKHILAFLEX_serial_number();
 char* AKHILAFLEX_friendly_name();
 
 /**
-  * Perform a hard reset of the micro:bit.
+  * Perform a hard reset of the AKHILAFLEX.
   */
 void AKHILAFLEX_reset();
 

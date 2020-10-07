@@ -24,7 +24,7 @@ DEALINGS IN THE SOFTWARE.
 */
 
 /**
-  * Class definition for the custom MicroBit Accelerometer Service.
+  * Class definition for the custom AKHILAFLEX Accelerometer Service.
   * Provides a BLE service to remotely read the state of the accelerometer, and configure its behaviour.
   */
 #include "AKHILAFLEXConfig.h"
@@ -36,9 +36,9 @@ DEALINGS IN THE SOFTWARE.
   * Constructor.
   * Create a representation of the AccelerometerService
   * @param _ble The instance of a BLE device that we're running on.
-  * @param _accelerometer An instance of MicroBitAccelerometer.
+  * @param _accelerometer An instance of AKHILAFLEXAccelerometer.
   */
-/*MicroBitAccelerometerService::MicroBitAccelerometerService(BLEDevice &_ble, MicroBitAccelerometer &_accelerometer) :
+/*AKHILAFLEXAccelerometerService::AKHILAFLEXAccelerometerService(BLEDevice &_ble, AKHILAFLEXAccelerometer &_accelerometer) :
         ble(_ble), accelerometer(_accelerometer) */
 AKHILAFLEXAccelerometerService::AKHILAFLEXAccelerometerService(BLEDevice &_ble,AKHILAFLEXAccelerometer &_accelerometer) :      
   ble(_ble), accelerometer(_accelerometer)  
@@ -117,11 +117,11 @@ const uint8_t  AKHILAFLEXAccelerometerServiceDataUUID[] = {
     0x00,0x00,0x07,0x53,0x25,0x1d,0x47,0x0a,0xa0,0x62,0xfa,0x19,0x22,0xdf,0xa9,0xa8
 };
 
-/*const uint8_t  MicroBitAccelerometerServiceDataUUID[] = {
+/*const uint8_t  AKHILAFLEXAccelerometerServiceDataUUID[] = {
     0x00,0x00,0xca,0x4b,0x25,0x1d,0x47,0x0a,0xa0,0x62,0xfa,0x19,0x22,0xdf,0xa9,0xa8
 };
 
-const uint8_t  MicroBitAccelerometerServicePeriodUUID[] = {
+const uint8_t  AKHILAFLEXAccelerometerServicePeriodUUID[] = {
     0x00,0x00,0xfb,0x24,0x25,0x1d,0x47,0x0a,0xa0,0x62,0xfa,0x19,0x22,0xdf,0xa9,0xa8
 };*/
 

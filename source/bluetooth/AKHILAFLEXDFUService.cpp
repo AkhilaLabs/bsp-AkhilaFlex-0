@@ -24,12 +24,12 @@ DEALINGS IN THE SOFTWARE.
 */
 
 /**
- * Class definition for a MicroBit Device Firmware Update loader.
+ * Class definition for a AKHILAFLEX Device Firmware Update loader.
  *
  * This is actually just a frontend to a memory resident nordic DFU loader.
  *
  * We rely on the BLE standard pairing processes to provide encryption and authentication.
- * We assume any device that is paied with the micro:bit is authorized to reprogram the device.
+ * We assume any device that is paied with the AKHILAFLEX is authorized to reprogram the device.
  *
  */
 #include "AKHILAFLEXConfig.h"
@@ -66,14 +66,14 @@ extern "C" {
   * Initialise the Device Firmware Update service.
   * @param _ble The instance of a BLE device that we're running on.
   */
-/*MicroBitDFUService::MicroBitDFUService(BLEDevice &_ble) :
+/*AKHILAFLEXDFUService::AKHILAFLEXDFUService(BLEDevice &_ble) :
     ble(_ble) */
  AKHILAFLEXDFUService::AKHILAFLEXDFUService(BLEDevice &_ble) :
     ble(_ble) 
    
 {
-    // Opcodes can be issued here to control the MicroBitDFU Service, as defined above.
-  /*  GattCharacteristic  microBitDFUServiceControlCharacteristic(MicroBitDFUServiceControlCharacteristicUUID, &controlByte, 0, sizeof(uint8_t),
+    // Opcodes can be issued here to control the AKHILAFLEXDFU Service, as defined above.
+  /*  GattCharacteristic  AKHILAFLEXDFUServiceControlCharacteristic(AKHILAFLEXDFUServiceControlCharacteristicUUID, &controlByte, 0, sizeof(uint8_t),
             GattCharacteristic::BLE_GATT_CHAR_PROPERTIES_READ | GattCharacteristic::BLE_GATT_CHAR_PROPERTIES_WRITE); */
  GattCharacteristic  AKHILAFLEXDFUServiceControlCharacteristic(AKHILAFLEXDFUServiceControlCharacteristicUUID, &controlByte, 0, sizeof(uint8_t),
             GattCharacteristic::BLE_GATT_CHAR_PROPERTIES_READ | GattCharacteristic::BLE_GATT_CHAR_PROPERTIES_WRITE); 
@@ -81,21 +81,21 @@ extern "C" {
     controlByte = 0x00;
 
     // Set default security requirements
-  /*  microBitDFUServiceControlCharacteristic.requireSecurity(SecurityManager::MICROBIT_BLE_SECURITY_LEVEL); */
+  /*  AKHILAFLEXDFUServiceControlCharacteristic.requireSecurity(SecurityManager::AKHILAFLEX_BLE_SECURITY_LEVEL); */
    AKHILAFLEXDFUServiceControlCharacteristic.requireSecurity(SecurityManager::AKHILAFLEX_BLE_SECURITY_LEVEL); 
 
-   /* GattCharacteristic *characteristics[] = {&microBitDFUServiceControlCharacteristic};
-    GattService         service(MicroBitDFUServiceUUID, characteristics, sizeof(characteristics) / sizeof(GattCharacteristic *)); */
+   /* GattCharacteristic *characteristics[] = {&AKHILAFLEXDFUServiceControlCharacteristic};
+    GattService         service(AKHILAFLEXDFUServiceUUID, characteristics, sizeof(characteristics) / sizeof(GattCharacteristic *)); */
     GattCharacteristic *characteristics[] = {&AKHILAFLEXDFUServiceControlCharacteristic};
     GattService         service(AKHILAFLEXDFUServiceUUID, characteristics, sizeof(characteristics) / sizeof(GattCharacteristic *));
 
     ble.addService(service);
 
-   /* microBitDFUServiceControlCharacteristicHandle = microBitDFUServiceControlCharacteristic.getValueHandle(); */
+   /* AKHILAFLEXDFUServiceControlCharacteristicHandle = AKHILAFLEXDFUServiceControlCharacteristic.getValueHandle(); */
  AKHILAFLEXDFUServiceControlCharacteristicHandle = AKHILAFLEXDFUServiceControlCharacteristic.getValueHandle();
 
-   /* ble.gattServer().write(microBitDFUServiceControlCharacteristicHandle, &controlByte, sizeof(uint8_t));
-    ble.gattServer().onDataWritten(this, &MicroBitDFUService::onDataWritten); */
+   /* ble.gattServer().write(AKHILAFLEXDFUServiceControlCharacteristicHandle, &controlByte, sizeof(uint8_t));
+    ble.gattServer().onDataWritten(this, &AKHILAFLEXDFUService::onDataWritten); */
     ble.gattServer().write(AKHILAFLEXDFUServiceControlCharacteristicHandle, &controlByte, sizeof(uint8_t));
     ble.gattServer().onDataWritten(this, &AKHILAFLEXDFUService::onDataWritten); 
 
@@ -104,20 +104,20 @@ extern "C" {
 /**
   * Callback. Invoked when any of our attributes are written via BLE.
   */
-/*void MicroBitDFUService::onDataWritten(const GattWriteCallbackParams *params) */
+/*void AKHILAFLEXDFUService::onDataWritten(const GattWriteCallbackParams *params) */
 void AKHILAFLEXDFUService::onDataWritten(const GattWriteCallbackParams *params) 
 {
-   /* if (params->handle == microBitDFUServiceControlCharacteristicHandle) */
+   /* if (params->handle == AKHILAFLEXDFUServiceControlCharacteristicHandle) */
    if (params->handle == AKHILAFLEXDFUServiceControlCharacteristicHandle) 
     {
-       /* if(params->len > 0 && params->data[0] == MICROBIT_DFU_OPCODE_START_DFU) */
+       /* if(params->len > 0 && params->data[0] == AKHILAFLEX_DFU_OPCODE_START_DFU) */
         if(params->len > 0 && params->data[0] == AKHILAFLEX_DFU_OPCODE_START_DFU) 
         {
             // TODO: Raise a SYSTEM event here.
             //uBit.display.stopAnimation();
             //uBit.display.clear();
 
-/*#if CONFIG_ENABLED(MICROBIT_DBG)*/
+/*#if CONFIG_ENABLED(AKHILAFLEX_DBG)*/
 #if CONFIG_ENABLED(AKHILAFLEX_DBG) 
             printf("  ACTIVATING BOOTLOADER.\n");
 #endif
@@ -145,14 +145,14 @@ void AKHILAFLEXDFUService::onDataWritten(const GattWriteCallbackParams *params)
   * UUID definitions for BLE Services and Characteristics.
   */
 /*
-const uint8_t              MicroBitDFUServiceUUID[] = {
+const uint8_t              AKHILAFLEXDFUServiceUUID[] = {
     0x00,0x00,0x93,0xb0,0x25,0x1d,0x47,0x0a,0xa0,0x62,0xfa,0x19,0x22,0xdf,0xa9,0xa8
 }; */
 const uint8_t              AKHILAFLEXDFUServiceUUID[] = {
     0x00,0x00,0x93,0xb0,0x25,0x1d,0x47,0x0a,0xa0,0x62,0xfa,0x19,0x22,0xdf,0xa9,0xa8
 }; 
 /*
-const uint8_t              MicroBitDFUServiceControlCharacteristicUUID[] = {
+const uint8_t              AKHILAFLEXDFUServiceControlCharacteristicUUID[] = {
     0x00,0x00,0x93,0xb1,0x25,0x1d,0x47,0x0a,0xa0,0x62,0xfa,0x19,0x22,0xdf,0xa9,0xa8
 }; */
 const uint8_t              AKHILAFLEXDFUServiceControlCharacteristicUUID[] = {

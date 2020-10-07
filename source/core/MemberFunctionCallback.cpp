@@ -30,7 +30,7 @@ DEALINGS IN THE SOFTWARE.
   * representation than normal C functions. This class allows a reference to
   * a C++ member function to be stored then called at a later date.
   *
-  * This class is used extensively by the MicroBitMessageBus to deliver
+  * This class is used extensively by the AKHILAFLEXMessageBus to deliver
   * events to C++ methods.
   */
 

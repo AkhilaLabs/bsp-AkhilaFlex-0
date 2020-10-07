@@ -26,7 +26,7 @@ DEALINGS IN THE SOFTWARE.
 /**
   * A simple 32 bit block based memory allocator. This allows one or more memory segments to
   * be designated as heap storage, and is designed to run in a static memory area or inside the standard C
-  * heap for use by the micro:bit runtime. This is required for several reasons:
+  * heap for use by the AKHILAFLEX runtime. This is required for several reasons:
   *
   * 1) It reduces memory fragmentation due to the high churn sometime placed on the heap
   * by ManagedTypes, fibers and user code. Underlying heap implentations are often have very simplistic
@@ -78,7 +78,7 @@ struct HeapDefinition
   *
   * @return AKHILAFLEX_OK on success, or AKHILAFLEX_NO_RESOURCES if the heap could not be allocated.
   *
-  * @note Only code that #includes AKHILAFLEXHeapAllocator.h will use this heap. This includes all micro:bit runtime
+  * @note Only code that #includes AKHILAFLEXHeapAllocator.h will use this heap. This includes all AKHILAFLEX runtime
   * code, and user code targetting the runtime. External code can choose to include this file, or
   * simply use the standard heap.
   */

@@ -47,7 +47,7 @@ DEALINGS IN THE SOFTWARE.
   * Class definition for AKHILAFLEX Thermometer.
   *
   * Infers and stores the ambient temoperature based on the surface temperature
-  * of the various chips on the micro:bit.
+  * of the various chips on the AKHILAFLEX.
   *
   */
 class AKHILAFLEXThermometer : public AKHILAFLEXComponent

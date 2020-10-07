@@ -72,7 +72,7 @@ DEALINGS IN THE SOFTWARE.
   * Class definition for a AKHILAFLEX device.
   *
   * Represents the device as a whole, and includes member variables that represent various device drivers
-  * used to control aspects of the micro:bit.
+  * used to control aspects of the AKHILAFLEX.
   */
 class AKHILAFLEX
 {
@@ -128,7 +128,7 @@ class AKHILAFLEX
       * Constructor.
       *
       * Create a representation of a AKHILAFLEX device, which includes member variables
-      * that represent various device drivers used to control aspects of the micro:bit.
+      * that represent various device drivers used to control aspects of the AKHILAFLEX.
       */
     AKHILAFLEX();
 
@@ -172,7 +172,7 @@ class AKHILAFLEX
     static ManagedString getSerial();
 
     /**
-      * Will reset the micro:bit when called.
+      * Will reset the AKHILAFLEX when called.
       *
       * @code
       * uBit.reset();
@@ -258,9 +258,9 @@ class AKHILAFLEX
     unsigned long systemTime();
 
     /**
-      * Determine the version of the micro:bit runtime currently in use.
+      * Determine the version of the AKHILAFLEX runtime currently in use.
       *
-      * @return A textual description of the version of the micro:bit runtime that
+      * @return A textual description of the version of the AKHILAFLEX runtime that
       *         is currently running on this device.
       */
     const char *systemVersion();
@@ -408,7 +408,7 @@ inline ManagedString AKHILAFLEX::getSerial()
 }
 
 /**
-  * Will reset the micro:bit when called.
+  * Will reset the AKHILAFLEX when called.
   *
   * @code
   * uBit.reset();
@@ -621,9 +621,9 @@ inline unsigned long AKHILAFLEX::systemTime()
 
 
 /**
-  * Determine the version of the micro:bit runtime currently in use.
+  * Determine the version of the AKHILAFLEX runtime currently in use.
   *
-  * @return A textual description of the version of the micro:bit runtime that
+  * @return A textual description of the version of the AKHILAFLEX runtime that
   *         is currently running on this device.
   */
 inline const char *AKHILAFLEX::systemVersion()

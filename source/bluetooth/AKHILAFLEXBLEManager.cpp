@@ -90,7 +90,7 @@ const int8_t AKHILAFLEX_BLE_POWER_LEVEL[] = {-30, -20, -16, -12, -8, -4, 0, 4};
 
 /*
  * Many of the mbed interfaces we need to use only support callbacks to plain C functions, rather than C++ methods.
- * So, we maintain a pointer to the AKHILAFLEXBLEManager that's in use. Ths way, we can still access resources on the micro:bit
+ * So, we maintain a pointer to the AKHILAFLEXBLEManager that's in use. Ths way, we can still access resources on the AKHILAFLEX
  * whilst keeping the code modular.
  */
 /*AKHILAFLEXBLEManager *AKHILAFLEXBLEManager::manager = NULL; */ // Singleton reference to the BLE manager. many mbed BLE API callbacks still do not support member funcions yet. :-(
@@ -242,7 +242,7 @@ static void securitySetupCompletedCallback(Gap::Handle_t handle, SecurityManager
 /**
  * Constructor.
  *
- * Configure and manage the micro:bit's Bluetooth Low Energy (BLE) stack.
+ * Configure and manage the AKHILAFLEX's Bluetooth Low Energy (BLE) stack.
  *
  * @param _storage an instance of AKHILAFLEXStorage used to persist sys attribute information. (This is required for compatability with iOS).
  *
@@ -262,7 +262,7 @@ AKHILAFLEXBLEManager::AKHILAFLEXBLEManager(AKHILAFLEXStorage &_storage) : storag
 /**
  * Constructor.
  *
- * Configure and manage the micro:bit's Bluetooth Low Energy (BLE) stack.
+ * Configure and manage the AKHILAFLEX's Bluetooth Low Energy (BLE) stack.
  *
  * @note The BLE stack *cannot*  be brought up in a static context (the software simply hangs or corrupts itself).
  * Hence, the init() member function should be used to initialise the BLE stack.
@@ -277,7 +277,7 @@ AKHILAFLEXBLEManager::AKHILAFLEXBLEManager() : storage(NULL)
 }
 
 /**
- * When called, the micro:bit will begin advertising for a predefined period,
+ * When called, the AKHILAFLEX will begin advertising for a predefined period,
  * AKHILAFLEX_BLE_ADVERTISING_TIMEOUT seconds to bonded devices.
  */
 /*AKHILAFLEXBLEManager *AKHILAFLEXBLEManager::getInstance() */
@@ -292,7 +292,7 @@ AKHILAFLEXBLEManager *AKHILAFLEXBLEManager::getInstance()
 }
 
 /**
- * When called, the micro:bit will begin advertising for a predefined period,
+ * When called, the AKHILAFLEX will begin advertising for a predefined period,
  * AKHILAFLEX_BLE_ADVERTISING_TIMEOUT seconds to bonded devices.
  */
 /*void AKHILAFLEXBLEManager::advertise() */
@@ -430,7 +430,7 @@ void AKHILAFLEXBLEManager::init(ManagedString deviceName, ManagedString serialNu
 /*#if CONFIG_ENABLED(AKHILAFLEX_BLE_DFU_SERVICE)  */
 #if CONFIG_ENABLED(AKHILAFLEX_BLE_DFU_SERVICE)  
     /*new AKHILAFLEXDFUService(*ble); */
-    new AKHILAFLEXDFUService(*ble); 
+    new AKHILAFLEXDFUService(*ble);
 #endif
 
 /*#if CONFIG_ENABLED(AKHILAFLEX_BLE_PARTIAL_FLASHING)
@@ -530,7 +530,7 @@ int AKHILAFLEXBLEManager::setTransmitPower(int power)
 }
 
 /**
- * Determines the number of devices currently bonded with this micro:bit.
+ * Determines the number of devices currently bonded with this AKHILAFLEX.
  * @return The number of active bonds.
  */
 /*int AKHILAFLEXBLEManager::getBondCount() */
@@ -637,7 +637,7 @@ void AKHILAFLEXBLEManager::stopAdvertising()
   *
   * @param connectable true to keep bluetooth connectable for other services, false otherwise. (Defaults to true)
   *
-  * @param interval the rate at which the micro:bit will advertise url frames. (Defaults to AKHILAFLEX_BLE_EDDYSTONE_ADV_INTERVAL)
+  * @param interval the rate at which the AKHILAFLEX will advertise url frames. (Defaults to AKHILAFLEX_BLE_EDDYSTONE_ADV_INTERVAL)
   *
   * @note The calibratedPower value ranges from -100 to +20 to a resolution of 1. The calibrated power should be binary encoded.
   * More information can be found at https://github.com/google/eddystone/tree/master/eddystone-uid#tx-power
@@ -675,7 +675,7 @@ int AKHILAFLEXBLEManager::advertiseEddystoneUrl(const char* url, int8_t calibrat
   *
   * @param connectable true to keep bluetooth connectable for other services, false otherwise. (Defaults to true)
   *
-  * @param interval the rate at which the micro:bit will advertise url frames. (Defaults to AKHILAFLEX_BLE_EDDYSTONE_ADV_INTERVAL)
+  * @param interval the rate at which the AKHILAFLEX will advertise url frames. (Defaults to AKHILAFLEX_BLE_EDDYSTONE_ADV_INTERVAL)
   *
   * @note The calibratedPower value ranges from -100 to +20 to a resolution of 1. The calibrated power should be binary encoded.
   * More information can be found at https://github.com/google/eddystone/tree/master/eddystone-uid#tx-power
@@ -700,7 +700,7 @@ int AKHILAFLEXBLEManager::advertiseEddystoneUrl(ManagedString url, int8_t calibr
   *
   * @param connectable true to keep bluetooth connectable for other services, false otherwise. (Defaults to true)
   *
-  * @param interval the rate at which the micro:bit will advertise url frames. (Defaults to AKHILAFLEX_BLE_EDDYSTONE_ADV_INTERVAL)
+  * @param interval the rate at which the AKHILAFLEX will advertise url frames. (Defaults to AKHILAFLEX_BLE_EDDYSTONE_ADV_INTERVAL)
   *
   * @note The calibratedPower value ranges from -100 to +20 to a resolution of 1. The calibrated power should be binary encoded.
   * More information can be found at https://github.com/google/eddystone/tree/master/eddystone-uid#tx-power
@@ -732,7 +732,7 @@ int AKHILAFLEXBLEManager::advertiseEddystoneUid(const char* uid_namespace, const
 
 /**
  * Enter pairing mode. This is mode is called to initiate pairing, and to enable FOTA programming
- * of the micro:bit in cases where BLE is disabled during normal operation.
+ * of the AKHILAFLEX in cases where BLE is disabled during normal operation.
  *
  * @param display An instance of AKHILAFLEXDisplay used when displaying pairing information.
  * @param authorizationButton The button to use to authorise a pairing request.
@@ -775,7 +775,7 @@ void AKHILAFLEXBLEManager::pairingMode(AKHILAFLEXDisplay &display, AKHILAFLEXBut
     ble->gap().setAdvertisingPolicyMode(Gap::ADV_POLICY_IGNORE_WHITELIST);
 #endif
 
-    // Update the advertised name of this micro:bit to include the device name
+    // Update the advertised name of this AKHILAFLEX to include the device name
     ble->clearAdvertisingPayload();
 
     ble->accumulateAdvertisingPayload(GapAdvertisingData::BREDR_NOT_SUPPORTED | GapAdvertisingData::LE_GENERAL_DISCOVERABLE);

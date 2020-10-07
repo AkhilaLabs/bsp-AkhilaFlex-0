@@ -148,7 +148,7 @@ class AKHILAFLEXBLEManager : AKHILAFLEXComponent
     /**
      * Constructor.
      *
-     * Configure and manage the micro:bit's Bluetooth Low Energy (BLE) stack.
+     * Configure and manage the AKHILAFLEX's Bluetooth Low Energy (BLE) stack.
      *
      * @param _storage an instance of AKHILAFLEXStorage used to persist sys attribute information. (This is required for compatability with iOS).
      *
@@ -161,7 +161,7 @@ class AKHILAFLEXBLEManager : AKHILAFLEXComponent
     /**
      * Constructor.
      *
-     * Configure and manage the micro:bit's Bluetooth Low Energy (BLE) stack.
+     * Configure and manage the AKHILAFLEX's Bluetooth Low Energy (BLE) stack.
      *
      * @note The BLE stack *cannot*  be brought up in a static context (the software simply hangs or corrupts itself).
      * Hence, the init() member function should be used to initialise the BLE stack.
@@ -211,7 +211,7 @@ class AKHILAFLEXBLEManager : AKHILAFLEXComponent
 
     /**
      * Enter pairing mode. This is mode is called to initiate pairing, and to enable FOTA programming
-     * of the micro:bit in cases where BLE is disabled during normal operation.
+     * of the AKHILAFLEX in cases where BLE is disabled during normal operation.
      *
      * @param display An instance of AKHILAFLEXDisplay used when displaying pairing information.
      * @param authorizationButton The button to use to authorise a pairing request.
@@ -226,13 +226,13 @@ class AKHILAFLEXBLEManager : AKHILAFLEXComponent
 
 
     /**
-     * When called, the micro:bit will begin advertising for a predefined period,
+     * When called, the AKHILAFLEX will begin advertising for a predefined period,
      * AKHILAFLEX_BLE_ADVERTISING_TIMEOUT seconds to bonded devices.
      */
     void advertise();
 
     /**
-     * Determines the number of devices currently bonded with this micro:bit.
+     * Determines the number of devices currently bonded with this AKHILAFLEX.
      * @return The number of active bonds.
      */
     int getBondCount();
@@ -284,7 +284,7 @@ class AKHILAFLEXBLEManager : AKHILAFLEXComponent
       *
       * @param connectable true to keep bluetooth connectable for other services, false otherwise. (Defaults to true)
       *
-      * @param interval the rate at which the micro:bit will advertise url frames. (Defaults to AKHILAFLEX_BLE_EDDYSTONE_ADV_INTERVAL)
+      * @param interval the rate at which the AKHILAFLEX will advertise url frames. (Defaults to AKHILAFLEX_BLE_EDDYSTONE_ADV_INTERVAL)
       *
       * @note The calibratedPower value ranges from -100 to +20 to a resolution of 1. The calibrated power should be binary encoded.
       * More information can be found at https://github.com/google/eddystone/tree/master/eddystone-uid#tx-power
@@ -302,7 +302,7 @@ class AKHILAFLEXBLEManager : AKHILAFLEXComponent
       *
       * @param connectable true to keep bluetooth connectable for other services, false otherwise. (Defaults to true)
       *
-      * @param interval the rate at which the micro:bit will advertise url frames. (Defaults to AKHILAFLEX_BLE_EDDYSTONE_ADV_INTERVAL)
+      * @param interval the rate at which the AKHILAFLEX will advertise url frames. (Defaults to AKHILAFLEX_BLE_EDDYSTONE_ADV_INTERVAL)
       *
       * @note The calibratedPower value ranges from -100 to +20 to a resolution of 1. The calibrated power should be binary encoded.
       * More information can be found at https://github.com/google/eddystone/tree/master/eddystone-uid#tx-power
@@ -324,7 +324,7 @@ class AKHILAFLEXBLEManager : AKHILAFLEXComponent
       *
       * @param connectable true to keep bluetooth connectable for other services, false otherwise. (Defaults to true)
       *
-      * @param interval the rate at which the micro:bit will advertise url frames. (Defaults to AKHILAFLEX_BLE_EDDYSTONE_ADV_INTERVAL)
+      * @param interval the rate at which the AKHILAFLEX will advertise url frames. (Defaults to AKHILAFLEX_BLE_EDDYSTONE_ADV_INTERVAL)
       *
       * @note The calibratedPower value ranges from -100 to +20 to a resolution of 1. The calibrated power should be binary encoded.
       * More information can be found at https://github.com/google/eddystone/tree/master/eddystone-uid#tx-power

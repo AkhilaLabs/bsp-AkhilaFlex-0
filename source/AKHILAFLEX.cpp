@@ -56,7 +56,7 @@ RawSerial* SERIAL_DEBUG = NULL;
   * Constructor.
   *
   * Create a representation of a AKHILAFLEX device, which includes member variables
-  * that represent various device drivers used to control aspects of the micro:bit.
+  * that represent various device drivers used to control aspects of the AKHILAFLEX.
   */
 AKHILAFLEX::AKHILAFLEX() :
     serial(USBTX, USBRX),

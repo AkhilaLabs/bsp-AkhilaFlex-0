@@ -24,7 +24,7 @@ DEALINGS IN THE SOFTWARE.
 */
 
 /**
-  * Functionality definitions for the MicroBit Fiber scheduler.
+  * Functionality definitions for the AKHILAFLEX Fiber scheduler.
   *
   * This lightweight, non-preemptive scheduler provides a simple threading mechanism for two main purposes:
   *

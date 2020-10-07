@@ -130,7 +130,7 @@ void AKHILAFLEXPartialFlashingService::onDataWritten(const GattWriteCallbackPara
         case END_OF_TRANSMISSION:
         {
           /* Start of embedded source isn't always on a page border so client must
-           * inform the micro:bit that it's the last packet.
+           * inform the AKHILAFLEX that it's the last packet.
            * - Write final packet
            * The END_OF_TRANSMISSION packet contains no data. Write any data left in the buffer.
            */
@@ -335,7 +335,7 @@ void AKHILAFLEXPartialFlashingService::partialFlashingEvent(AKHILAFLEXEvent e)
 
 
       // Once the final packet has been written remove the BLE mode flag and reset
-      // the micro:bit
+      // the AKHILAFLEX
         /* AKHILAFLEXStorage storage; */
         AKHILAFLEXStorage storage; 
 

@@ -353,7 +353,7 @@ ManagedString& ManagedString::operator = (const ManagedString& s)
   * @return true if this ManagedString is identical to the one supplied, false otherwise.
   *
   * @code
-  * MicroBitDisplay display;
+  * AKHILAFLEXDisplay display;
   * ManagedString s("abcd");
   * ManagedString p("efgh");
   *
@@ -378,7 +378,7 @@ bool ManagedString::operator== (const ManagedString& s)
   * @return true if this ManagedString is alphabetically less than to the one supplied, false otherwise.
   *
   * @code
-  * MicroBitDisplay display;
+  * AKHILAFLEXDisplay display;
   * ManagedString s("a");
   * ManagedString p("b");
   *
@@ -403,7 +403,7 @@ bool ManagedString::operator< (const ManagedString& s)
   * @return true if this ManagedString is alphabetically greater than to the one supplied, false otherwise.
   *
   * @code
-  * MicroBitDisplay display;
+  * AKHILAFLEXDisplay display;
   * ManagedString s("a");
   * ManagedString p("b");
   *
@@ -428,7 +428,7 @@ bool ManagedString::operator> (const ManagedString& s)
   * @return a ManagedString representing the requested substring.
   *
   * @code
-  * MicroBitDisplay display;
+  * AKHILAFLEXDisplay display;
   * ManagedString s("abcdefg");
   *
   * display.scroll(s.substring(0,2)) // displays "ab"
@@ -456,7 +456,7 @@ ManagedString ManagedString::substring(int16_t start, int16_t length)
   * @return a new ManagedString representing the joined strings.
   *
   * @code
-  * MicroBitDisplay display;
+  * AKHILAFLEXDisplay display;
   * ManagedString s("abcd");
   * ManagedString p("efgh")
   *
@@ -485,7 +485,7 @@ ManagedString operator+ (const ManagedString& lhs, const ManagedString& rhs)
   * @return the character at position index, zero if index is invalid.
   *
   * @code
-  * MicroBitDisplay display;
+  * AKHILAFLEXDisplay display;
   * ManagedString s("abcd");
   *
   * display.scroll(s.charAt(1)) // scrolls "b"

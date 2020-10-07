@@ -24,7 +24,7 @@ DEALINGS IN THE SOFTWARE.
 */
 
 /**
-  * Class definition for the custom MicroBit Button Service.
+  * Class definition for the custom AKHILAFLEX Button Service.
   * Provides a BLE service to remotely read the state of each button, and configure its behaviour.
   */
 #include "AKHILAFLEXConfig.h"
@@ -38,19 +38,19 @@ DEALINGS IN THE SOFTWARE.
   * Create a representation of the ButtonService
   * @param _ble The instance of a BLE device that we're running on.
   */
-/*MicroBitButtonService::MicroBitButtonService(BLEDevice &_ble) :
+/*AKHILAFLEXButtonService::AKHILAFLEXButtonService(BLEDevice &_ble) :
         ble(_ble) */
 AKHILAFLEXButtonService::AKHILAFLEXButtonService(BLEDevice &_ble) :
         ble(_ble) 
 
 {
     // Create the data structures that represent each of our characteristics in Soft Device.
-  /*  GattCharacteristic  buttonADataCharacteristic(MicroBitButtonAServiceDataUUID, (uint8_t *)&buttonADataCharacteristicBuffer, 0,
+  /*  GattCharacteristic  buttonADataCharacteristic(AKHILAFLEXButtonAServiceDataUUID, (uint8_t *)&buttonADataCharacteristicBuffer, 0,
     sizeof(buttonADataCharacteristicBuffer), GattCharacteristic::BLE_GATT_CHAR_PROPERTIES_READ | GattCharacteristic::BLE_GATT_CHAR_PROPERTIES_NOTIFY);*/
 GattCharacteristic  buttonADataCharacteristic(AKHILAFLEXButtonAServiceDataUUID, (uint8_t *)&buttonADataCharacteristicBuffer, 0,
     sizeof(buttonADataCharacteristicBuffer), GattCharacteristic::BLE_GATT_CHAR_PROPERTIES_READ | GattCharacteristic::BLE_GATT_CHAR_PROPERTIES_NOTIFY); 
 
-    /*GattCharacteristic  buttonBDataCharacteristic(MicroBitButtonBServiceDataUUID, (uint8_t *)&buttonBDataCharacteristicBuffer, 0,
+    /*GattCharacteristic  buttonBDataCharacteristic(AKHILAFLEXButtonBServiceDataUUID, (uint8_t *)&buttonBDataCharacteristicBuffer, 0,
     sizeof(buttonBDataCharacteristicBuffer), GattCharacteristic::BLE_GATT_CHAR_PROPERTIES_READ | GattCharacteristic::BLE_GATT_CHAR_PROPERTIES_NOTIFY); */
   GattCharacteristic  buttonBDataCharacteristic(AKHILAFLEXButtonBServiceDataUUID, (uint8_t *)&buttonBDataCharacteristicBuffer, 0,
     sizeof(buttonBDataCharacteristicBuffer), GattCharacteristic::BLE_GATT_CHAR_PROPERTIES_READ | GattCharacteristic::BLE_GATT_CHAR_PROPERTIES_NOTIFY); 
@@ -61,14 +61,14 @@ GattCharacteristic  buttonADataCharacteristic(AKHILAFLEXButtonAServiceDataUUID, 
     buttonBDataCharacteristicBuffer = 0;
 
     // Set default security requirements
-   /* buttonADataCharacteristic.requireSecurity(SecurityManager::MICROBIT_BLE_SECURITY_LEVEL);
-    buttonBDataCharacteristic.requireSecurity(SecurityManager::MICROBIT_BLE_SECURITY_LEVEL); */
+   /* buttonADataCharacteristic.requireSecurity(SecurityManager::AKHILAFLEX_BLE_SECURITY_LEVEL);
+    buttonBDataCharacteristic.requireSecurity(SecurityManager::AKHILAFLEX_BLE_SECURITY_LEVEL); */
      buttonADataCharacteristic.requireSecurity(SecurityManager::AKHILAFLEX_BLE_SECURITY_LEVEL);
     buttonBDataCharacteristic.requireSecurity(SecurityManager::AKHILAFLEX_BLE_SECURITY_LEVEL); 
 
 
   /*  GattCharacteristic *characteristics[] = {&buttonADataCharacteristic, &buttonBDataCharacteristic};
-    GattService         service(MicroBitButtonServiceUUID, characteristics, sizeof(characteristics) / sizeof(GattCharacteristic *)); */
+    GattService         service(AKHILAFLEXButtonServiceUUID, characteristics, sizeof(characteristics) / sizeof(GattCharacteristic *)); */
 GattCharacteristic *characteristics[] = {&buttonADataCharacteristic, &buttonBDataCharacteristic};
     GattService         service(AKHILAFLEXButtonServiceUUID, characteristics, sizeof(characteristics) / sizeof(GattCharacteristic *));
 
@@ -82,8 +82,8 @@ GattCharacteristic *characteristics[] = {&buttonADataCharacteristic, &buttonBDat
 
     if (EventModel::defaultEventBus)
     {
-     /* EventModel::defaultEventBus->listen(MICROBIT_ID_BUTTON_A, MICROBIT_EVT_ANY, this, &MicroBitButtonService::buttonAUpdate, MESSAGE_BUS_LISTENER_IMMEDIATE);
-        EventModel::defaultEventBus->listen(MICROBIT_ID_BUTTON_B, MICROBIT_EVT_ANY, this, &MicroBitButtonService::buttonBUpdate, MESSAGE_BUS_LISTENER_IMMEDIATE); */
+     /* EventModel::defaultEventBus->listen(AKHILAFLEX_ID_BUTTON_A, AKHILAFLEX_EVT_ANY, this, &AKHILAFLEXButtonService::buttonAUpdate, MESSAGE_BUS_LISTENER_IMMEDIATE);
+        EventModel::defaultEventBus->listen(AKHILAFLEX_ID_BUTTON_B, AKHILAFLEX_EVT_ANY, this, &AKHILAFLEXButtonService::buttonBUpdate, MESSAGE_BUS_LISTENER_IMMEDIATE); */
     EventModel::defaultEventBus->listen(AKHILAFLEX_ID_BUTTON_A, AKHILAFLEX_EVT_ANY, this, &AKHILAFLEXButtonService::buttonAUpdate, MESSAGE_BUS_LISTENER_IMMEDIATE);
      EventModel::defaultEventBus->listen(AKHILAFLEX_ID_BUTTON_B, AKHILAFLEX_EVT_ANY, this, &AKHILAFLEXButtonService::buttonBUpdate, MESSAGE_BUS_LISTENER_IMMEDIATE); 
     
@@ -94,26 +94,26 @@ GattCharacteristic *characteristics[] = {&buttonADataCharacteristic, &buttonBDat
 /**
   * Button B update callback
   */
-/*void MicroBitButtonService::buttonAUpdate(MicroBitEvent e)*/
+/*void AKHILAFLEXButtonService::buttonAUpdate(AKHILAFLEXEvent e)*/
 void AKHILAFLEXButtonService::buttonAUpdate(AKHILAFLEXEvent e) 
 {
     if (ble.getGapState().connected)
     {
-       /* if (e.value == MICROBIT_BUTTON_EVT_UP)*/
+       /* if (e.value == AKHILAFLEX_BUTTON_EVT_UP)*/
         if (e.value == AKHILAFLEX_BUTTON_EVT_UP) 
         {
             buttonADataCharacteristicBuffer = 0;
             ble.gattServer().notify(buttonADataCharacteristicHandle,(uint8_t *)&buttonADataCharacteristicBuffer, sizeof(buttonADataCharacteristicBuffer));
         }
 
-       /* if (e.value == MICROBIT_BUTTON_EVT_DOWN) */
+       /* if (e.value == AKHILAFLEX_BUTTON_EVT_DOWN) */
         if (e.value == AKHILAFLEX_BUTTON_EVT_DOWN) 
         {
             buttonADataCharacteristicBuffer = 1;
             ble.gattServer().notify(buttonADataCharacteristicHandle,(uint8_t *)&buttonADataCharacteristicBuffer, sizeof(buttonADataCharacteristicBuffer));
         }
 
-     /*   if (e.value == MICROBIT_BUTTON_EVT_HOLD) */
+     /*   if (e.value == AKHILAFLEX_BUTTON_EVT_HOLD) */
        if (e.value == AKHILAFLEX_BUTTON_EVT_HOLD) 
         {
             buttonADataCharacteristicBuffer = 2;
@@ -125,26 +125,26 @@ void AKHILAFLEXButtonService::buttonAUpdate(AKHILAFLEXEvent e)
 /**
   * Button A update callback
   */
-/*void MicroBitButtonService::buttonBUpdate(MicroBitEvent e) */
+/*void AKHILAFLEXButtonService::buttonBUpdate(AKHILAFLEXEvent e) */
 void AKHILAFLEXButtonService::buttonBUpdate(AKHILAFLEXEvent e) 
 {
     if (ble.getGapState().connected)
     {
-       /* if (e.value == MICROBIT_BUTTON_EVT_UP) */
+       /* if (e.value == AKHILAFLEX_BUTTON_EVT_UP) */
         if (e.value == AKHILAFLEX_BUTTON_EVT_UP) 
         {
             buttonBDataCharacteristicBuffer = 0;
             ble.gattServer().notify(buttonBDataCharacteristicHandle,(uint8_t *)&buttonBDataCharacteristicBuffer, sizeof(buttonBDataCharacteristicBuffer));
         }
 
-        /*if (e.value == MICROBIT_BUTTON_EVT_DOWN) */
+        /*if (e.value == AKHILAFLEX_BUTTON_EVT_DOWN) */
       if (e.value == AKHILAFLEX_BUTTON_EVT_DOWN) 
         {
             buttonBDataCharacteristicBuffer = 1;
             ble.gattServer().notify(buttonBDataCharacteristicHandle,(uint8_t *)&buttonBDataCharacteristicBuffer, sizeof(buttonBDataCharacteristicBuffer));
         }
 
-        /*if (e.value == MICROBIT_BUTTON_EVT_HOLD) */
+        /*if (e.value == AKHILAFLEX_BUTTON_EVT_HOLD) */
        if (e.value == AKHILAFLEX_BUTTON_EVT_HOLD) 
         {
             buttonBDataCharacteristicBuffer = 2;
@@ -153,14 +153,14 @@ void AKHILAFLEXButtonService::buttonBUpdate(AKHILAFLEXEvent e)
     }
 }
 
-/*const uint8_t  MicroBitButtonServiceUUID[] = {
+/*const uint8_t  AKHILAFLEXButtonServiceUUID[] = {
     0x00,0x00,0x98,0x82,0x25,0x1d,0x47,0x0a,0xa0,0x62,0xfa,0x19,0x22,0xdf,0xa9,0xa8
 }; */
 const uint8_t  AKHILAFLEXButtonServiceUUID[] = {
     0x00,0x00,0x98,0x82,0x25,0x1d,0x47,0x0a,0xa0,0x62,0xfa,0x19,0x22,0xdf,0xa9,0xa8
 }; 
 /*
-const uint8_t  MicroBitButtonAServiceDataUUID[] = {
+const uint8_t  AKHILAFLEXButtonAServiceDataUUID[] = {
     0x00,0x00,0xda,0x90,0x25,0x1d,0x47,0x0a,0xa0,0x62,0xfa,0x19,0x22,0xdf,0xa9,0xa8
 }
 ; */
@@ -169,7 +169,7 @@ const uint8_t  AKHILAFLEXButtonAServiceDataUUID[] = {
 }
 ; 
 /*
-const uint8_t  MicroBitButtonBServiceDataUUID[] = {
+const uint8_t  AKHILAFLEXButtonBServiceDataUUID[] = {
     0x00,0x00,0xda,0x91,0x25,0x1d,0x47,0x0a,0xa0,0x62,0xfa,0x19,0x22,0xdf,0xa9,0xa8
 }; */
 

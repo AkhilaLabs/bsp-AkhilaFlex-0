@@ -34,7 +34,7 @@ DEALINGS IN THE SOFTWARE.
 /**
  * Provides a simple broadcast radio abstraction, built upon the raw nrf51822 RADIO module.
  *
- * This class provides the ability to extend the micro:bit's default EventModel to other micro:bits in the vicinity,
+ * This class provides the ability to extend the AKHILAFLEX's default EventModel to other AKHILAFLEXs in the vicinity,
  * in a very similar way to the AKHILAFLEXEventService for BLE interfaces.
  *
  * It is envisaged that this would provide the basis for children to experiment with building their own, simple,
@@ -55,7 +55,7 @@ class AKHILAFLEXRadioEvent
       * Constructor.
       *
       * Creates an instance of AKHILAFLEXRadioEvent which offers the ability to extend
-      * the micro:bit's default EventModel to other micro:bits in the vicinity.
+      * the AKHILAFLEX's default EventModel to other AKHILAFLEXs in the vicinity.
       *
       * @param r The underlying radio module used to send and receive data.
       */
@@ -64,7 +64,7 @@ class AKHILAFLEXRadioEvent
     /**
       * Associates the given event with the radio channel.
       *
-      * Once registered, all events matching the given registration sent to this micro:bit's
+      * Once registered, all events matching the given registration sent to this AKHILAFLEX's
       * default EventModel will be automatically retransmitted on the radio.
       *
       * @param id The id of the event to register.
@@ -135,7 +135,7 @@ class AKHILAFLEXRadioEvent
     /**
       * Event handler callback. This is called whenever an event is received matching one of those registered through
       * the registerEvent() method described above. Upon receiving such an event, it is wrapped into
-      * a radio packet and transmitted to any other micro:bits in the same group.
+      * a radio packet and transmitted to any other AKHILAFLEXs in the same group.
       */
     void eventReceived(AKHILAFLEXEvent e);
 };

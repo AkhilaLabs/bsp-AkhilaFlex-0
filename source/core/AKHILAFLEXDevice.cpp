@@ -128,7 +128,7 @@ char* AKHILAFLEX_friendly_name()
 }
 
 /**
-  * Perform a hard reset of the micro:bit.
+  * Perform a hard reset of the AKHILAFLEX.
   */
 void
 AKHILAFLEX_reset()

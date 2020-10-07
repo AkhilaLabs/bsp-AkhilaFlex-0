@@ -28,8 +28,8 @@ DEALINGS IN THE SOFTWARE.
   * It also contains constants that are used elsewhere in the DAL.
   */
 /*
-#ifndef MICROBIT_COMPAT_H
-#define MICROBIT_COMPAT_H */
+#ifndef AKHILAFLEX_COMPAT_H
+#define AKHILAFLEX_COMPAT_H */
 #ifndef AKHILAFLEX_COMPAT_H
 #define AKHILAFLEX_COMPAT_H 
 
@@ -96,7 +96,7 @@ inline bool isdigit(char c)
   *
   * @param s the string to reverse.
   *
-  * @return MICROBIT_OK, or MICROBIT_INVALID_PARAMETER.
+  * @return AKHILAFLEX_OK, or AKHILAFLEX_INVALID_PARAMETER.
   */
 int string_reverse(char *s);
 
@@ -107,7 +107,7 @@ int string_reverse(char *s);
   *
   * @param s A pointer to the buffer where the resulting string will be stored.
   *
-  * @return MICROBIT_OK, or MICROBIT_INVALID_PARAMETER.
+  * @return AKHILAFLEX_OK, or AKHILAFLEX_INVALID_PARAMETER.
   */
 int itoa(int n, char *s);
 

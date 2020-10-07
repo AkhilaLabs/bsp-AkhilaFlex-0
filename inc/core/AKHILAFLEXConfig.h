@@ -24,11 +24,11 @@ DEALINGS IN THE SOFTWARE.
 */
 
 /**
-  * Compile time configuration options for the micro:bit runtime.
+  * Compile time configuration options for the AKHILAFLEX runtime.
   */
 /*
-#ifndef MICROBIT_CONFIG_H
-#define MICROBIT_CONFIG_H */
+#ifndef AKHILAFLEX_CONFIG_H
+#define AKHILAFLEX_CONFIG_H */
 #ifndef AKHILAFLEX_CONFIG_H
 #define AKHILAFLEX_CONFIG_H 
 
@@ -41,8 +41,8 @@ DEALINGS IN THE SOFTWARE.
 //
 /*
 // The start address of usable RAM memory.
-#ifndef MICROBIT_SRAM_BASE
-#define MICROBIT_SRAM_BASE                      0x20000008
+#ifndef AKHILAFLEX_SRAM_BASE
+#define AKHILAFLEX_SRAM_BASE                      0x20000008
 #endif */
 
 #ifndef AKHILAFLEX_SRAM_BASE
@@ -52,8 +52,8 @@ DEALINGS IN THE SOFTWARE.
 
 /*
 // Physical address of the top of SRAM.
-#ifndef MICROBIT_SRAM_END
-#define MICROBIT_SRAM_END                       0x20004000
+#ifndef AKHILAFLEX_SRAM_END
+#define AKHILAFLEX_SRAM_END                       0x20004000
 #endif */
 #ifndef AKHILAFLEX_SRAM_END
 #define AKHILAFLEX_SRAM_END                       0x20004000
@@ -88,11 +88,11 @@ DEALINGS IN THE SOFTWARE.
 #endif
 #endif
 /*
-#ifndef MICROBIT_SD_GATT_TABLE_START
+#ifndef AKHILAFLEX_SD_GATT_TABLE_START
 #ifdef TARGET_MCU_NRF51_16K_S130
-#define MICROBIT_SD_GATT_TABLE_START            0x20002200
+#define AKHILAFLEX_SD_GATT_TABLE_START            0x20002200
 #else
-#define MICROBIT_SD_GATT_TABLE_START            0x20001900
+#define AKHILAFLEX_SD_GATT_TABLE_START            0x20001900
 #endif
 #endif */
 
@@ -103,8 +103,8 @@ DEALINGS IN THE SOFTWARE.
 #endif
 
 // Amount of memory reserved for the stack at the end of memory (bytes).
-/*#ifndef MICROBIT_STACK_SIZE
-#define MICROBIT_STACK_SIZE                     2048
+/*#ifndef AKHILAFLEX_STACK_SIZE
+#define AKHILAFLEX_STACK_SIZE                     2048
 #endif */
 #ifndef AKHILAFLEX_STACK_SIZE
 #define AKHILAFLEX_STACK_SIZE                     2048
@@ -112,8 +112,8 @@ DEALINGS IN THE SOFTWARE.
 
 
 // Physical address of the end of mbed heap space.
-/*#ifndef MICROBIT_HEAP_END
-#define MICROBIT_HEAP_END                       (CORTEX_M0_STACK_BASE - MICROBIT_STACK_SIZE)
+/*#ifndef AKHILAFLEX_HEAP_END
+#define AKHILAFLEX_HEAP_END                       (CORTEX_M0_STACK_BASE - AKHILAFLEX_STACK_SIZE)
 #endif */
 #ifndef AKHILAFLEX_HEAP_END
 #define AKHILAFLEX_HEAP_END                       (CORTEX_M0_STACK_BASE - AKHILAFLEX_STACK_SIZE)
@@ -134,7 +134,7 @@ DEALINGS IN THE SOFTWARE.
 #define BLE_BOND_DATA_PAGE                      (PAGE_SIZE * (NRF_FICR->CODESIZE - 18))
 #endif
 
-// MicroBitFileSystem uses DEFAULT_SCRATCH_PAGE to mark end of FileSystem
+// AKHILAFLEXFileSystem uses DEFAULT_SCRATCH_PAGE to mark end of FileSystem
 #ifndef DEFAULT_SCRATCH_PAGE
 #define DEFAULT_SCRATCH_PAGE	                (PAGE_SIZE * (NRF_FICR->CODESIZE - 19))
 #endif
@@ -150,13 +150,13 @@ extern uint32_t __etext;
 #endif
 
 //
-// If set to '1', this option enables the microbit heap allocator. This supports multiple heaps and interrupt safe operation.
+// If set to '1', this option enables the AKHILAFLEX heap allocator. This supports multiple heaps and interrupt safe operation.
 // If set to '0', the standard GCC libc heap allocator is used, which restricts available memory in BLE scenarios, and MessageBus operations
 // in ISR contexts will no longer be safe.
 //
 /*
-#ifndef MICROBIT_HEAP_ENABLED
-#define MICROBIT_HEAP_ENABLED                   1
+#ifndef AKHILAFLEX_HEAP_ENABLED
+#define AKHILAFLEX_HEAP_ENABLED                   1
 #endif */
 #ifndef AKHILAFLEX_HEAP_ENABLED
 #define AKHILAFLEX_HEAP_ENABLED                   1
@@ -165,8 +165,8 @@ extern uint32_t __etext;
 
 // Block size used by the allocator in bytes.
 // n.b. Currently only 32 bits (4 bytes) is supported.
-/*#ifndef MICROBIT_HEAP_BLOCK_SIZE
-#define MICROBIT_HEAP_BLOCK_SIZE                4
+/*#ifndef AKHILAFLEX_HEAP_BLOCK_SIZE
+#define AKHILAFLEX_HEAP_BLOCK_SIZE                4
 #endif */
 
 #ifndef AKHILAFLEX_HEAP_BLOCK_SIZE
@@ -176,21 +176,21 @@ extern uint32_t __etext;
 
 
 // If defined, reuse any unused SRAM normally reserved for SoftDevice (Nordic's memory resident BLE stack) as heap memory.
-// The amount of memory reused depends upon whether or not BLE is enabled using MICROBIT_BLE_ENABLED.
+// The amount of memory reused depends upon whether or not BLE is enabled using AKHILAFLEX_BLE_ENABLED.
 // Set '1' to enable.
 #ifndef AKHILAFLEX_HEAP_REUSE_SD
 #define AKHILAFLEX_HEAP_REUSE_SD                  1
 #endif 
 /*
-#ifndef MICROBIT_HEAP_REUSE_SD
-#define MICROBIT_HEAP_REUSE_SD                  1
+#ifndef AKHILAFLEX_HEAP_REUSE_SD
+#define AKHILAFLEX_HEAP_REUSE_SD                  1
 #endif */
 
 // The amount of memory allocated to Soft Device to hold its BLE GATT table.
 // For standard S110 builds, this should be word aligned and in the range 0x300 - 0x700.
-// Any unused memory will be automatically reclaimed as HEAP memory if both MICROBIT_HEAP_REUSE_SD and MICROBIT_HEAP_ALLOCATOR are enabled.
-/*#ifndef MICROBIT_SD_GATT_TABLE_SIZE
-#define MICROBIT_SD_GATT_TABLE_SIZE             0x300
+// Any unused memory will be automatically reclaimed as HEAP memory if both AKHILAFLEX_HEAP_REUSE_SD and AKHILAFLEX_HEAP_ALLOCATOR are enabled.
+/*#ifndef AKHILAFLEX_SD_GATT_TABLE_SIZE
+#define AKHILAFLEX_SD_GATT_TABLE_SIZE             0x300
 #endif */
 #ifndef AKHILAFLEX_SD_GATT_TABLE_SIZE
 #define AKHILAFLEX_SD_GATT_TABLE_SIZE             0x300
@@ -202,7 +202,7 @@ extern uint32_t __etext;
 //
 
 // Scheduling quantum (milliseconds)
-// Also used to drive the micro:bit runtime system ticker.
+// Also used to drive the AKHILAFLEX runtime system ticker.
 #ifndef SYSTEM_TICK_PERIOD_MS
 #define SYSTEM_TICK_PERIOD_MS                   6
 #endif
@@ -230,14 +230,14 @@ extern uint32_t __etext;
 #endif
 
 //
-// Core micro:bit services
+// Core AKHILAFLEX services
 //
 
-// To reduce memory cost and complexity, the micro:bit allows components to register for
+// To reduce memory cost and complexity, the AKHILAFLEX allows components to register for
 // periodic callback events during interrupt context, which occur every scheduling quantum (FIBER_TICK_PERIOD_MS)
 // This defines the maximum size of interrupt callback list.
-/*#ifndef MICROBIT_SYSTEM_COMPONENTS
-#define MICROBIT_SYSTEM_COMPONENTS              10
+/*#ifndef AKHILAFLEX_SYSTEM_COMPONENTS
+#define AKHILAFLEX_SYSTEM_COMPONENTS              10
 #endif */
 
 #ifndef AKHILAFLEX_SYSTEM_COMPONENTS
@@ -245,12 +245,12 @@ extern uint32_t __etext;
 #endif
 
 
-// To reduce memory cost and complexity, the micro:bit allows components to register for
+// To reduce memory cost and complexity, the AKHILAFLEX allows components to register for
 // periodic callback events when the processor is idle.
 // This defines the maximum size of the idle callback list.
 /*
-#ifndef MICROBIT_IDLE_COMPONENTS
-#define MICROBIT_IDLE_COMPONENTS                6
+#ifndef AKHILAFLEX_IDLE_COMPONENTS
+#define AKHILAFLEX_IDLE_COMPONENTS                6
 #endif */
 #ifndef AKHILAFLEX_IDLE_COMPONENTS
 #define AKHILAFLEX_IDLE_COMPONENTS                6
@@ -269,8 +269,8 @@ extern uint32_t __etext;
 
 // Enable/Disable BLE during normal operation.
 // Set '1' to enable.
-/*#ifndef MICROBIT_BLE_ENABLED
-#define MICROBIT_BLE_ENABLED                    1
+/*#ifndef AKHILAFLEX_BLE_ENABLED
+#define AKHILAFLEX_BLE_ENABLED                    1
 #endif
 */
 #ifndef AKHILAFLEX_BLE_ENABLED
@@ -280,8 +280,8 @@ extern uint32_t __etext;
 /*
 // Enable/Disable BLE pairing mode mode at power up.
 // Set '1' to enable.
-#ifndef MICROBIT_BLE_PAIRING_MODE
-#define MICROBIT_BLE_PAIRING_MODE               1
+#ifndef AKHILAFLEX_BLE_PAIRING_MODE
+#define AKHILAFLEX_BLE_PAIRING_MODE               1
 #endif */
 
 #ifndef AKHILAFLEX_BLE_PAIRING_MODE
@@ -292,8 +292,8 @@ extern uint32_t __etext;
 // Enable/Disable the use of private resolvable addresses.
 // Set '1' to enable.
 // n.b. This is known to be a feature that suffers compatibility issues with many BLE central devices.
-/*#ifndef MICROBIT_BLE_PRIVATE_ADDRESSES
-#define MICROBIT_BLE_PRIVATE_ADDRESSES          0
+/*#ifndef AKHILAFLEX_BLE_PRIVATE_ADDRESSES
+#define AKHILAFLEX_BLE_PRIVATE_ADDRESSES          0
 #endif */
 
 #ifndef AKHILAFLEX_BLE_PRIVATE_ADDRESSES
@@ -304,8 +304,8 @@ extern uint32_t __etext;
 // Convenience option to enable / disable BLE security entirely
 // Open BLE links are not secure, but commonly used during the development of BLE services
 // Set '1' to disable all secuity
-/*#ifndef MICROBIT_BLE_OPEN
-#define MICROBIT_BLE_OPEN                       0
+/*#ifndef AKHILAFLEX_BLE_OPEN
+#define AKHILAFLEX_BLE_OPEN                       0
 #endif */
 #ifndef AKHILAFLEX_BLE_OPEN
 #define   AKHILA_BLE_OPEN                       0
@@ -313,11 +313,11 @@ extern uint32_t __etext;
 
 /*
 // Configure for open BLE operation if so configured
-#if (MICROBIT_BLE_OPEN == 1)
-#define MICROBIT_BLE_SECURITY_LEVEL             SECURITY_MODE_ENCRYPTION_OPEN_LINK
-#define MICROBIT_BLE_WHITELIST                  0
-#define MICROBIT_BLE_ADVERTISING_TIMEOUT        0
-#define MICROBIT_BLE_DEFAULT_TX_POWER           6
+#if (AKHILAFLEX_BLE_OPEN == 1)
+#define AKHILAFLEX_BLE_SECURITY_LEVEL             SECURITY_MODE_ENCRYPTION_OPEN_LINK
+#define AKHILAFLEX_BLE_WHITELIST                  0
+#define AKHILAFLEX_BLE_ADVERTISING_TIMEOUT        0
+#define AKHILAFLEX_BLE_DEFAULT_TX_POWER           6
 #endif */
 
 #if (AKHILAFLEX_BLE_OPEN == 1)
@@ -328,15 +328,15 @@ extern uint32_t __etext;
 #endif 
 
 
-// Define the default, global BLE security requirements for MicroBit BLE services
+// Define the default, global BLE security requirements for AKHILAFLEX BLE services
 // May be one of the following options (see mbed's SecurityManager class implementaiton detail)
 // SECURITY_MODE_ENCRYPTION_OPEN_LINK:      No bonding, encryption, or whitelisting required.
 // SECURITY_MODE_ENCRYPTION_NO_MITM:        Bonding, encyption and whitelisting but no passkey.
 // SECURITY_MODE_ENCRYPTION_WITH_MITM:      Bonding, encrytion and whitelisting with passkey authentication.
 //
 /*
-#ifndef MICROBIT_BLE_SECURITY_LEVEL
-#define MICROBIT_BLE_SECURITY_LEVEL             SECURITY_MODE_ENCRYPTION_WITH_MITM
+#ifndef AKHILAFLEX_BLE_SECURITY_LEVEL
+#define AKHILAFLEX_BLE_SECURITY_LEVEL             SECURITY_MODE_ENCRYPTION_WITH_MITM
 #endif */
 #ifndef AKHILAFLEX_BLE_SECURITY_LEVEL
 #define AKHILAFLEX_BLE_SECURITY_LEVEL             SECURITY_MODE_ENCRYPTION_WITH_MITM
@@ -344,11 +344,11 @@ extern uint32_t __etext;
 
 
 // Enable/Disable the use of BLE whitelisting.
-// If enabled, the micro:bit will only respond to connection requests from
+// If enabled, the AKHILAFLEX will only respond to connection requests from
 // known, bonded devices.
 /*
-#ifndef MICROBIT_BLE_WHITELIST
-#define MICROBIT_BLE_WHITELIST                  1
+#ifndef AKHILAFLEX_BLE_WHITELIST
+#define AKHILAFLEX_BLE_WHITELIST                  1
 #endif */
 
 #ifndef AKHILAFLEX_BLE_WHITELIST
@@ -359,8 +359,8 @@ extern uint32_t __etext;
 // Define the period of time for which the BLE stack will advertise (seconds)
 // Afer this period, advertising will cease. Set to '0' for no timeout (always advertise).
 /*
-#ifndef MICROBIT_BLE_ADVERTISING_TIMEOUT
-#define MICROBIT_BLE_ADVERTISING_TIMEOUT        0
+#ifndef AKHILAFLEX_BLE_ADVERTISING_TIMEOUT
+#define AKHILAFLEX_BLE_ADVERTISING_TIMEOUT        0
 #endif */
 
 #ifndef AKHILAFLEX_BLE_ADVERTISING_TIMEOUT
@@ -369,8 +369,8 @@ extern uint32_t __etext;
 
 /*
 // Define the default BLE advertising interval in ms
-#ifndef MICROBIT_BLE_ADVERTISING_INTERVAL
-#define MICROBIT_BLE_ADVERTISING_INTERVAL        50
+#ifndef AKHILAFLEX_BLE_ADVERTISING_INTERVAL
+#define AKHILAFLEX_BLE_ADVERTISING_INTERVAL        50
 #endif */
 #ifndef AKHILAFLEX_BLE_ADVERTISING_INTERVAL
 #define AKHILAFLEX_BLE_ADVERTISING_INTERVAL        50
@@ -382,8 +382,8 @@ extern uint32_t __etext;
 // Based on trials undertaken by the BBC, the radio is normally set to its lowest power level
 // to best protect children's privacy.
 /*
-#ifndef MICROBIT_BLE_DEFAULT_TX_POWER
-#define MICROBIT_BLE_DEFAULT_TX_POWER           0
+#ifndef AKHILAFLEX_BLE_DEFAULT_TX_POWER
+#define AKHILAFLEX_BLE_DEFAULT_TX_POWER           0
 #endif  */
 
 #ifndef AKHILAFLEX_BLE_DEFAULT_TX_POWER
@@ -391,12 +391,12 @@ extern uint32_t __etext;
 #endif  
 
 
-// Enable/Disable BLE Service: MicroBitDFU
+// Enable/Disable BLE Service: AKHILAFLEXDFU
 // This allows over the air programming during normal operation.
 // Set '1' to enable.
 /*
-#ifndef MICROBIT_BLE_DFU_SERVICE
-#define MICROBIT_BLE_DFU_SERVICE                1
+#ifndef AKHILAFLEX_BLE_DFU_SERVICE
+#define AKHILAFLEX_BLE_DFU_SERVICE                1
 #endif */
 #ifndef AKHILAFLEX_BLE_DFU_SERVICE
 #define AKHILAFLEX_BLE_DFU_SERVICE                1
@@ -406,8 +406,8 @@ extern uint32_t __etext;
 // Enable/Disable availability of Eddystone URL APIs
 // Set '1' to enable.
 /*
-#ifndef MICROBIT_BLE_EDDYSTONE_URL
-#define MICROBIT_BLE_EDDYSTONE_URL               0
+#ifndef AKHILAFLEX_BLE_EDDYSTONE_URL
+#define AKHILAFLEX_BLE_EDDYSTONE_URL               0
 #endif */
 #ifndef AKHILAFLEX_BLE_EDDYSTONE_URL
 #define AKHILAFLEX_BLE_EDDYSTONE_URL               0
@@ -417,32 +417,32 @@ extern uint32_t __etext;
 // Enable/Disable availability of Eddystone UID APIs
 // Set '1' to enable.
 /*
-#ifndef MICROBIT_BLE_EDDYSTONE_UID
-#define MICROBIT_BLE_EDDYSTONE_UID               0
+#ifndef AKHILAFLEX_BLE_EDDYSTONE_UID
+#define AKHILAFLEX_BLE_EDDYSTONE_UID               0
 #endif */
 #ifndef AKHILAFLEX_BLE_EDDYSTONE_UID
 #define AKHILAFLEX_BLE_EDDYSTONE_UID               0
 #endif 
 
 
-// Enable/Disable BLE Service: MicroBitEventService
-// This allows routing of events from the micro:bit message bus over BLE.
+// Enable/Disable BLE Service: AKHILAFLEXEventService
+// This allows routing of events from the AKHILAFLEX message bus over BLE.
 // Set '1' to enable.
 /*
-#ifndef MICROBIT_BLE_EVENT_SERVICE
-#define MICROBIT_BLE_EVENT_SERVICE              1
+#ifndef AKHILAFLEX_BLE_EVENT_SERVICE
+#define AKHILAFLEX_BLE_EVENT_SERVICE              1
 #endif */
 #ifndef AKHILAFLEX_BLE_EVENT_SERVICE
 #define AKHILAFLEX_BLE_EVENT_SERVICE              1
 #endif
 
 
-// Enable/Disable BLE Service: MicroBitDeviceInformationService
+// Enable/Disable BLE Service: AKHILAFLEXDeviceInformationService
 // This enables the standard BLE device information service.
 // Set '1' to enable.
 /*
-#ifndef MICROBIT_BLE_DEVICE_INFORMATION_SERVICE
-#define MICROBIT_BLE_DEVICE_INFORMATION_SERVICE 1
+#ifndef AKHILAFLEX_BLE_DEVICE_INFORMATION_SERVICE
+#define AKHILAFLEX_BLE_DEVICE_INFORMATION_SERVICE 1
 #endif*/
 
 #ifndef AKHILAFLEX_BLE_DEVICE_INFORMATION_SERVICE
@@ -450,13 +450,13 @@ extern uint32_t __etext;
 #endif 
 
 
-// Enable/Disable BLE Service: MicroBitPartialFlashingService
+// Enable/Disable BLE Service: AKHILAFLEXPartialFlashingService
 // This enables the flashing part of the partial flashing service.
 // Partial flashing is currently only possible for programs built using MakeCode
 // and is disabled by default.
 /*
-#ifndef MICROBIT_BLE_PARTIAL_FLASHING
-#define MICROBIT_BLE_PARTIAL_FLASHING           0
+#ifndef AKHILAFLEX_BLE_PARTIAL_FLASHING
+#define AKHILAFLEX_BLE_PARTIAL_FLASHING           0
 #endif */
 #ifndef AKHILAFLEX_BLE_PARTIAL_FLASHING
 #define AKHILAFLEX_BLE_PARTIAL_FLASHING           0
@@ -468,8 +468,8 @@ extern uint32_t __etext;
 
 // Sets the default radio channel
 /*
-#ifndef MICROBIT_RADIO_DEFAULT_FREQUENCY
-#define MICROBIT_RADIO_DEFAULT_FREQUENCY 7
+#ifndef AKHILAFLEX_RADIO_DEFAULT_FREQUENCY
+#define AKHILAFLEX_RADIO_DEFAULT_FREQUENCY 7
 #endif */
 
 #ifndef AKHILAFLEX_RADIO_DEFAULT_FREQUENCY
@@ -478,8 +478,8 @@ extern uint32_t __etext;
 
 /*
 // Sets the minimum frequency band permissable for the device
-#ifndef MICROBIT_RADIO_LOWER_FREQ_BAND
-#define MICROBIT_RADIO_LOWER_FREQ_BAND 0
+#ifndef AKHILAFLEX_RADIO_LOWER_FREQ_BAND
+#define AKHILAFLEX_RADIO_LOWER_FREQ_BAND 0
 #endif */
 #ifndef AKHILAFLEX_RADIO_LOWER_FREQ_BAND
 #define AKHILAFLEX_RADIO_LOWER_FREQ_BAND 0
@@ -487,8 +487,8 @@ extern uint32_t __etext;
 
 /*
 // Sets the maximum frequency band permissable for the device
-#ifndef MICROBIT_RADIO_UPPER_FREQ_BAND
-#define MICROBIT_RADIO_UPPER_FREQ_BAND 83
+#ifndef AKHILAFLEX_RADIO_UPPER_FREQ_BAND
+#define AKHILAFLEX_RADIO_UPPER_FREQ_BAND 83
 #endif */
 #ifndef AKHILAFLEX_RADIO_UPPER_FREQ_BAND
 #define AKHILAFLEX_RADIO_UPPER_FREQ_BAND 83
@@ -510,13 +510,13 @@ extern uint32_t __etext;
 // Enable a 0..360 degree range on the accelerometer getPitch()
 // calculation. Set to '1' to enable.
 //
-// A value of '0' provides consistency with the (buggy) microbit-dal 2.0
+// A value of '0' provides consistency with the (buggy) AKHILAFLEX-dal 2.0
 // and earlier versions, which inadvertently provided only an ambiguous
 // 0..180 degree range
 // 
 /*
-#ifndef MICROBIT_FULL_RANGE_PITCH_CALCULATION
-#define MICROBIT_FULL_RANGE_PITCH_CALCULATION   1
+#ifndef AKHILAFLEX_FULL_RANGE_PITCH_CALCULATION
+#define AKHILAFLEX_FULL_RANGE_PITCH_CALCULATION   1
 #endif */
 
 #ifndef AKHILAFLEX_FULL_RANGE_PITCH_CALCULATION
@@ -532,12 +532,12 @@ extern uint32_t __etext;
 //
 /*
 #define MICROBUG_REFERENCE_DEVICE               1
-#define MICROBIT_3X9                            2
-#define MICROBIT_SB1                            3
-#define MICROBIT_SB2                            4
+#define AKHILAFLEX_3X9                            2
+#define AKHILAFLEX_SB1                            3
+#define AKHILAFLEX_SB2                            4
 
-#ifndef MICROBIT_DISPLAY_TYPE
-#define MICROBIT_DISPLAY_TYPE                   MICROBIT_SB2
+#ifndef AKHILAFLEX_DISPLAY_TYPE
+#define AKHILAFLEX_DISPLAY_TYPE                   AKHILAFLEX_SB2
 #endif */
 #define MICROBUG_REFERENCE_DEVICE               1
 #define AKHILAFLEX_3X9                            2
@@ -551,8 +551,8 @@ extern uint32_t __etext;
 /*
 // Selects the minimum permissable brightness level for the device
 // in the region of 0 (off) to 255 (full brightness)
-#ifndef MICROBIT_DISPLAY_MINIMUM_BRIGHTNESS
-#define MICROBIT_DISPLAY_MINIMUM_BRIGHTNESS     1
+#ifndef AKHILAFLEX_DISPLAY_MINIMUM_BRIGHTNESS
+#define AKHILAFLEX_DISPLAY_MINIMUM_BRIGHTNESS     1
 #endif */
 #ifndef AKHILAFLEX_DISPLAY_MINIMUM_BRIGHTNESS
 #define AKHILAFLEX_DISPLAY_MINIMUM_BRIGHTNESS     1
@@ -562,8 +562,8 @@ extern uint32_t __etext;
 // Selects the maximum permissable brightness level for the device
 // in the region of 0 (off) to 255 (full brightness)
 /*
-#ifndef MICROBIT_DISPLAY_MAXIMUM_BRIGHTNESS
-#define MICROBIT_DISPLAY_MAXIMUM_BRIGHTNESS     255
+#ifndef AKHILAFLEX_DISPLAY_MAXIMUM_BRIGHTNESS
+#define AKHILAFLEX_DISPLAY_MAXIMUM_BRIGHTNESS     255
 #endif */
 #ifndef AKHILAFLEX_DISPLAY_MAXIMUM_BRIGHTNESS
 #define AKHILAFLEX_DISPLAY_MAXIMUM_BRIGHTNESS     255
@@ -573,8 +573,8 @@ extern uint32_t __etext;
 // Selects the default brightness for the display
 // in the region of zero (off) to 255 (full brightness)
 /*
-#ifndef MICROBIT_DISPLAY_DEFAULT_BRIGHTNESS
-#define MICROBIT_DISPLAY_DEFAULT_BRIGHTNESS     MICROBIT_DISPLAY_MAXIMUM_BRIGHTNESS
+#ifndef AKHILAFLEX_DISPLAY_DEFAULT_BRIGHTNESS
+#define AKHILAFLEX_DISPLAY_DEFAULT_BRIGHTNESS     AKHILAFLEX_DISPLAY_MAXIMUM_BRIGHTNESS
 #endif */
 #ifndef AKHILAFLEX_DISPLAY_DEFAULT_BRIGHTNESS
 #define AKHILAFLEX_DISPLAY_DEFAULT_BRIGHTNESS     AKHILAFLEX_DISPLAY_MAXIMUM_BRIGHTNESS
@@ -584,8 +584,8 @@ extern uint32_t __etext;
 // Selects the default scroll speed for the display.
 // The time taken to move a single pixel (ms).
 /*
-#ifndef MICROBIT_DEFAULT_SCROLL_SPEED
-#define MICROBIT_DEFAULT_SCROLL_SPEED           120
+#ifndef AKHILAFLEX_DEFAULT_SCROLL_SPEED
+#define AKHILAFLEX_DEFAULT_SCROLL_SPEED           120
 #endif */
 
 #ifndef AKHILAFLEX_DEFAULT_SCROLL_SPEED
@@ -595,8 +595,8 @@ extern uint32_t __etext;
 
 // Selects the number of pixels a scroll will move in each quantum.
 /*
-#ifndef MICROBIT_DEFAULT_SCROLL_STRIDE
-#define MICROBIT_DEFAULT_SCROLL_STRIDE          -1
+#ifndef AKHILAFLEX_DEFAULT_SCROLL_STRIDE
+#define AKHILAFLEX_DEFAULT_SCROLL_STRIDE          -1
 #endif */
 #ifndef AKHILAFLEX_DEFAULT_SCROLL_STRIDE
 #define AKHILAFLEX_DEFAULT_SCROLL_STRIDE          -1
@@ -606,8 +606,8 @@ extern uint32_t __etext;
 // Selects the time each character will be shown on the display during print operations.
 // The time each character is shown on the screen  (ms).
 /*
-#ifndef MICROBIT_DEFAULT_PRINT_SPEED
-#define MICROBIT_DEFAULT_PRINT_SPEED            400
+#ifndef AKHILAFLEX_DEFAULT_PRINT_SPEED
+#define AKHILAFLEX_DEFAULT_PRINT_SPEED            400
 #endif
 */
 #ifndef AKHILAFLEX_DEFAULT_PRINT_SPEED
@@ -617,8 +617,8 @@ extern uint32_t __etext;
 
 /*
 //Configures the default serial mode used by serial read and send calls.
-#ifndef MICROBIT_DEFAULT_SERIAL_MODE
-#define MICROBIT_DEFAULT_SERIAL_MODE            SYNC_SLEEP
+#ifndef AKHILAFLEX_DEFAULT_SERIAL_MODE
+#define AKHILAFLEX_DEFAULT_SERIAL_MODE            SYNC_SLEEP
 #endif */
 
 #ifndef AKHILAFLEX_DEFAULT_SERIAL_MODE
@@ -661,8 +661,8 @@ extern uint32_t __etext;
 // valid options are PullDown, PullUp and PullNone.
 //
 /*
-#ifndef MICROBIT_DEFAULT_PULLMODE
-#define MICROBIT_DEFAULT_PULLMODE                PullDown
+#ifndef AKHILAFLEX_DEFAULT_PULLMODE
+#define AKHILAFLEX_DEFAULT_PULLMODE                PullDown
 #endif */
 #ifndef AKHILAFLEX_DEFAULT_PULLMODE
 #define AKHILAFLEX_DEFAULT_PULLMODE                PullDown
@@ -675,8 +675,8 @@ extern uint32_t __etext;
 // Enable this to invoke a panic on out of memory conditions.
 // Set '1' to enable.
 /*
-#ifndef MICROBIT_PANIC_HEAP_FULL
-#define MICROBIT_PANIC_HEAP_FULL                1
+#ifndef AKHILAFLEX_PANIC_HEAP_FULL
+#define AKHILAFLEX_PANIC_HEAP_FULL                1
 #endif */
 #ifndef AKHILAFLEX_PANIC_HEAP_FULL
 #define AKHILAFLEX_PANIC_HEAP_FULL                1
@@ -692,32 +692,32 @@ extern uint32_t __etext;
 // n.b. This also disables the user serial port 'uBit.serial'.
 // Set '1' to enable.
 /*
-#ifndef MICROBIT_DBG
-#define MICROBIT_DBG                            0
+#ifndef AKHILAFLEX_DBG
+#define AKHILAFLEX_DBG                            0
 #endif */
 #ifndef AKHILAFLEX_DBG
 #define AKHILAFLEX_DBG                            0
 #endif 
 
 // Enable this to receive diagnostic messages from the heap allocator via the USB serial interface.
-// n.b. This requires MICROBIT_DBG to be defined.
+// n.b. This requires AKHILAFLEX_DBG to be defined.
 // Set '1' to enable.
 /*
-#ifndef MICROBIT_HEAP_DBG
-#define MICROBIT_HEAP_DBG                       0
+#ifndef AKHILAFLEX_HEAP_DBG
+#define AKHILAFLEX_HEAP_DBG                       0
 #endif */
 #ifndef AKHILAFLEX_HEAP_DBG
 #define AKHILAFLEX_HEAP_DBG                       0
 #endif 
 
 // Versioning options.
-// We use semantic versioning (http://semver.org/) to identify differnet versions of the micro:bit runtime.
+// We use semantic versioning (http://semver.org/) to identify differnet versions of the AKHILAFLEX runtime.
 // Where possible we use yotta (an ARM mbed build tool) to help us track versions.
 // if this isn't available, it can be defined manually as a configuration option.
 //
 /*
-#ifndef MICROBIT_DAL_VERSION
-#define MICROBIT_DAL_VERSION                    "unknown"
+#ifndef AKHILAFLEX_DAL_VERSION
+#define AKHILAFLEX_DAL_VERSION                    "unknown"
 #endif */
 
 #ifndef AKHILAFLEX_DAL_VERSION
@@ -725,15 +725,15 @@ extern uint32_t __etext;
 #endif 
 
 
-// micro:bit Modes
-// The micro:bit may be in different states: running a user's application or into BLE pairing mode
+// AKHILAFLEX Modes
+// The AKHILAFLEX may be in different states: running a user's application or into BLE pairing mode
 // These modes can be representeded using these #defines
 /*
-#ifndef MICROBIT_MODE_PAIRING
-#define MICROBIT_MODE_PAIRING                   0
+#ifndef AKHILAFLEX_MODE_PAIRING
+#define AKHILAFLEX_MODE_PAIRING                   0
 #endif
-#ifndef MICROBIT_MODE_APPLICATION
-#define MICROBIT_MODE_APPLICATION               1
+#ifndef AKHILAFLEX_MODE_APPLICATION
+#define AKHILAFLEX_MODE_APPLICATION               1
 #endif */
 
 #ifndef AKHILAFLEX_MODE_PAIRING
@@ -745,15 +745,15 @@ extern uint32_t __etext;
 
 
 //
-// Helper macro used by the micro:bit runtime to determine if a boolean configuration option is set.
+// Helper macro used by the AKHILAFLEX runtime to determine if a boolean configuration option is set.
 //
 
 #define CONFIG_ENABLED(X) (X == 1)
 #define CONFIG_DISABLED(X) (X != 1)
 
 /*
-#if CONFIG_ENABLED(MICROBIT_HEAP_ALLOCATOR)
-#include "MicroBitHeapAllocator.h"
+#if CONFIG_ENABLED(AKHILAFLEX_HEAP_ALLOCATOR)
+#include "AKHILAFLEXHeapAllocator.h"
 #endif */
 
 #if CONFIG_ENABLED(AKHILAFLEX_HEAP_ALLOCATOR)

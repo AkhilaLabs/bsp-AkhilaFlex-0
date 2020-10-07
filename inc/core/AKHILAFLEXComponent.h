@@ -23,8 +23,8 @@ FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 */
 /*
-#ifndef MICROBIT_COMPONENT_H
-#define MICROBIT_COMPONENT_H */
+#ifndef AKHILAFLEX_COMPONENT_H
+#define AKHILAFLEX_COMPONENT_H */
 #ifndef AKHILAFLEX_COMPONENT_H
 #define AKHILAFLEX_COMPONENT_H 
 
@@ -32,12 +32,12 @@ DEALINGS IN THE SOFTWARE.
 #include "AKHILAFLEXConfig.h"
 /*
 // Enumeration of core components.
-#define MICROBIT_ID_BUTTON_A            1
-#define MICROBIT_ID_BUTTON_B            2
-#define MICROBIT_ID_BUTTON_RESET        3
-#define MICROBIT_ID_ACCELEROMETER       4
-#define MICROBIT_ID_COMPASS             5
-#define MICROBIT_ID_DISPLAY             6 */
+#define AKHILAFLEX_ID_BUTTON_A            1
+#define AKHILAFLEX_ID_BUTTON_B            2
+#define AKHILAFLEX_ID_BUTTON_RESET        3
+#define AKHILAFLEX_ID_ACCELEROMETER       4
+#define AKHILAFLEX_ID_COMPASS             5
+#define AKHILAFLEX_ID_DISPLAY             6 */
 #define AKHILAFLEX_ID_BUTTON_A            1
 #define AKHILAFLEX_ID_BUTTON_B            2
 #define AKHILAFLEX_ID_BUTTON_RESET        3
@@ -47,27 +47,27 @@ DEALINGS IN THE SOFTWARE.
 
 /*
 //EDGE connector events
-#define MICROBIT_IO_PINS                20
+#define AKHILAFLEX_IO_PINS                20
 
-#define MICROBIT_ID_IO_P0               7           //P0 is the left most pad (ANALOG/DIGITAL)
-#define MICROBIT_ID_IO_P1               8           //P1 is the middle pad (ANALOG/DIGITAL)
-#define MICROBIT_ID_IO_P2               9           //P2 is the right most pad (ANALOG/DIGITAL)
-#define MICROBIT_ID_IO_P3               10          //COL1 (ANALOG/DIGITAL)
-#define MICROBIT_ID_IO_P4               11          //BTN_A
-#define MICROBIT_ID_IO_P5               12          //COL2 (ANALOG/DIGITAL)
-#define MICROBIT_ID_IO_P6               13          //ROW2
-#define MICROBIT_ID_IO_P7               14          //ROW1
-#define MICROBIT_ID_IO_P8               15          //PIN 18
-#define MICROBIT_ID_IO_P9               16          //ROW3
-#define MICROBIT_ID_IO_P10              17          //COL3 (ANALOG/DIGITAL)
-#define MICROBIT_ID_IO_P11              18          //BTN_B
-#define MICROBIT_ID_IO_P12              19          //PIN 20
-#define MICROBIT_ID_IO_P13              20          //SCK
-#define MICROBIT_ID_IO_P14              21          //MISO
-#define MICROBIT_ID_IO_P15              22          //MOSI
-#define MICROBIT_ID_IO_P16              23          //PIN 16
-#define MICROBIT_ID_IO_P19              24          //SCL
-#define MICROBIT_ID_IO_P20              25          //SDA */
+#define AKHILAFLEX_ID_IO_P0               7           //P0 is the left most pad (ANALOG/DIGITAL)
+#define AKHILAFLEX_ID_IO_P1               8           //P1 is the middle pad (ANALOG/DIGITAL)
+#define AKHILAFLEX_ID_IO_P2               9           //P2 is the right most pad (ANALOG/DIGITAL)
+#define AKHILAFLEX_ID_IO_P3               10          //COL1 (ANALOG/DIGITAL)
+#define AKHILAFLEX_ID_IO_P4               11          //BTN_A
+#define AKHILAFLEX_ID_IO_P5               12          //COL2 (ANALOG/DIGITAL)
+#define AKHILAFLEX_ID_IO_P6               13          //ROW2
+#define AKHILAFLEX_ID_IO_P7               14          //ROW1
+#define AKHILAFLEX_ID_IO_P8               15          //PIN 18
+#define AKHILAFLEX_ID_IO_P9               16          //ROW3
+#define AKHILAFLEX_ID_IO_P10              17          //COL3 (ANALOG/DIGITAL)
+#define AKHILAFLEX_ID_IO_P11              18          //BTN_B
+#define AKHILAFLEX_ID_IO_P12              19          //PIN 20
+#define AKHILAFLEX_ID_IO_P13              20          //SCK
+#define AKHILAFLEX_ID_IO_P14              21          //MISO
+#define AKHILAFLEX_ID_IO_P15              22          //MOSI
+#define AKHILAFLEX_ID_IO_P16              23          //PIN 16
+#define AKHILAFLEX_ID_IO_P19              24          //SCL
+#define AKHILAFLEX_ID_IO_P20              25          //SDA */
 #define AKHILAFLEX_IO_PINS                20
 
 #define AKHILAFLEX_ID_IO_P0               7           //P0 is the left most pad (ANALOG/DIGITAL)
@@ -92,19 +92,19 @@ DEALINGS IN THE SOFTWARE.
 
 
 /*
-#define MICROBIT_ID_BUTTON_AB           26          // Button A+B multibutton
-#define MICROBIT_ID_GESTURE             27          // Gesture events
+#define AKHILAFLEX_ID_BUTTON_AB           26          // Button A+B multibutton
+#define AKHILAFLEX_ID_GESTURE             27          // Gesture events
 
-#define MICROBIT_ID_THERMOMETER         28
-#define MICROBIT_ID_RADIO               29
-#define MICROBIT_ID_RADIO_DATA_READY    30
-#define MICROBIT_ID_MULTIBUTTON_ATTACH  31
-#define MICROBIT_ID_SERIAL              32
+#define AKHILAFLEX_ID_THERMOMETER         28
+#define AKHILAFLEX_ID_RADIO               29
+#define AKHILAFLEX_ID_RADIO_DATA_READY    30
+#define AKHILAFLEX_ID_MULTIBUTTON_ATTACH  31
+#define AKHILAFLEX_ID_SERIAL              32
 
-#define MICROBIT_ID_IO_INT1             33          //INT1
-#define MICROBIT_ID_IO_INT2             34          //INT2
-#define MICROBIT_ID_IO_INT3             35          //INT3
-#define MICROBIT_ID_PARTIAL_FLASHING    36 */
+#define AKHILAFLEX_ID_IO_INT1             33          //INT1
+#define AKHILAFLEX_ID_IO_INT2             34          //INT2
+#define AKHILAFLEX_ID_IO_INT3             35          //INT3
+#define AKHILAFLEX_ID_PARTIAL_FLASHING    36 */
 #define AKHILAFLEX_ID_BUTTON_AB           26          // Button A+B multibutton
 #define AKHILAFLEX_ID_GESTURE             27          // Gesture events
 
@@ -120,23 +120,23 @@ DEALINGS IN THE SOFTWARE.
 #define AKHILAFLEX_ID_PARTIAL_FLASHING    36  
 
 /*
-#define MICROBIT_ID_MESSAGE_BUS_LISTENER            1021          // Message bus indication that a handler for a given ID has been registered.
-#define MICROBIT_ID_NOTIFY_ONE                      1022          // Notfication channel, for general purpose synchronisation
-#define MICROBIT_ID_NOTIFY                          1023          // Notfication channel, for general purpose synchronisation
+#define AKHILAFLEX_ID_MESSAGE_BUS_LISTENER            1021          // Message bus indication that a handler for a given ID has been registered.
+#define AKHILAFLEX_ID_NOTIFY_ONE                      1022          // Notfication channel, for general purpose synchronisation
+#define AKHILAFLEX_ID_NOTIFY                          1023          // Notfication channel, for general purpose synchronisation
 */
 #define AKHILAFLEX_ID_MESSAGE_BUS_LISTENER            1021          // Message bus indication that a handler for a given ID has been registered.
 #define AKHILAFLEX_ID_NOTIFY_ONE                      1022          // Notfication channel, for general purpose synchronisation
 #define AKHILAFLEX_ID_NOTIFY                          1023          // Notfication channel, for general purpose synchronisation
 
 // Universal flags used as part of the status field
-/*#define MICROBIT_COMPONENT_RUNNING		0x01 */
+/*#define AKHILAFLEX_COMPONENT_RUNNING		0x01 */
 #define AKHILAFLEX_COMPONENT_RUNNING		0x01 
 
 
 
 
 /**
-  * Class definition for MicroBitComponent.
+  * Class definition for AKHILAFLEXComponent.
   *
   * All components should inherit from this class.
   *
@@ -148,7 +148,7 @@ DEALINGS IN THE SOFTWARE.
   * Two levels of support are available. 
   *
   * systemTick() provides a periodic callback during the
-  * micro:bit's system timer interrupt. This provides a guaranteed periodic callback, but in interrupt context
+  * AKHILAFLEX's system timer interrupt. This provides a guaranteed periodic callback, but in interrupt context
   * and is suitable for code with lightweight processing requirements, but strict time constraints.
   * 
   * idleTick() provides a periodic callback whenever the scheduler is idle. This provides occasional, callbacks
@@ -158,7 +158,7 @@ DEALINGS IN THE SOFTWARE.
   * register their components using system_timer_add_component() fiber_add_idle_component() respectively.
   *
   */
-/*class MicroBitComponent */
+/*class AKHILAFLEXComponent */
 class AKHILAFLEXComponent 
 {
     protected:
@@ -169,9 +169,9 @@ class AKHILAFLEXComponent
     public:
 
     /**
-      * The default constructor of a MicroBitComponent
+      * The default constructor of a AKHILAFLEXComponent
       */
-  /*  MicroBitComponent()  */
+  /*  AKHILAFLEXComponent()  */
     AKHILAFLEXComponent() 
     {
         this->id = 0;
@@ -199,7 +199,7 @@ class AKHILAFLEXComponent
       * If you have added your component to the idle or system tick component arrays,
       * you must remember to remove your component from them if your component is destructed.
       */
-   /* virtual ~MicroBitComponent() */
+   /* virtual ~AKHILAFLEXComponent() */
     virtual ~AKHILAFLEXComponent() 
     {
     }

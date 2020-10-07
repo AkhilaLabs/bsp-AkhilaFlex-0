@@ -39,7 +39,7 @@ struct FrameBuffer;
  * Provides a simple broadcast radio abstraction, built upon the raw nrf51822 RADIO module.
  *
  * The nrf51822 RADIO module supports a number of proprietary modes of operation in addition to the typical BLE usage.
- * This class uses one of these modes to enable simple, point to multipoint communication directly between micro:bits.
+ * This class uses one of these modes to enable simple, point to multipoint communication directly between AKHILAFLEXs.
  *
  * TODO: The protocols implemented here do not currently perform any significant form of energy management,
  * which means that they will consume far more energy than their BLE equivalent. Later versions of the protocol
@@ -71,7 +71,7 @@ struct FrameBuffer;
 
 // Known Protocol Numbers
 #define AKHILAFLEX_RADIO_PROTOCOL_DATAGRAM        1       // A simple, single frame datagram. a little like UDP but with smaller packets. :-)
-#define AKHILAFLEX_RADIO_PROTOCOL_EVENTBUS        2       // Transparent propogation of events from one micro:bit to another.
+#define AKHILAFLEX_RADIO_PROTOCOL_EVENTBUS        2       // Transparent propogation of events from one AKHILAFLEX to another.
 
 // Events
 #define AKHILAFLEX_RADIO_EVT_DATAGRAM             1       // Event to signal that a new datagram has been received.
@@ -92,7 +92,7 @@ struct FrameBuffer
 
 class AKHILAFLEXRadio : AKHILAFLEXComponent
 {
-    uint8_t                 group;      // The radio group to which this micro:bit belongs.
+    uint8_t                 group;      // The radio group to which this AKHILAFLEX belongs.
     uint8_t                 queueDepth; // The number of packets in the receiver queue.
     int                     rssi;
     FrameBuffer             *rxQueue;   // A linear list of incoming packets, queued awaiting processing.
@@ -185,7 +185,7 @@ class AKHILAFLEXRadio : AKHILAFLEXComponent
     /**
       * Sets the radio to listen to packets sent with the given group id.
       *
-      * @param group The group to join. A micro:bit can only listen to one group ID at any time.
+      * @param group The group to join. A AKHILAFLEX can only listen to one group ID at any time.
       *
       * @return AKHILAFLEX_OK on success, or AKHILAFLEX_NOT_SUPPORTED if the BLE stack is running.
       */

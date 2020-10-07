@@ -66,7 +66,7 @@ struct MatrixMap
 };
 
 /*
- * Dimensions for well known micro:bit LED configurations
+ * Dimensions for well known AKHILAFLEX LED configurations
  */
 #define AKHILAFLEX_DISPLAY_WIDTH                  5
 #define AKHILAFLEX_DISPLAY_HEIGHT                 5

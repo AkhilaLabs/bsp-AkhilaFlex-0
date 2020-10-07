@@ -24,7 +24,7 @@ DEALINGS IN THE SOFTWARE.
 */
 
 /**
-  * Class definition for the custom MicroBit Temperature Service.
+  * Class definition for the custom AKHILAFLEX Temperature Service.
   * Provides a BLE service to remotely read the silicon temperature of the nRF51822.
   */
 #include "AKHILAFLEXConfig.h"
@@ -36,21 +36,21 @@ DEALINGS IN THE SOFTWARE.
   * Constructor.
   * Create a representation of the TemperatureService
   * @param _ble The instance of a BLE device that we're running on.
-  * @param _thermometer An instance of MicroBitThermometer to use as our temperature source.
+  * @param _thermometer An instance of AKHILAFLEXThermometer to use as our temperature source.
   */
-/*MicroBitTemperatureService::MicroBitTemperatureService(BLEDevice &_ble, MicroBitThermometer &_thermometer) :     
+/*AKHILAFLEXTemperatureService::AKHILAFLEXTemperatureService(BLEDevice &_ble, AKHILAFLEXThermometer &_thermometer) :     
         ble(_ble), thermometer(_thermometer) */
 AKHILAFLEXTemperatureService::AKHILAFLEXTemperatureService(BLEDevice &_ble, AKHILAFLEXThermometer &_thermometer) :
         ble(_ble), thermometer(_thermometer) 
 
 {
     // Create the data structures that represent each of our characteristics in Soft Device.
-   /* GattCharacteristic  temperatureDataCharacteristic(MicroBitTemperatureServiceDataUUID, (uint8_t *)&temperatureDataCharacteristicBuffer, 0,
+   /* GattCharacteristic  temperatureDataCharacteristic(AKHILAFLEXTemperatureServiceDataUUID, (uint8_t *)&temperatureDataCharacteristicBuffer, 0,
     sizeof(temperatureDataCharacteristicBuffer), GattCharacteristic::BLE_GATT_CHAR_PROPERTIES_READ | GattCharacteristic::BLE_GATT_CHAR_PROPERTIES_NOTIFY); */
  GattCharacteristic  temperatureDataCharacteristic(AKHILAFLEXTemperatureServiceDataUUID, (uint8_t *)&temperatureDataCharacteristicBuffer, 0,
   sizeof(temperatureDataCharacteristicBuffer), GattCharacteristic::BLE_GATT_CHAR_PROPERTIES_READ | GattCharacteristic::BLE_GATT_CHAR_PROPERTIES_NOTIFY);
 
-   /* GattCharacteristic  temperaturePeriodCharacteristic(MicroBitTemperatureServicePeriodUUID, (uint8_t *)&temperaturePeriodCharacteristicBuffer, 0,
+   /* GattCharacteristic  temperaturePeriodCharacteristic(AKHILAFLEXTemperatureServicePeriodUUID, (uint8_t *)&temperaturePeriodCharacteristicBuffer, 0,
     sizeof(temperaturePeriodCharacteristicBuffer), GattCharacteristic::BLE_GATT_CHAR_PROPERTIES_READ | GattCharacteristic::BLE_GATT_CHAR_PROPERTIES_WRITE); */
 GattCharacteristic  temperaturePeriodCharacteristic(AKHILAFLEXTemperatureServicePeriodUUID, (uint8_t *)&temperaturePeriodCharacteristicBuffer, 0,
 sizeof(temperaturePeriodCharacteristicBuffer), GattCharacteristic::BLE_GATT_CHAR_PROPERTIES_READ | GattCharacteristic::BLE_GATT_CHAR_PROPERTIES_WRITE);
@@ -60,14 +60,14 @@ sizeof(temperaturePeriodCharacteristicBuffer), GattCharacteristic::BLE_GATT_CHAR
     temperaturePeriodCharacteristicBuffer = thermometer.getPeriod();
 
     // Set default security requirements
-  /*  temperatureDataCharacteristic.requireSecurity(SecurityManager::MICROBIT_BLE_SECURITY_LEVEL);
-    temperaturePeriodCharacteristic.requireSecurity(SecurityManager::MICROBIT_BLE_SECURITY_LEVEL); */
+  /*  temperatureDataCharacteristic.requireSecurity(SecurityManager::AKHILAFLEX_BLE_SECURITY_LEVEL);
+    temperaturePeriodCharacteristic.requireSecurity(SecurityManager::AKHILAFLEX_BLE_SECURITY_LEVEL); */
     temperatureDataCharacteristic.requireSecurity(SecurityManager::AKHILAFLEX_BLE_SECURITY_LEVEL);
     temperaturePeriodCharacteristic.requireSecurity(SecurityManager::AKHILAFLEX_BLE_SECURITY_LEVEL); 
 
 
   /*  GattCharacteristic *characteristics[] = {&temperatureDataCharacteristic, &temperaturePeriodCharacteristic};
-    GattService         service(MicroBitTemperatureServiceUUID, characteristics, sizeof(characteristics) / sizeof(GattCharacteristic *)); */
+    GattService         service(AKHILAFLEXTemperatureServiceUUID, characteristics, sizeof(characteristics) / sizeof(GattCharacteristic *)); */
 GattCharacteristic *characteristics[] = {&temperatureDataCharacteristic, &temperaturePeriodCharacteristic};
     GattService        service(AKHILAFLEXTemperatureServiceUUID, characteristics, sizeof(characteristics) / sizeof(GattCharacteristic *));
 
@@ -79,7 +79,7 @@ GattCharacteristic *characteristics[] = {&temperatureDataCharacteristic, &temper
     ble.gattServer().write(temperatureDataCharacteristicHandle,(uint8_t *)&temperatureDataCharacteristicBuffer, sizeof(temperatureDataCharacteristicBuffer));
     ble.gattServer().write(temperaturePeriodCharacteristicHandle,(uint8_t *)&temperaturePeriodCharacteristicBuffer, sizeof(temperaturePeriodCharacteristicBuffer));
 
-   /* ble.onDataWritten(this, &MicroBitTemperatureService::onDataWritten); */
+   /* ble.onDataWritten(this, &AKHILAFLEXTemperatureService::onDataWritten); */
     ble.onDataWritten(this, &AKHILAFLEXTemperatureService::onDataWritten); 
     if (EventModel::defaultEventBus)
   EventModel::defaultEventBus->listen(AKHILAFLEX_ID_THERMOMETER, AKHILAFLEX_THERMOMETER_EVT_UPDATE, this, &AKHILAFLEXTemperatureService::temperatureUpdate, MESSAGE_BUS_LISTENER_IMMEDIATE);
@@ -88,7 +88,7 @@ GattCharacteristic *characteristics[] = {&temperatureDataCharacteristic, &temper
 /**
   * Temperature update callback
   */
-/*void MicroBitTemperatureService::temperatureUpdate(MicroBitEvent) */
+/*void AKHILAFLEXTemperatureService::temperatureUpdate(AKHILAFLEXEvent) */
 void AKHILAFLEXTemperatureService::temperatureUpdate(AKHILAFLEXEvent) 
 {
     if (ble.getGapState().connected)
@@ -101,7 +101,7 @@ void AKHILAFLEXTemperatureService::temperatureUpdate(AKHILAFLEXEvent)
 /**
   * Callback. Invoked when any of our attributes are written via BLE.
   */
-/*void MicroBitTemperatureService::onDataWritten(const GattWriteCallbackParams *params) */
+/*void AKHILAFLEXTemperatureService::onDataWritten(const GattWriteCallbackParams *params) */
 void AKHILAFLEXTemperatureService::onDataWritten(const GattWriteCallbackParams *params) 
 {
    if (params->handle == temperaturePeriodCharacteristicHandle && params->len >= sizeof(temperaturePeriodCharacteristicBuffer))
@@ -117,7 +117,7 @@ void AKHILAFLEXTemperatureService::onDataWritten(const GattWriteCallbackParams *
 }
 
 /*
-const uint8_t  MicroBitTemperatureServiceUUID[] = {
+const uint8_t  AKHILAFLEXTemperatureServiceUUID[] = {
     0x00,0x00,0x61,0x00,0x25,0x1d,0x47,0x0a,0xa0,0x62,0xfa,0x19,0x22,0xdf,0xa9,0xa8
 }; */
 const uint8_t  AKHILAFLEXTemperatureServiceUUID[] = {
@@ -125,7 +125,7 @@ const uint8_t  AKHILAFLEXTemperatureServiceUUID[] = {
 }; 
 
 /*
-const uint8_t  MicroBitTemperatureServiceDataUUID[] = {
+const uint8_t  AKHILAFLEXTemperatureServiceDataUUID[] = {
     0x00,0x00,0x92,0x50,0x25,0x1d,0x47,0x0a,0xa0,0x62,0xfa,0x19,0x22,0xdf,0xa9,0xa8
 }; */
 const uint8_t  AKHILAFLEXTemperatureServiceDataUUID[] = {
@@ -133,7 +133,7 @@ const uint8_t  AKHILAFLEXTemperatureServiceDataUUID[] = {
 }; 
 
 /*
-const uint8_t  MicroBitTemperatureServicePeriodUUID[] = {
+const uint8_t  AKHILAFLEXTemperatureServicePeriodUUID[] = {
     0x00,0x00,0x1b,0x25,0x25,0x1d,0x47,0x0a,0xa0,0x62,0xfa,0x19,0x22,0xdf,0xa9,0xa8
 }; */
 const uint8_t  AKHILAFLEXTemperatureServicePeriodUUID[] = {

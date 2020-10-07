@@ -36,7 +36,7 @@ DEALINGS IN THE SOFTWARE.
   * Provides a simple broadcast radio abstraction, built upon the raw nrf51822 RADIO module.
   *
   * The nrf51822 RADIO module supports a number of proprietary modes of operation in addition to the typical BLE usage.
-  * This class uses one of these modes to enable simple, point to multipoint communication directly between micro:bits.
+  * This class uses one of these modes to enable simple, point to multipoint communication directly between AKHILAFLEXs.
   *
   * TODO: The protocols implemented here do not currently perform any significant form of energy management,
   * which means that they will consume far more energy than their BLE equivalent. Later versions of the protocol
@@ -394,7 +394,7 @@ int AKHILAFLEXRadio::disable()
 /**
   * Sets the radio to listen to packets sent with the given group id.
   *
-  * @param group The group to join. A micro:bit can only listen to one group ID at any time.
+  * @param group The group to join. A AKHILAFLEX can only listen to one group ID at any time.
   *
   * @return AKHILAFLEX_OK on success, or AKHILAFLEX_NOT_SUPPORTED if the BLE stack is running.
   */

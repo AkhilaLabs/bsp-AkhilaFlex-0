@@ -52,7 +52,7 @@ enum AKHILAFLEXSerialMode
 /**
   * Class definition for AKHILAFLEXSerial.
   *
-  * Represents an instance of RawSerial which accepts micro:bit specific data types.
+  * Represents an instance of RawSerial which accepts AKHILAFLEX specific data types.
   */
 class AKHILAFLEXSerial : public RawSerial
 {

@@ -26,7 +26,7 @@ DEALINGS IN THE SOFTWARE.
 /**
   * Class definition for AKHILAFLEXDisplay.
   *
-  * A AKHILAFLEXDisplay represents the LED matrix array on the micro:bit.
+  * A AKHILAFLEXDisplay represents the LED matrix array on the AKHILAFLEX.
   */
 #include "AKHILAFLEXConfig.h"
 #include "AKHILAFLEXDisplay.h"
@@ -40,7 +40,7 @@ const int greyScaleTimings[AKHILAFLEX_DISPLAY_GREYSCALE_BIT_DEPTH] = {1, 23, 70,
 /**
   * Constructor.
   *
-  * Create a software representation the micro:bit's 5x5 LED matrix.
+  * Create a software representation the AKHILAFLEX's 5x5 LED matrix.
   * The display is initially blank.
   *
   * @param id The id the display should use when sending events on the MessageBus. Defaults to AKHILAFLEX_ID_DISPLAY.
@@ -1202,7 +1202,7 @@ AKHILAFLEXImage AKHILAFLEXDisplay::screenShot()
 
 /**
   * Gives a representative figure of the light level in the current environment
-  * where are micro:bit is situated.
+  * where are AKHILAFLEX is situated.
   *
   * Internally, it constructs an instance of a AKHILAFLEXLightSensor if not already configured
   * and sets the display mode to DISPLAY_MODE_BLACK_AND_WHITE_LIGHT_SENSE.

@@ -179,7 +179,7 @@ void AKHILAFLEXEventService::idleTick()
 /**
   * Read callback on AKHILAFLEXRequirements characteristic.
   *
-  * Used to iterate through the events that the code on this micro:bit is interested in.
+  * Used to iterate through the events that the code on this AKHILAFLEX is interested in.
   */
 /*void AKHILAFLEXEventService::onRequirementsRead(GattReadAuthCallbackParams *params) */
 void AKHILAFLEXEventService::onRequirementsRead(GattReadAuthCallbackParams *params) 

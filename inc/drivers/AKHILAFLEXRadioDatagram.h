@@ -34,7 +34,7 @@ DEALINGS IN THE SOFTWARE.
 /**
   * Provides a simple broadcast radio abstraction, built upon the raw nrf51822 RADIO module.
   *
-  * This class provides the ability to broadcast simple text or binary messages to other micro:bits in the vicinity
+  * This class provides the ability to broadcast simple text or binary messages to other AKHILAFLEXs in the vicinity
   * It is envisaged that this would provide the basis for children to experiment with building their own, simple,
   * custom protocols.
   *
@@ -53,7 +53,7 @@ class AKHILAFLEXRadioDatagram
       * Constructor.
       *
       * Creates an instance of a AKHILAFLEXRadioDatagram which offers the ability
-      * to broadcast simple text or binary messages to other micro:bits in the vicinity
+      * to broadcast simple text or binary messages to other AKHILAFLEXs in the vicinity
       *
       * @param r The underlying radio module used to send and receive data.
       */

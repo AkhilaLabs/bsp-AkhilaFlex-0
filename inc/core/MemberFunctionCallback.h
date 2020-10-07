@@ -39,7 +39,7 @@ DEALINGS IN THE SOFTWARE.
   * representation than normal C functions. This class allows a reference to
   * a C++ member function to be stored then called at a later date.
   *
-  * This class is used extensively by the MicroBitMessageBus to deliver
+  * This class is used extensively by the AKHILAFLEXMessageBus to deliver
   * events to C++ methods.
   */
 class MemberFunctionCallback
@@ -47,8 +47,8 @@ class MemberFunctionCallback
     private:
     void* object;
     uint32_t method[4];
-   /* void (*invoke)(void *object, uint32_t *method, MicroBitEvent e);
-    template <typename T> static void methodCall(void* object, uint32_t*method, MicroBitEvent e); */
+   /* void (*invoke)(void *object, uint32_t *method, AKHILAFLEXEvent e);
+    template <typename T> static void methodCall(void* object, uint32_t*method, AKHILAFLEXEvent e); */
      void (*invoke)(void *object, uint32_t *method, AKHILAFLEXEvent e);
     template <typename T> static void methodCall(void* object, uint32_t*method, AKHILAFLEXEvent e); 
 
@@ -62,7 +62,7 @@ class MemberFunctionCallback
       *
       * @param method The method to invoke.
       */
-   /* template <typename T> MemberFunctionCallback(T* object, void (T::*method)(MicroBitEvent e)); */
+   /* template <typename T> MemberFunctionCallback(T* object, void (T::*method)(AKHILAFLEXEvent e)); */
     template <typename T> MemberFunctionCallback(T* object, void (T::*method)(AKHILAFLEXEvent e)); 
 
     /**
@@ -77,7 +77,7 @@ class MemberFunctionCallback
       *
       * @param e The event to deliver to the method
       */
-   /* void fire(MicroBitEvent e); */
+   /* void fire(AKHILAFLEXEvent e); */
     void fire(AKHILAFLEXEvent e); 
 };
 
@@ -89,7 +89,7 @@ class MemberFunctionCallback
   * @param method The method to invoke.
   */
 template <typename T>
-/*MemberFunctionCallback::MemberFunctionCallback(T* object, void (T::*method)(MicroBitEvent e)) */
+/*MemberFunctionCallback::MemberFunctionCallback(T* object, void (T::*method)(AKHILAFLEXEvent e)) */
 MemberFunctionCallback::MemberFunctionCallback(T* object, void (T::*method)(AKHILAFLEXEvent e)) 
 
 {
@@ -107,14 +107,14 @@ MemberFunctionCallback::MemberFunctionCallback(T* object, void (T::*method)(AKHI
   *
   * @param method The method to invoke.
   *
-  * @param method The MicroBitEvent to supply to the given member function.
+  * @param method The AKHILAFLEXEvent to supply to the given member function.
   */
 template <typename T>
-/*void MemberFunctionCallback::methodCall(void *object, uint32_t *method, MicroBitEvent e) */
+/*void MemberFunctionCallback::methodCall(void *object, uint32_t *method, AKHILAFLEXEvent e) */
 void MemberFunctionCallback::methodCall(void *object, uint32_t *method, AKHILAFLEXEvent e) 
 {
     T* o = (T*)object;
-   /* void (T::*m)(MicroBitEvent);  */
+   /* void (T::*m)(AKHILAFLEXEvent);  */
    void (T::*m)(AKHILAFLEXEvent); 
     memcpy(&m, method, sizeof(m));
 

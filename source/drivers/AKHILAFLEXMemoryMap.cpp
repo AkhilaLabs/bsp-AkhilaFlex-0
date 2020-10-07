@@ -48,12 +48,12 @@ AKHILAFLEXMemoryMap::AKHILAFLEXMemoryMap()
       pushRegion(Region(0x00, 0x00, 0x18000, 0x00));  // Soft Device
 
       // DAL
-      pushRegion(Region(0x01, 0x18000, FLASH_PROGRAM_END, 0x00)); // micro:bit Device Abstractation Layer
+      pushRegion(Region(0x01, 0x18000, FLASH_PROGRAM_END, 0x00)); // AKHILAFLEX Device Abstractation Layer
 
       // PXT
       // PXT will be on the start of the next page
       // padding to next page = 0x400 - (FLASH_PROGRAM_END % 0x400);
-      pushRegion(Region(0x02, FLASH_PROGRAM_END + (0x400 - (FLASH_PROGRAM_END % 0x400)), 0x3BBFF, 0x00)); // micro:bit PXT
+      pushRegion(Region(0x02, FLASH_PROGRAM_END + (0x400 - (FLASH_PROGRAM_END % 0x400)), 0x3BBFF, 0x00)); // AKHILAFLEX PXT
 
       // Find Hashes if PXT Built Program
       findHashes();
