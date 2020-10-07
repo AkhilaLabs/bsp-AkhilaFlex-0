@@ -96,7 +96,7 @@ class AKHILAFLEXEddystone
       * More information can be found at https://github.com/google/eddystone/tree/master/eddystone-uid#tx-power
       */
     int setUID(BLEDevice* ble, const char* uid_namespace, const char* uid_instance, int8_t calibratedPower = 0xF0);
-int setUID(BLEDevice* ble, const char* uid_namespace, const char* uid_instance, int8_t calibratedPower = 0xF0);
+/*int setUID(BLEDevice* ble, const char* uid_namespace, const char* uid_instance, int8_t calibratedPower = 0xF0);*/
 
 #endif
 
