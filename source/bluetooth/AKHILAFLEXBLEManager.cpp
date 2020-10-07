@@ -436,7 +436,7 @@ void AKHILAFLEXBLEManager::init(ManagedString deviceName, ManagedString serialNu
 /*#if CONFIG_ENABLED(AKHILAFLEX_BLE_PARTIAL_FLASHING)
     new AKHILAFLEXPartialFlashingService(*ble, messageBus); */
 #if CONFIG_ENABLED(AKHILAFLEX_BLE_PARTIAL_FLASHING)
-    new AKHILAFLEXFlashingService(*ble, messageBus); 
+    new AKHILAFLEXPartialFlashingService(*ble, messageBus); 
 
 #endif
 
