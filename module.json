@@ -1,6 +1,6 @@
 {
   "name": "bsp-AkhilaFlex-0",
-  "version": "2.2.0-rc6",
+  "version": "1.0.1",
   "description": "A simple to use collection of the most commonly used components in the bsp-AkhilaFlex-0 runtime",
   "dependencies": {
     "mbed-classic": "lancaster-university/mbed-classic#microbit_hfclk+mb6",
