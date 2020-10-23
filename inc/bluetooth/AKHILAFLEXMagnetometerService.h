@@ -25,9 +25,6 @@ DEALINGS IN THE SOFTWARE.
 
 #ifndef AKHILAFLEX_MAGNETOMETER_SERVICE_H
 #define AKHILAFLEX_MAGNETOMETER_SERVICE_H
-/*#ifndef AKHILAFLEX_MAGNETOMETER_SERVICE_H
-#define AKHILAFLEX_MAGNETOMETER_SERVICE_H */
-
 
 #include "ble/BLE.h"
 #include "AKHILAFLEXConfig.h"
@@ -45,20 +42,12 @@ extern const uint8_t  AKHILAFLEXMagnetometerServiceDataUUID[];
 extern const uint8_t  AKHILAFLEXMagnetometerServiceBearingUUID[];
 extern const uint8_t  AKHILAFLEXMagnetometerServicePeriodUUID[];
 extern const uint8_t  AKHILAFLEXMagnetometerServiceCalibrationUUID[];
-/*extern const uint8_t  AKHILAFLEXMagnetometerServiceUUID[];
-extern const uint8_t  AKHILAFLEXMagnetometerServiceDataUUID[];
-extern const uint8_t  AKHILAFLEXMagnetometerServiceBearingUUID[];
-extern const uint8_t  AKHILAFLEXMagnetometerServicePeriodUUID[];
-extern const uint8_t  AKHILAFLEXMagnetometerServiceCalibrationUUID[]; */
-
 
 /**
   * Class definition for the AKHILAFLEX BLE Magnetometer Service.
   * Provides access to live magnetometer data via BLE, and provides basic configuration options.
   */
 class AKHILAFLEXMagnetometerService
-/*class AKHILAFLEXMagnetometerService */
-
 {
     public:
 
@@ -69,7 +58,6 @@ class AKHILAFLEXMagnetometerService
       * @param _compass An instance of AKHILAFLEXCompass to use as our Magnetometer source.
       */
     AKHILAFLEXMagnetometerService(BLEDevice &_ble, AKHILAFLEXCompass &_compass);
-   /* AKHILAMagnetometerService(BLEDevice &_ble, AKHILAFLEXCompass &_compass); */
 
     private:
 
@@ -82,7 +70,6 @@ class AKHILAFLEXMagnetometerService
      * Magnetometer update callback
      */
     void magnetometerUpdate();
-    
 
     /**
      * Sample Period Change Needed callback.
@@ -100,12 +87,10 @@ class AKHILAFLEXMagnetometerService
      * Handle compass events such as calibration requests
      */
     void compassEvents(AKHILAFLEXEvent e);
-   /* void compassEvents(AKHILAFLEXEvent e); */
 
     // Bluetooth stack we're running on.
     BLEDevice           &ble;
     AKHILAFLEXCompass     &compass;
-  /* AKHILAFLEXCompass     &compass; */
 
     // memory for our 8 bit control characteristics.
     int16_t             magnetometerDataCharacteristicBuffer[3];

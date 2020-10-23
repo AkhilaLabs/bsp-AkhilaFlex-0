@@ -65,12 +65,9 @@ DEALINGS IN THE SOFTWARE.
   */
 AKHILAFLEXThermometer::AKHILAFLEXThermometer(AKHILAFLEXStorage& _storage, uint16_t id) :
     storage(&_storage)
-/*AKHILAFLEXThermometer::AKHILAFLEXThermometer(AKHILAFLEXStorage& _storage, uint16_t id) :
-    storage(&_storage)  */  
 {
     this->id = id;
     this->samplePeriod = AKHILAFLEX_THERMOMETER_PERIOD;
-   /* this->samplePeriod = AKHILAFLEX_THERMOMETER_PERIOD; */
     this->sampleTime = 0;
     this->offset = 0;
 
@@ -94,12 +91,10 @@ AKHILAFLEXThermometer::AKHILAFLEXThermometer(AKHILAFLEXStorage& _storage, uint16
   * @endcode
   */
 AKHILAFLEXThermometer::AKHILAFLEXThermometer(uint16_t id) :
-/*AKHILAFLEXThermometer::AKHILAFLEXThermometer(uint16_t id) : */	
     storage(NULL)
 {
     this->id = id;
     this->samplePeriod = AKHILAFLEX_THERMOMETER_PERIOD;
-   /* this->samplePeriod = AKHILAFLEX_THERMOMETER_PERIOD; */
     this->sampleTime = 0;
     this->offset = 0;
 }
@@ -114,7 +109,6 @@ AKHILAFLEXThermometer::AKHILAFLEXThermometer(uint16_t id) :
   * @endcode
   */
 int AKHILAFLEXThermometer::getTemperature()
-/*int AKHILAFLEXThermometer::getTemperature() */
 {
     updateSample();
     return temperature - offset;
@@ -131,16 +125,13 @@ int AKHILAFLEXThermometer::getTemperature()
   * @return AKHILAFLEX_OK on success.
   */
 int AKHILAFLEXThermometer::updateSample()
-/*int AKHILAFLEXThermometer::updateSample() */
 {
     if(!(status & AKHILAFLEX_THERMOMETER_ADDED_TO_IDLE))
-   /* if(!(status & AKHILAFLEX_THERMOMETER_ADDED_TO_IDLE)) */
     {
         // If we're running under a fiber scheduer, register ourselves for a periodic callback to keep our data up to date.
         // Otherwise, we do just do this on demand, when polled through our read() interface.
         fiber_add_idle_component(this);
         status |= AKHILAFLEX_THERMOMETER_ADDED_TO_IDLE;
-       /* status |= AKHILAFLEX_THERMOMETER_ADDED_TO_IDLE; */
     }
 
     // check if we need to update our sample...
@@ -185,18 +176,15 @@ int AKHILAFLEXThermometer::updateSample()
 
         // Send an event to indicate that we'e updated our temperature.
         AKHILAFLEXEvent e(id, AKHILAFLEX_THERMOMETER_EVT_UPDATE);
-       /* AKHILAFLEXEvent e(id, AKHILAFLEX_THERMOMETER_EVT_UPDATE); */
     }
 
     return AKHILAFLEX_OK;
-   /* return AKHILAFLEX_OK; */
 };
 
 /**
   * Periodic callback from AKHILAFLEX idle thread.
   */
 void AKHILAFLEXThermometer::idleTick()
-/*void AKHILAFLEXThermometer::idleTick() */
 {
     updateSample();
 }
@@ -207,7 +195,6 @@ void AKHILAFLEXThermometer::idleTick()
   * @return 1 if we're due to take a temperature reading, 0 otherwise.
   */
 int AKHILAFLEXThermometer::isSampleNeeded()
-/*int AKHILAFLEXThermometer::isSampleNeeded() */
 {
     return  system_timer_current_time() >= sampleTime;
 }
@@ -223,7 +210,6 @@ int AKHILAFLEXThermometer::isSampleNeeded()
   * when the processor is idle, or when the temperature is explicitly read.
   */
 void AKHILAFLEXThermometer::setPeriod(int period)
-/*void AKHILAFLEXThermometer::setPeriod(int period) */
 {
     updateSample();
     samplePeriod = period;
@@ -235,7 +221,6 @@ void AKHILAFLEXThermometer::setPeriod(int period)
   * @return The time between samples, in milliseconds.
   */
 int AKHILAFLEXThermometer::getPeriod()
-/*int AKHILAFLEXThermometer::getPeriod() */
 {
     return samplePeriod;
 }
@@ -248,7 +233,6 @@ int AKHILAFLEXThermometer::getPeriod()
   * @return AKHILAFLEX_OK on success
   */
 int AKHILAFLEXThermometer::setOffset(int offset)
-/*int AKHILAFLEXThermometer::setOffset(int offset) */
 {
     if(this->storage != NULL)
         this->storage->put(ManagedString("tempCal"), (uint8_t *)&offset, sizeof(int));
@@ -256,7 +240,6 @@ int AKHILAFLEXThermometer::setOffset(int offset)
     this->offset = offset;
 
     return AKHILAFLEX_OK;
-    /* return AKHILAFLEX_OK; */
 }
 
 /**
@@ -265,7 +248,6 @@ int AKHILAFLEXThermometer::setOffset(int offset)
   * @return the current offset.
   */
 int AKHILAFLEXThermometer::getOffset()
-/*int AKHILAFLEXThermometer::getOffset() */
 {
     return offset;
 }
@@ -280,7 +262,6 @@ int AKHILAFLEXThermometer::getOffset()
   * @return AKHILAFLEX_OK on success
   */
 int AKHILAFLEXThermometer::setCalibration(int calibrationTemp)
-/*int AKHILAFLEXThermometer::setCalibration(int calibrationTemp) */
 {
     updateSample();
     return setOffset(temperature - calibrationTemp);

@@ -33,10 +33,6 @@ DEALINGS IN THE SOFTWARE.
 uint8_t AKHILAFLEXSerial::status = 0;
 
 int AKHILAFLEXSerial::baudrate = 0;
-/*uint8_t AKHILAFLEXSerial::status = 0;
-
-int AKHILAFLEXSerial::baudrate = 0; */
-
 
 /**
   * Constructor.
@@ -60,7 +56,6 @@ int AKHILAFLEXSerial::baudrate = 0; */
   *       Buffers aren't allocated until the first send or receive respectively.
   */
 AKHILAFLEXSerial::AKHILAFLEXSerial(PinName tx, PinName rx, uint8_t rxBufferSize, uint8_t txBufferSize) : RawSerial(tx,rx), delimeters()
-/*AKHILAFLEXSerial::AKHILAFLEXSerial(PinName tx, PinName rx, uint8_t rxBufferSize, uint8_t txBufferSize) : RawSerial(tx,rx), delimeters() */
 {
     // + 1 so there is a usable buffer size, of the size the user requested.
     this->rxBuffSize = rxBufferSize + 1;
@@ -78,7 +73,6 @@ AKHILAFLEXSerial::AKHILAFLEXSerial(PinName tx, PinName rx, uint8_t rxBufferSize,
     this->rxBuffHeadMatch = -1;
 
     this->baud(AKHILAFLEX_SERIAL_DEFAULT_BAUD_RATE);
-   /* this->baud(AKHILAFLEX_SERIAL_DEFAULT_BAUD_RATE); */
 
 #if CONFIG_ENABLED(AKHILAFLEX_DBG)
     SERIAL_DEBUG = this;
@@ -93,14 +87,12 @@ AKHILAFLEXSerial::AKHILAFLEXSerial(PinName tx, PinName rx, uint8_t rxBufferSize,
   * Each time a character is received fill our circular buffer!
   */
 void AKHILAFLEXSerial::dataReceived()
-/*void AKHILAFLEXSerial::dataReceived() */
 {
     //get the received character
     //Note: always read from the serial to clear the RX interrupt
     char c = getc();
 
     if(!(status & AKHILAFLEX_SERIAL_RX_BUFF_INIT))
-    /*if(!(status & AKHILAFLEX_SERIAL_RX_BUFF_INIT)) */
         return;
 
     int delimeterOffset = 0;
@@ -112,7 +104,6 @@ void AKHILAFLEXSerial::dataReceived()
         //fire an event if there is to block any waiting fibers
         if(this->delimeters.charAt(delimeterOffset) == c)
             AKHILAFLEXEvent(AKHILAFLEX_ID_SERIAL, AKHILAFLEX_SERIAL_EVT_DELIM_MATCH);
-           /* AKHILAFLEXEvent(AKHILAFLEX_ID_SERIAL, AKHILAFLEX_SERIAL_EVT_DELIM_MATCH); */
 
         delimeterOffset++;
     }
@@ -132,13 +123,11 @@ void AKHILAFLEXSerial::dataReceived()
             {
                 rxBuffHeadMatch = -1;
                 AKHILAFLEXEvent(AKHILAFLEX_ID_SERIAL, AKHILAFLEX_SERIAL_EVT_HEAD_MATCH);
-              /*  AKHILAFLEXEvent(AKHILAFLEX_ID_SERIAL, AKHILLAFLEX_SERIAL_EVT_HEAD_MATCH); */
             }
     }
     else
         //otherwise, our buffer is full, send an event to the user...
         AKHILAFLEXEvent(AKHILAFLEX_ID_SERIAL, AKHILAFLEX_SERIAL_EVT_RX_FULL);
-       /* AKHILAFLEXEvent(AKHILAFLEX_ID_SERIAL, AKHILAFLEX_SERIAL_EVT_RX_FULL); */
 }
 
 /**
@@ -148,10 +137,8 @@ void AKHILAFLEXSerial::dataReceived()
   * characters to write.
   */
 void AKHILAFLEXSerial::dataWritten()
-/*void AKHILAFLEXSerial::dataWritten() */
 {
     if(txBuffTail == txBuffHead || !(status & AKHILAFLEX_SERIAL_TX_BUFF_INIT))
-   /* if(txBuffTail == txBuffHead || !(status & AKHILAFLEX_SERIAL_TX_BUFF_INIT)) */
         return;
 
     //send our current char
@@ -163,7 +150,6 @@ void AKHILAFLEXSerial::dataWritten()
     if(nextTail == txBuffHead)
     {
         AKHILAFLEXEvent(AKHILAFLEX_ID_NOTIFY, AKHILAFLEX_SERIAL_EVT_TX_EMPTY);
-       /* AKHILAFLEXEvent(AKHILAFLEX_ID_NOTIFY, AKHILAFLEX_SERIAL_EVT_TX_EMPTY); */
         detach(Serial::TxIrq);
     }
 
@@ -187,7 +173,6 @@ void AKHILAFLEXSerial::dataWritten()
   * @return the number of bytes copied into the buffer.
   */
 int AKHILAFLEXSerial::setTxInterrupt(uint8_t *string, int len, AKHILAFLEXSerialMode mode)
-/*int AKHILAFLEXSerial::setTxInterrupt(uint8_t *string, int len, AKHILAFLEXSerialMode mode) */
 {
     int copiedBytes = 0;
 
@@ -205,11 +190,9 @@ int AKHILAFLEXSerial::setTxInterrupt(uint8_t *string, int len, AKHILAFLEXSerialM
 
     if(mode != SYNC_SPINWAIT)
         fiber_wake_on_event(AKHILAFLEX_ID_NOTIFY, AKHILAFLEX_SERIAL_EVT_TX_EMPTY);
-      /*  fiber_wake_on_event(AKHILAFLEX_ID_NOTIFY, AKHILAFLEX_SERIAL_EVT_TX_EMPTY); */
 
     //set the TX interrupt
     attach(this, &AKHILAFLEXSerial::dataWritten, Serial::TxIrq);
-   /* attach(this, &AKHILAFLEXSerial::dataWritten, Serial::TxIrq); */
 
     return copiedBytes;
 }
@@ -218,40 +201,32 @@ int AKHILAFLEXSerial::setTxInterrupt(uint8_t *string, int len, AKHILAFLEXSerialM
   * Locks the mutex so that others can't use this serial instance for reception
   */
 void AKHILAFLEXSerial::lockRx()
-/*void AKHILAFLEXSerial::lockRx() */
 {
     status |= AKHILAFLEX_SERIAL_RX_IN_USE;
-    /*status |= AKHILAFLEX_SERIAL_RX_IN_USE; */
 }
 
 /**
   * Locks the mutex so that others can't use this serial instance for transmission
   */
 void AKHILAFLEXSerial::lockTx()
-/*void AKHILAFLEXSerial::lockTx() */
 {
     status |= AKHILAFLEX_SERIAL_TX_IN_USE;
-    /*status |= AKHILAFLEX_SERIAL_TX_IN_USE; */
 }
 
 /**
   * Unlocks the mutex so that others can use this serial instance for reception
   */
 void AKHILAFLEXSerial::unlockRx()
-/*void AKHILAFLEXSerial::unlockRx() */
 {
     status &= ~AKHILAFLEX_SERIAL_RX_IN_USE;
-    /*status &= ~AKHILAFLEX_SERIAL_RX_IN_USE; */
 }
 
 /**
   * Unlocks the mutex so that others can use this serial instance for transmission
   */
 void AKHILAFLEXSerial::unlockTx()
-/*void AKHILAFLEXSerial::unlockTx() */
 {
     status &= ~AKHILAFLEX_SERIAL_TX_IN_USE;
- /*   status &= ~AKHILAFLEX_SERIAL_TX_IN_USE; */
 }
 
 /**
@@ -259,10 +234,8 @@ void AKHILAFLEXSerial::unlockTx()
   * use them. We only bring them up on demand.
   */
 int AKHILAFLEXSerial::initialiseRx()
-/*int AKHILAFLEXSerial::initialiseRx() */
 {
     if((status & AKHILAFLEX_SERIAL_RX_BUFF_INIT))
-  /*  if((status & AKHILAFLEX_SERIAL_RX_BUFF_INIT)) */
     {
         //ensure that we receive no interrupts after freeing our buffer
         detach(Serial::RxIrq);
@@ -270,24 +243,18 @@ int AKHILAFLEXSerial::initialiseRx()
     }
 
     status &= ~AKHILAFLEX_SERIAL_RX_BUFF_INIT;
-   /* status &= ~AKHILAFLEX_SERIAL_RX_BUFF_INIT; */
-
 
     if((this->rxBuff = (uint8_t *)malloc(rxBuffSize)) == NULL)
         return AKHILAFLEX_NO_RESOURCES;
-     /*    return AKHILAFLEX_NO_RESOURCES; */
 
     this->rxBuffHead = 0;
     this->rxBuffTail = 0;
 
     //set the receive interrupt
     status |= AKHILAFLEX_SERIAL_RX_BUFF_INIT;
-  /*  status |= AKHILAFLEX_SERIAL_RX_BUFF_INIT; */
     attach(this, &AKHILAFLEXSerial::dataReceived, Serial::RxIrq);
-   /* attach(this, &AKHILAFLEXSerial::dataReceived, Serial::RxIrq); */
 
     return AKHILAFLEX_OK;
-    /*return AKHILAFLEX_OK; */
 }
 
 /**
@@ -295,10 +262,8 @@ int AKHILAFLEXSerial::initialiseRx()
   * use them. We only bring them up on demand.
   */
 int AKHILAFLEXSerial::initialiseTx()
-/*int AKHILAFLEXSerial::initialiseTx() */
 {
     if((status & AKHILAFLEX_SERIAL_TX_BUFF_INIT))
-   /*  if((status & AKHILAFLEX_SERIAL_TX_BUFF_INIT)) */
     {
         //ensure that we receive no interrupts after freeing our buffer
         detach(Serial::TxIrq);
@@ -306,21 +271,16 @@ int AKHILAFLEXSerial::initialiseTx()
     }
 
     status &= ~AKHILAFLEX_SERIAL_TX_BUFF_INIT;
-   /* status &= ~AKHILAFLEX_SERIAL_TX_BUFF_INIT; */
 
     if((this->txBuff = (uint8_t *)malloc(txBuffSize)) == NULL)
         return AKHILAFLEX_NO_RESOURCES;
-       /* return AKHILAFLEX_NO_RESOURCES;   */ 
+
     this->txBuffHead = 0;
     this->txBuffTail = 0;
 
     status |= AKHILAFLEX_SERIAL_TX_BUFF_INIT;
 
     return AKHILAFLEX_OK;
-   /* status |= AKHILAFLEX_SERIAL_TX_BUFF_INIT;
-
-    return AKHILAFLEX_OK; */
-
 }
 
 /**
@@ -330,13 +290,12 @@ int AKHILAFLEXSerial::initialiseTx()
   * @param mode the selected mode, one of: ASYNC, SYNC_SPINWAIT, SYNC_SLEEP
   */
 void AKHILAFLEXSerial::send(AKHILAFLEXSerialMode mode)
-/*void AKHILAFLEXSerial::send(AKHILAFLEXSerialMode mode) */
 {
     if(mode == SYNC_SPINWAIT)
         while(txBufferedSize() > 0);
 
     if(mode == SYNC_SLEEP)
-        fiber_sleep(0);
+        schedule();
 }
 
 /**
@@ -362,13 +321,11 @@ void AKHILAFLEXSerial::send(AKHILAFLEXSerialMode mode)
   *         are no characters in the buffer.
   */
 int AKHILAFLEXSerial::getChar(AKHILAFLEXSerialMode mode)
-/*int AKHILAFLEXSerial::getChar(AKHILAFLEXSerialMode mode) */
 {
     if(mode == ASYNC)
     {
         if(!isReadable())
             return AKHILAFLEX_NO_DATA;
-            /*return AKHILAFLEX_NO_DATA; */
     }
 
     if(mode == SYNC_SPINWAIT)
@@ -404,7 +361,6 @@ int AKHILAFLEXSerial::getChar(AKHILAFLEXSerialMode mode)
   *       memory to contain the copy operation
   */
 void AKHILAFLEXSerial::circularCopy(uint8_t *circularBuff, uint8_t circularBuffSize, uint8_t *linearBuff, uint16_t tailPosition, uint16_t headPosition)
-/*void AKHILAFLEXSerial::circularCopy(uint8_t *circularBuff, uint8_t circularBuffSize, uint8_t *linearBuff, uint16_t tailPosition, uint16_t headPosition) */
 {
     int toBuffIndex = 0;
 
@@ -440,22 +396,18 @@ void AKHILAFLEXSerial::circularCopy(uint8_t *circularBuff, uint8_t circularBuffS
   *         is using the serial instance for transmission.
   */
 int AKHILAFLEXSerial::sendChar(char c, AKHILAFLEXSerialMode mode)
-/*int AKHILAFLEXSerial::sendChar(char c,AKHILAFLEXSerialMode mode) */
 {
     if(txInUse())
         return AKHILAFLEX_SERIAL_IN_USE;
-       /* return AKHILAFLEX_SERIAL_IN_USE; */
 
     lockTx();
 
     //lazy initialisation of our tx buffer
     if(!(status & AKHILAFLEX_SERIAL_TX_BUFF_INIT))
-   /* if(!(status & AKHILAFLEX_SERIAL_TX_BUFF_INIT)) */
     {
         int result = initialiseTx();
 
         if(result != AKHILAFLEX_OK)
-      /*  if(result != AKHILAFLEX_OK) */
             return result;
     }
 
@@ -495,7 +447,6 @@ int AKHILAFLEXSerial::sendChar(char c, AKHILAFLEXSerialMode mode)
   *         if buffer is invalid, or the given bufferLen is <= 0.
   */
 int AKHILAFLEXSerial::send(ManagedString s, AKHILAFLEXSerialMode mode)
-/*int AKHILAFLEXSerial::send(ManagedString s, AKHILAFLEXSerialMode mode) */
 {
     return send((uint8_t *)s.toCharArray(), s.length(), mode);
 }
@@ -527,26 +478,21 @@ int AKHILAFLEXSerial::send(ManagedString s, AKHILAFLEXSerialMode mode)
   *         if buffer is invalid, or the given bufferLen is <= 0.
   */
 int AKHILAFLEXSerial::send(uint8_t *buffer, int bufferLen, AKHILAFLEXSerialMode mode)
-/*int AKHILAFLEXSerial::send(uint8_t *buffer, int bufferLen, AKHILAFLEXSerialMode mode) */
 {
     if(txInUse())
         return AKHILAFLEX_SERIAL_IN_USE;
-        /*return AKHILAFLEX_SERIAL_IN_USE; */
 
     if(bufferLen <= 0 || buffer == NULL)
         return AKHILAFLEX_INVALID_PARAMETER;
-       /* return AKHILAFLEX_INVALID_PARAMETER; */
 
     lockTx();
 
     //lazy initialisation of our tx buffer
     if(!(status & AKHILAFLEX_SERIAL_TX_BUFF_INIT))
-    /*if(!(status & AKHILAFLEX_SERIAL_TX_BUFF_INIT)) */
     {
         int result = initialiseTx();
 
         if(result != AKHILAFLEX_OK)
-       /* if(result != AKHILAFLEX_OK) */
             return result;
     }
 
@@ -591,22 +537,18 @@ int AKHILAFLEXSerial::send(uint8_t *buffer, int bufferLen, AKHILAFLEXSerialMode 
   *         the rx buffer is empty and the mode given is ASYNC.
   */
 int AKHILAFLEXSerial::read(AKHILAFLEXSerialMode mode)
-/*int AKHILAFLEXSerial::read(AKHILAFLEXSerialMode mode) */
 {
     if(rxInUse())
         return AKHILAFLEX_SERIAL_IN_USE;
-       /* return AKHILAFLEX_SERIAL_IN_USE; */
 
     lockRx();
 
     //lazy initialisation of our buffers
     if(!(status & AKHILAFLEX_SERIAL_RX_BUFF_INIT))
- /*   if(!(status & AKHILAFLEX_SERIAL_RX_BUFF_INIT)) */
     {
         int result = initialiseRx();
 
         if(result != AKHILAFLEX_OK)
-       /* if(result != AKHILAFLEX_OK) */
             return result;
     }
 
@@ -642,7 +584,6 @@ int AKHILAFLEXSerial::read(AKHILAFLEXSerialMode mode)
   * @return A ManagedString, or an empty ManagedString if an error was encountered during the read.
   */
 ManagedString AKHILAFLEXSerial::read(int size, AKHILAFLEXSerialMode mode)
-/*ManagedString AKHILAFLEXSerial::read(int size, AKHILAFLEXSerialMode mode) */
 {
     uint8_t buff[size + 1];
 
@@ -684,22 +625,18 @@ ManagedString AKHILAFLEXSerial::read(int size, AKHILAFLEXSerialMode mode)
   *         is using the instance for receiving.
   */
 int AKHILAFLEXSerial::read(uint8_t *buffer, int bufferLen, AKHILAFLEXSerialMode mode)
-/*int AKHILAFLEXSerial::read(uint8_t *buffer, int bufferLen, AKHILAFLEXSerialMode mode) */
 {
     if(rxInUse())
         return AKHILAFLEX_SERIAL_IN_USE;
-       /* return AKHILAFLEX_SERIAL_IN_USE; */
 
     lockRx();
 
     //lazy initialisation of our rx buffer
     if(!(status & AKHILAFLEX_SERIAL_RX_BUFF_INIT))
-   /* if(!(status & AKHILAFLEX_SERIAL_RX_BUFF_INIT)) */
     {
         int result = initialiseRx();
 
         if(result != AKHILAFLEX_OK)
-       /* if(result != AKHILAFLEX_OK) */
             return result;
     }
 
@@ -773,7 +710,6 @@ int AKHILAFLEXSerial::read(uint8_t *buffer, int bufferLen, AKHILAFLEXSerialMode 
   * @note delimeters are matched on a per byte basis.
   */
 ManagedString AKHILAFLEXSerial::readUntil(ManagedString delimeters, AKHILAFLEXSerialMode mode)
-/*ManagedString AKHILAFLEXSerial::readUntil(ManagedString delimeters, AKHILAFLEXSerialMode mode) */
 {
 
     if(rxInUse())
@@ -781,7 +717,6 @@ ManagedString AKHILAFLEXSerial::readUntil(ManagedString delimeters, AKHILAFLEXSe
 
     //lazy initialisation of our rx buffer
     if(!(status & AKHILAFLEX_SERIAL_RX_BUFF_INIT))
-   /* if(!(status & AKHILAFLEX_SERIAL_RX_BUFF_INIT)) */
     {
         int result = initialiseRx();
 
@@ -875,7 +810,6 @@ ManagedString AKHILAFLEXSerial::readUntil(ManagedString delimeters, AKHILAFLEXSe
   * @note the underlying implementation chooses the first allowable rate at or above that requested.
   */
 void AKHILAFLEXSerial::baud(int baudrate)
-/*void AKHILAFLEXSerial::baud(int baudrate) */
 {
     if(baudrate < 0)
         return;
@@ -895,11 +829,9 @@ void AKHILAFLEXSerial::baud(int baudrate)
   * @return AKHILAFLEX_SERIAL_IN_USE if another fiber is currently transmitting or receiving, otherwise AKHILAFLEX_OK.
   */
 int AKHILAFLEXSerial::redirect(PinName tx, PinName rx)
-/*int AKHILAFLEXSerial::redirect(PinName tx, PinName rx) */
 {
     if(txInUse() || rxInUse())
         return AKHILAFLEX_SERIAL_IN_USE;
-       /* return AKHILAFLEX_SERIAL_IN_USE; */
 
     lockTx();
     lockRx();
@@ -922,7 +854,6 @@ int AKHILAFLEXSerial::redirect(PinName tx, PinName rx)
     unlockTx();
 
     return AKHILAFLEX_OK;
-    /*return AKHILAFLEX_OK; */
 }
 
 /**
@@ -945,11 +876,9 @@ int AKHILAFLEXSerial::redirect(PinName tx, PinName rx)
   * @return AKHILAFLEX_INVALID_PARAMETER if the mode given is SYNC_SPINWAIT, otherwise AKHILAFLEX_OK.
   */
 int AKHILAFLEXSerial::eventAfter(int len, AKHILAFLEXSerialMode mode)
-/*int AKHILAFLEXSerial::eventAfter(int len, AKHILAFLEXSerialMode mode) */
 {
     if(mode == SYNC_SPINWAIT)
         return AKHILAFLEX_INVALID_PARAMETER;
-       /* return AKHILAFLEX_INVALID_PARAMETER; */
 
     //configure our head match...
     this->rxBuffHeadMatch = (rxBuffHead + len) % rxBuffSize;
@@ -957,10 +886,8 @@ int AKHILAFLEXSerial::eventAfter(int len, AKHILAFLEXSerialMode mode)
     //block!
     if(mode == SYNC_SLEEP)
         fiber_wait_for_event(AKHILAFLEX_ID_SERIAL, AKHILAFLEX_SERIAL_EVT_HEAD_MATCH);
-      /*  fiber_wait_for_event(AKHILAFLEX_ID_SERIAL, AKHILAFLEX_SERIAL_EVT_HEAD_MATCH); */
 
     return AKHILAFLEX_OK;
-   /* return AKHILAFLEX_OK; */
 }
 
 /**
@@ -985,11 +912,9 @@ int AKHILAFLEXSerial::eventAfter(int len, AKHILAFLEXSerialMode mode)
   * @note delimeters are matched on a per byte basis.
   */
 int AKHILAFLEXSerial::eventOn(ManagedString delimeters, AKHILAFLEXSerialMode mode)
-/*int AKHILAFLEXSerial::eventOn(ManagedString delimeters, AKHILAFLEXSerialMode mode) */
 {
     if(mode == SYNC_SPINWAIT)
         return AKHILAFLEX_INVALID_PARAMETER;
-        /*return AKHILAFLEX_INVALID_PARAMETER; */
 
     //configure our head match...
     this->delimeters = delimeters;
@@ -997,10 +922,8 @@ int AKHILAFLEXSerial::eventOn(ManagedString delimeters, AKHILAFLEXSerialMode mod
     //block!
     if(mode == SYNC_SLEEP)
         fiber_wait_for_event(AKHILAFLEX_ID_SERIAL, AKHILAFLEX_SERIAL_EVT_DELIM_MATCH);
-        /*fiber_wait_for_event(AKHILAFLEX_ID_SERIAL, AKHILAFLEX_SERIAL_EVT_DELIM_MATCH); */
 
     return AKHILAFLEX_OK;
-  /*  return AKHILAFLEX_OK; */
 }
 
 /**
@@ -1012,7 +935,6 @@ int AKHILAFLEXSerial::eventOn(ManagedString delimeters, AKHILAFLEXSerialMode mod
   *       interfere with communities that use manual calls to serial.readable().
   */
 int AKHILAFLEXSerial::isReadable()
-/*int AKHILAFLEXSerial::isReadable() */
 {
     return (rxBuffTail != rxBuffHead) ? 1 : 0;
 }
@@ -1026,7 +948,6 @@ int AKHILAFLEXSerial::isReadable()
   *       interfere with communities that use manual calls to serial.writeable().
   */
 int AKHILAFLEXSerial::isWriteable()
-/*int AKHILAFLEXSerial::isWriteable() */
 {
     return (txBuffHead != (txBuffTail - 1)) ? 1 : 0;
 }
@@ -1040,11 +961,9 @@ int AKHILAFLEXSerial::isWriteable()
   *         for reception, otherwise AKHILAFLEX_OK.
   */
 int AKHILAFLEXSerial::setRxBufferSize(uint8_t size)
-/*int AKHILAFLEXSerial::setRxBufferSize(uint8_t size) */
 {
     if(rxInUse())
         return AKHILAFLEX_SERIAL_IN_USE;
-        /*return AKHILAFLEX_SERIAL_IN_USE; */
 
     lockRx();
 
@@ -1067,11 +986,9 @@ int AKHILAFLEXSerial::setRxBufferSize(uint8_t size)
   *         for transmission, otherwise AKHILAFLEX_OK.
   */
 int AKHILAFLEXSerial::setTxBufferSize(uint8_t size)
-/*int AKHILAFLEXSerial::setTxBufferSize(uint8_t size) */
 {
     if(txInUse())
         return AKHILAFLEX_SERIAL_IN_USE;
-       /* return AKHILAFLEX_SERIAL_IN_USE; */
 
     lockTx();
 
@@ -1091,7 +1008,6 @@ int AKHILAFLEXSerial::setTxBufferSize(uint8_t size)
   * @return the current size of rxBuff in bytes
   */
 int AKHILAFLEXSerial::getRxBufferSize()
-/*int AKHILAFLEXSerial::getRxBufferSize() */
 {
     return this->rxBuffSize;
 }
@@ -1102,7 +1018,6 @@ int AKHILAFLEXSerial::getRxBufferSize()
   * @return the current size of txBuff in bytes
   */
 int AKHILAFLEXSerial::getTxBufferSize()
-/*int AKHILAFLEXSerial::getTxBufferSize() */
 {
     return this->txBuffSize;
 }
@@ -1115,11 +1030,9 @@ int AKHILAFLEXSerial::getTxBufferSize()
   *         for reception, otherwise AKHILAFLEX_OK.
   */
 int AKHILAFLEXSerial::clearRxBuffer()
-/*int AKHILAFLEXSerial::clearRxBuffer(uint8_t size) */
 {
     if(rxInUse())
         return AKHILAFLEX_SERIAL_IN_USE;
-         /* return AKHILAFLEX_SERIAL_IN_USE; */
 
     lockRx();
 
@@ -1128,7 +1041,6 @@ int AKHILAFLEXSerial::clearRxBuffer()
     unlockRx();
 
     return AKHILAFLEX_OK;
-   /* return AKHILAFLEX_OK; */
 }
 
 /**
@@ -1139,11 +1051,9 @@ int AKHILAFLEXSerial::clearRxBuffer()
   *         for transmission, otherwise AKHILAFLEX_OK.
   */
 int AKHILAFLEXSerial::clearTxBuffer()
-/*int AKHILAFLEXSerial::clearTxBuffer() */
 {
     if(txInUse())
         return AKHILAFLEX_SERIAL_IN_USE;
-         /* return AKHILAFLEX_SERIAL_IN_USE; */
 
     lockTx();
 
@@ -1152,8 +1062,6 @@ int AKHILAFLEXSerial::clearTxBuffer()
     unlockTx();
 
     return AKHILAFLEX_OK;
-     /* return AKHILAFLEX_OK; */
-
 }
 
 /**
@@ -1163,7 +1071,6 @@ int AKHILAFLEXSerial::clearTxBuffer()
   * @return The currently buffered number of bytes in our rxBuff.
   */
 int AKHILAFLEXSerial::rxBufferedSize()
-/*int AKHILAFLEXSerial::rxBufferedSize() */
 {
     if(rxBuffTail > rxBuffHead)
         return (rxBuffSize - rxBuffTail) + rxBuffHead;
@@ -1178,7 +1085,6 @@ int AKHILAFLEXSerial::rxBufferedSize()
   * @return The currently buffered number of bytes in our txBuff.
   */
 int AKHILAFLEXSerial::txBufferedSize()
-/*int AKHILAFLEXSerial::txBufferedSize() */
 {
     if(txBuffTail > txBuffHead)
         return (txBuffSize - txBuffTail) + txBuffHead;
@@ -1194,11 +1100,8 @@ int AKHILAFLEXSerial::txBufferedSize()
   * @note Only one fiber can call read at a time
   */
 int AKHILAFLEXSerial::rxInUse()
-/*int AKHILAFLEXSerial::rxInUse() */
 {
     return (status & AKHILAFLEX_SERIAL_RX_IN_USE);
-    /* return(status & AKHILAFLEX_SERIAL_IN_USE); */
-
 }
 
 /**
@@ -1209,11 +1112,8 @@ int AKHILAFLEXSerial::rxInUse()
   * @note Only one fiber can call send at a time
   */
 int AKHILAFLEXSerial::txInUse()
-/*int AKHILAFLEXSerial::txInUse() */
 {
     return (status & AKHILAFLEX_SERIAL_TX_IN_USE);
-    /* return(status & AKHILAFLEX_SERIAL_IN_USE); */
-
 }
 
 /**
@@ -1222,9 +1122,7 @@ int AKHILAFLEXSerial::txInUse()
   * @param interruptType one of Serial::RxIrq or Serial::TxIrq
   */
 void AKHILAFLEXSerial::detach(Serial::IrqType interruptType)
-/*void AKHILAFLEXSerial::detach(Serial::IrqType interruptType) */
 {
     //we detach by sending a bad value to attach, for some weird reason...
     attach((AKHILAFLEXSerial *)NULL, &AKHILAFLEXSerial::dataReceived, interruptType);
-   /* attach((AKHILAFLEXSerial *)NULL, &AKHILAFLEXSerial::dataReceived, interruptType); */
 }

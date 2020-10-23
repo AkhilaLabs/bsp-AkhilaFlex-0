@@ -26,9 +26,7 @@ DEALINGS IN THE SOFTWARE.
 #include "AKHILAFLEXConfig.h"
 #include "AKHILAFLEXEddystone.h"
 
-/*AKHILAFLEXEddystone *AKHILAFLEXEddystone::_instance = NULL; */
-AKHILAFLEXEddystone *AKHILAFLEXEddystone::_instance = NULL; 
-
+AKHILAFLEXEddystone *AKHILAFLEXEddystone::_instance = NULL;
 
 /* The underlying Nordic libraries that support BLE do not compile cleanly with the stringent GCC settings we employ.
  * If we're compiling under GCC, then we suppress any warnings generated from this code (but not the rest of the DAL)
@@ -50,8 +48,7 @@ AKHILAFLEXEddystone *AKHILAFLEXEddystone::_instance = NULL;
 
 const uint8_t EDDYSTONE_UUID[] = {0xAA, 0xFE};
 
-/*#if CONFIG_ENABLED(AKHILAFLEX_BLE_EDDYSTONE_URL) */
-#if CONFIG_ENABLED(AKHILAFLEX_BLE_EDDYSTONE_URL) 
+#if CONFIG_ENABLED(AKHILAFLEX_BLE_EDDYSTONE_URL)
 const char *EDDYSTONE_URL_PREFIXES[] = {"http://www.", "https://www.", "http://", "https://"};
 const size_t EDDYSTONE_URL_PREFIXES_LENGTH = sizeof(EDDYSTONE_URL_PREFIXES) / sizeof(char *);
 const char *EDDYSTONE_URL_SUFFIXES[] = {".com/", ".org/", ".edu/", ".net/", ".info/", ".biz/", ".gov/", ".com", ".org", ".edu", ".net", ".info", ".biz", ".gov"};
@@ -60,7 +57,6 @@ const int EDDYSTONE_URL_MAX_LENGTH = 18;
 const uint8_t EDDYSTONE_URL_FRAME_TYPE = 0x10;
 #endif
 
-/*#if CONFIG_ENABLED(AKHILAFLEX_BLE_EDDYSTONE_UID) */
 #if CONFIG_ENABLED(AKHILAFLEX_BLE_EDDYSTONE_UID)
 const int EDDYSTONE_UID_NAMESPACE_MAX_LENGTH = 10;
 const int EDDYSTONE_UID_INSTANCE_MAX_LENGTH = 6;
@@ -77,23 +73,19 @@ const uint8_t EDDYSTONE_UID_FRAME_TYPE = 0x00;
  * @note The BLE stack *cannot*  be brought up in a static context (the software simply hangs or corrupts itself).
  * Hence, the init() member function should be used to initialise the BLE stack.
  */
-/*AKHILAFLEXEddystone::AKHILAFLEXEddystone() */
-AKHILAFLEXEddystone::AKHILAFLEXEddystone() 
+AKHILAFLEXEddystone::AKHILAFLEXEddystone()
 {
 }
 
-/*AKHILAFLEXEddystone* AKHILAFLEXEddystone::getInstance() */
-AKHILAFLEXEddystone* AKHILAFLEXEddystone::getInstance() 
+AKHILAFLEXEddystone* AKHILAFLEXEddystone::getInstance()
 {
     if (_instance == 0)
-     /*   _instance = new AKHILAFLEXEddystone; */
-        _instance = new AKHILAFLEXEddystone; 
+        _instance = new AKHILAFLEXEddystone;
 
     return _instance;
 }
 
-/*#if CONFIG_ENABLED(AKHILAFLEX_BLE_EDDYSTONE_URL) */
-#if CONFIG_ENABLED(AKHILAFLEX_BLE_EDDYSTONE_URL) 
+#if CONFIG_ENABLED(AKHILAFLEX_BLE_EDDYSTONE_URL)
 
 /**
   * Set the content of Eddystone URL frames
@@ -105,16 +97,14 @@ AKHILAFLEXEddystone* AKHILAFLEXEddystone::getInstance()
   * @note The calibratedPower value ranges from -100 to +20 to a resolution of 1. The calibrated power should be binary encoded.
   * More information can be found at https://github.com/google/eddystone/tree/master/eddystone-uid#tx-power
   */
-/*int AKHILAFLEXEddystone::setURL(BLEDevice* ble, const char* url, int8_t calibratedPower) */
-int AKHILAFLEXEddystone::setURL(BLEDevice* ble, const char* url, int8_t calibratedPower) 
+int AKHILAFLEXEddystone::setURL(BLEDevice* ble, const char* url, int8_t calibratedPower)
 {
     int urlDataLength = 0;
     char urlData[EDDYSTONE_URL_MAX_LENGTH];
     memset(urlData, 0, EDDYSTONE_URL_MAX_LENGTH);
 
     if (url == NULL || strlen(url) == 0)
-      /*  return AKHILAFLEX_INVALID_PARAMETER; */
-        return AKHILAFLEX_INVALID_PARAMETER; 
+        return AKHILAFLEX_INVALID_PARAMETER;
 
     // Prefix
     for (size_t i = 0; i < EDDYSTONE_URL_PREFIXES_LENGTH; i++)
@@ -162,7 +152,6 @@ int AKHILAFLEXEddystone::setURL(BLEDevice* ble, const char* url, int8_t calibrat
     ble->accumulateAdvertisingPayload(GapAdvertisingData::COMPLETE_LIST_16BIT_SERVICE_IDS, EDDYSTONE_UUID, sizeof(EDDYSTONE_UUID));
     ble->accumulateAdvertisingPayload(GapAdvertisingData::SERVICE_DATA, rawFrame, index + urlDataLength);
 
-   /* return AKHILAFLEX_OK; */
     return AKHILAFLEX_OK;
 }
 
@@ -176,17 +165,13 @@ int AKHILAFLEXEddystone::setURL(BLEDevice* ble, const char* url, int8_t calibrat
   * @note The calibratedPower value ranges from -100 to +20 to a resolution of 1. The calibrated power should be binary encoded.
   * More information can be found at https://github.com/google/eddystone/tree/master/eddystone-uid#tx-power
   */
-/*int AKHILAFLEXEddystone::setURL(BLEDevice* ble, ManagedString url, int8_t calibratedPower) */
-int AKHILAFLEXEddystone::setURL(BLEDevice* ble, ManagedString url, int8_t calibratedPower) 
-
+int AKHILAFLEXEddystone::setURL(BLEDevice* ble, ManagedString url, int8_t calibratedPower)
 {
     return setURL(ble, (char *)url.toCharArray(), calibratedPower);
 }
 #endif
 
-/*#if CONFIG_ENABLED(AKHILAFLEX_BLE_EDDYSTONE_UID) */
-#if CONFIG_ENABLED(AKHILAFLEX_BLE_EDDYSTONE_UID) 
-
+#if CONFIG_ENABLED(AKHILAFLEX_BLE_EDDYSTONE_UID)
 
 /**
   * Set the content of Eddystone UID frames
@@ -200,13 +185,10 @@ int AKHILAFLEXEddystone::setURL(BLEDevice* ble, ManagedString url, int8_t calibr
   * @note The calibratedPower value ranges from -100 to +20 to a resolution of 1. The calibrated power should be binary encoded.
   * More information can be found at https://github.com/google/eddystone/tree/master/eddystone-uid#tx-power
   */
-/*int AKHILAFLEXEddystone::setUID(BLEDevice* ble, const char* uid_namespace, const char* uid_instance, int8_t calibratedPower) */
-int AKHILAFLEXEddystone::setUID(BLEDevice* ble, const char* uid_namespace, const char* uid_instance, int8_t calibratedPower) 
-
+int AKHILAFLEXEddystone::setUID(BLEDevice* ble, const char* uid_namespace, const char* uid_instance, int8_t calibratedPower)
 {
     if (uid_namespace == NULL || uid_instance == NULL)
-       /* return AKHILAFLEX_INVALID_PARAMETER; */
-        return AKHILAFLEX_INVALID_PARAMETER; 
+        return AKHILAFLEX_INVALID_PARAMETER;
 
     char uidData[EDDYSTONE_UID_NAMESPACE_MAX_LENGTH + EDDYSTONE_UID_INSTANCE_MAX_LENGTH];
 
@@ -227,8 +209,7 @@ int AKHILAFLEXEddystone::setUID(BLEDevice* ble, const char* uid_namespace, const
     ble->accumulateAdvertisingPayload(GapAdvertisingData::COMPLETE_LIST_16BIT_SERVICE_IDS, EDDYSTONE_UUID, sizeof(EDDYSTONE_UUID));
     ble->accumulateAdvertisingPayload(GapAdvertisingData::SERVICE_DATA, rawFrame, index + EDDYSTONE_UID_NAMESPACE_MAX_LENGTH + EDDYSTONE_UID_INSTANCE_MAX_LENGTH);
 
-    /*return AKHILAFLEX_OK; */
-     return AKHILAFLEX_OK; 
+    return AKHILAFLEX_OK;
 }
 
 #endif

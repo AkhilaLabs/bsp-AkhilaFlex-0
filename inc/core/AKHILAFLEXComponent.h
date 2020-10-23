@@ -22,117 +22,60 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
 FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 */
-/*
-#ifndef AKHILAFLEX_COMPONENT_H
-#define AKHILAFLEX_COMPONENT_H */
-#ifndef AKHILAFLEX_COMPONENT_H
-#define AKHILAFLEX_COMPONENT_H 
 
+#ifndef AKHILAFLEX_COMPONENT_H
+#define AKHILAFLEX_COMPONENT_H
 
 #include "AKHILAFLEXConfig.h"
-/*
+
 // Enumeration of core components.
 #define AKHILAFLEX_ID_BUTTON_A            1
 #define AKHILAFLEX_ID_BUTTON_B            2
-#define AKHILAFLEX_ID_BUTTON_RESET        3
-#define AKHILAFLEX_ID_ACCELEROMETER       4
-#define AKHILAFLEX_ID_COMPASS             5
-#define AKHILAFLEX_ID_DISPLAY             6 */
-#define AKHILAFLEX_ID_BUTTON_A            1
-#define AKHILAFLEX_ID_BUTTON_B            2
-#define AKHILAFLEX_ID_BUTTON_RESET        3
-#define AKHILAFLEX_ID_ACCELEROMETER       4
-#define AKHILAFLEX_ID_COMPASS             5
-#define AKHILAFLEX_ID_DISPLAY             6 
+#define AKHILAFLEX_ID_BUTTON_AB           3           // Button A+B multibutton
+#define AKHILAFLEX_ID_BUTTON_RESET        4
+#define AKHILAFLEX_ID_ACCELEROMETER       5
+#define AKHILAFLEX_ID_COMPASS             6
+#define AKHILAFLEX_ID_DISPLAY             7
+#define AKHILAFLEX_ID_THERMOMETER         8
+#define AKHILAFLEX_ID_RADIO               9
+#define AKHILAFLEX_ID_RADIO_DATA_READY    10
+#define AKHILAFLEX_ID_MULTIBUTTON_ATTACH  11
+#define AKHILAFLEX_ID_SERIAL              12
+#define AKHILAFLEX_ID_GESTURE             13          // Gesture events
 
-/*
-//EDGE connector events
-#define AKHILAFLEX_IO_PINS                20
+#define AKHILAFLEX_ID_IO_P0               100         //P0 is the left most pad (ANALOG/DIGITAL)
+#define AKHILAFLEX_ID_IO_P1               101         //P1 is the middle pad (ANALOG/DIGITAL)
+#define AKHILAFLEX_ID_IO_P2               102         //P2 is the right most pad (ANALOG/DIGITAL)
+#define AKHILAFLEX_ID_IO_P3               103         //COL1 (ANALOG/DIGITAL)
+#define AKHILAFLEX_ID_IO_P4               104         //BTN_A
+#define AKHILAFLEX_ID_IO_P5               105         //COL2 (ANALOG/DIGITAL)
+#define AKHILAFLEX_ID_IO_P6               106         //ROW2
+#define AKHILAFLEX_ID_IO_P7               107         //ROW1
+#define AKHILAFLEX_ID_IO_P8               108         //PIN 18
+#define AKHILAFLEX_ID_IO_P9               109         //ROW3
+#define AKHILAFLEX_ID_IO_P10              110         //COL3 (ANALOG/DIGITAL)
+#define AKHILAFLEX_ID_IO_P11              111         //BTN_B
+#define AKHILAFLEX_ID_IO_P12              112         //PIN 20
+#define AKHILAFLEX_ID_IO_P13              113         //SCK
+#define AKHILAFLEX_ID_IO_P14              114         //MISO
+#define AKHILAFLEX_ID_IO_P15              115         //MOSI
+#define AKHILAFLEX_ID_IO_P16              116         //PIN 16
+#define AKHILAFLEX_ID_IO_P19              119         //SCL
+#define AKHILAFLEX_ID_IO_P20              120         //SDA
 
-#define AKHILAFLEX_ID_IO_P0               7           //P0 is the left most pad (ANALOG/DIGITAL)
-#define AKHILAFLEX_ID_IO_P1               8           //P1 is the middle pad (ANALOG/DIGITAL)
-#define AKHILAFLEX_ID_IO_P2               9           //P2 is the right most pad (ANALOG/DIGITAL)
-#define AKHILAFLEX_ID_IO_P3               10          //COL1 (ANALOG/DIGITAL)
-#define AKHILAFLEX_ID_IO_P4               11          //BTN_A
-#define AKHILAFLEX_ID_IO_P5               12          //COL2 (ANALOG/DIGITAL)
-#define AKHILAFLEX_ID_IO_P6               13          //ROW2
-#define AKHILAFLEX_ID_IO_P7               14          //ROW1
-#define AKHILAFLEX_ID_IO_P8               15          //PIN 18
-#define AKHILAFLEX_ID_IO_P9               16          //ROW3
-#define AKHILAFLEX_ID_IO_P10              17          //COL3 (ANALOG/DIGITAL)
-#define AKHILAFLEX_ID_IO_P11              18          //BTN_B
-#define AKHILAFLEX_ID_IO_P12              19          //PIN 20
-#define AKHILAFLEX_ID_IO_P13              20          //SCK
-#define AKHILAFLEX_ID_IO_P14              21          //MISO
-#define AKHILAFLEX_ID_IO_P15              22          //MOSI
-#define AKHILAFLEX_ID_IO_P16              23          //PIN 16
-#define AKHILAFLEX_ID_IO_P19              24          //SCL
-#define AKHILAFLEX_ID_IO_P20              25          //SDA */
-#define AKHILAFLEX_IO_PINS                20
+#define AKHILAFLEX_ID_IO_INT1             130         //INT1
+#define AKHILAFLEX_ID_IO_INT2             131         //INT2
+#define AKHILAFLEX_ID_IO_INT3             132         //INT3
 
-#define AKHILAFLEX_ID_IO_P0               7           //P0 is the left most pad (ANALOG/DIGITAL)
-#define AKHILAFLEX_ID_IO_P1               8           //P1 is the middle pad (ANALOG/DIGITAL)
-#define AKHILAFLEX_ID_IO_P2               9           //P2 is the right most pad (ANALOG/DIGITAL)
-#define AKHILAFLEX_ID_IO_P3               10          //COL1 (ANALOG/DIGITAL)
-#define AKHILAFLEX_ID_IO_P4               11          //BTN_A
-#define AKHILAFLEX_ID_IO_P5               12          //COL2 (ANALOG/DIGITAL)
-#define AKHILAFLEX_ID_IO_P6               13          //ROW2
-#define AKHILAFLEX_ID_IO_P7               14          //ROW1
-#define AKHILAFLEX_ID_IO_P8               15          //PIN 18
-#define AKHILAFLEX_ID_IO_P9               16          //ROW3
-#define AKHILAFLEX_ID_IO_P10              17          //COL3 (ANALOG/DIGITAL)
-#define AKHILAFLEX_ID_IO_P11              18          //BTN_B
-#define AKHILAFLEX_ID_IO_P12              19          //PIN 20
-#define AKHILAFLEX_ID_IO_P13              20          //SCK
-#define AKHILAFLEX_ID_IO_P14              21          //MISO
-#define AKHILAFLEX_ID_IO_P15              22          //MOSI
-#define AKHILAFLEX_ID_IO_P16              23          //PIN 16
-#define AKHILAFLEX_ID_IO_P19              24          //SCL
-#define AKHILAFLEX_ID_IO_P20              25          //SDA
+// System Softwarre components
+#define AKHILAFLEX_ID_PARTIAL_FLASHING                200
 
-
-/*
-#define AKHILAFLEX_ID_BUTTON_AB           26          // Button A+B multibutton
-#define AKHILAFLEX_ID_GESTURE             27          // Gesture events
-
-#define AKHILAFLEX_ID_THERMOMETER         28
-#define AKHILAFLEX_ID_RADIO               29
-#define AKHILAFLEX_ID_RADIO_DATA_READY    30
-#define AKHILAFLEX_ID_MULTIBUTTON_ATTACH  31
-#define AKHILAFLEX_ID_SERIAL              32
-
-#define AKHILAFLEX_ID_IO_INT1             33          //INT1
-#define AKHILAFLEX_ID_IO_INT2             34          //INT2
-#define AKHILAFLEX_ID_IO_INT3             35          //INT3
-#define AKHILAFLEX_ID_PARTIAL_FLASHING    36 */
-#define AKHILAFLEX_ID_BUTTON_AB           26          // Button A+B multibutton
-#define AKHILAFLEX_ID_GESTURE             27          // Gesture events
-
-#define AKHILAFLEX_ID_THERMOMETER         28
-#define AKHILAFLEX_ID_RADIO               29
-#define AKHILAFLEX_ID_RADIO_DATA_READY    30
-#define AKHILAFLEX_ID_MULTIBUTTON_ATTACH  31
-#define AKHILAFLEX_ID_SERIAL              32 
-
-#define AKHILAFLEX_ID_IO_INT1             33          //INT1
-#define AKHILAFLEX_ID_IO_INT2             34          //INT2
-#define AKHILAFLEX_ID_IO_INT3             35          //INT3
-#define AKHILAFLEX_ID_PARTIAL_FLASHING    36  
-
-/*
-#define AKHILAFLEX_ID_MESSAGE_BUS_LISTENER            1021          // Message bus indication that a handler for a given ID has been registered.
-#define AKHILAFLEX_ID_NOTIFY_ONE                      1022          // Notfication channel, for general purpose synchronisation
-#define AKHILAFLEX_ID_NOTIFY                          1023          // Notfication channel, for general purpose synchronisation
-*/
 #define AKHILAFLEX_ID_MESSAGE_BUS_LISTENER            1021          // Message bus indication that a handler for a given ID has been registered.
 #define AKHILAFLEX_ID_NOTIFY_ONE                      1022          // Notfication channel, for general purpose synchronisation
 #define AKHILAFLEX_ID_NOTIFY                          1023          // Notfication channel, for general purpose synchronisation
 
 // Universal flags used as part of the status field
-/*#define AKHILAFLEX_COMPONENT_RUNNING		0x01 */
-#define AKHILAFLEX_COMPONENT_RUNNING		0x01 
-
-
+#define AKHILAFLEX_COMPONENT_RUNNING		0x01
 
 
 /**
@@ -158,8 +101,7 @@ DEALINGS IN THE SOFTWARE.
   * register their components using system_timer_add_component() fiber_add_idle_component() respectively.
   *
   */
-/*class AKHILAFLEXComponent */
-class AKHILAFLEXComponent 
+class AKHILAFLEXComponent
 {
     protected:
 
@@ -171,8 +113,7 @@ class AKHILAFLEXComponent
     /**
       * The default constructor of a AKHILAFLEXComponent
       */
-  /*  AKHILAFLEXComponent()  */
-    AKHILAFLEXComponent() 
+    AKHILAFLEXComponent()
     {
         this->id = 0;
         this->status = 0;
@@ -199,8 +140,7 @@ class AKHILAFLEXComponent
       * If you have added your component to the idle or system tick component arrays,
       * you must remember to remove your component from them if your component is destructed.
       */
-   /* virtual ~AKHILAFLEXComponent() */
-    virtual ~AKHILAFLEXComponent() 
+    virtual ~AKHILAFLEXComponent()
     {
     }
 };

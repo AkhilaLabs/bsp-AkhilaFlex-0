@@ -25,9 +25,6 @@ DEALINGS IN THE SOFTWARE.
 
 #ifndef AKHILAFLEX_DFU_SERVICE_H
 #define AKHILAFLEX_DFU_SERVICE_H
-/*#ifndef AKHILAFLEX_DFU_SERVICE_H
-#define AKHILAFLEX_DFU_SERVICE_H */
-
 
 #include "mbed.h"
 #include "AKHILAFLEXConfig.h"
@@ -37,23 +34,15 @@ DEALINGS IN THE SOFTWARE.
 // AKHILAFLEX ControlPoint OpCodes
 // Requests transfer to the Nordic DFU bootloader.
 #define AKHILAFLEX_DFU_OPCODE_START_DFU       1
-/*#define  AKHILAFLEX_DFU_OPCODE_START_DFU       1 */
 
 // visual ID code constants
 #define AKHILAFLEX_DFU_HISTOGRAM_WIDTH        5
 #define AKHILAFLEX_DFU_HISTOGRAM_HEIGHT       5
-/*#define AKHILAFLEX_DFU_HISTOGRAM_WIDTH     5
-#define AKHILAFLEX_DFU_HISTOGRAM_HEIGHT      5  */
-
 
 // UUIDs for our service and characteristics
 extern const uint8_t  AKHILAFLEXDFUServiceUUID[];
 extern const uint8_t  AKHILAFLEXDFUServiceControlCharacteristicUUID[];
 extern const uint8_t  AKHILAFLEXDFUServiceFlashCodeCharacteristicUUID[];
-/*extern const uint8_t  AKHILAFLEXDFUServiceUUID[];
-extern const uint8_t  AKHILAFLEXDFUServiceControlCharacteristicUUID[];
-extern const uint8_t  AKHILAFLEXDFUServiceFlashCodeCharacteristicUUID[]; */
-
 
 // Handle on the memory resident Nordic bootloader.
 extern "C" void bootloader_start(void);
@@ -64,7 +53,6 @@ extern "C" void bootloader_start(void);
   * device.
   */
 class AKHILAFLEXDFUService
-/*class AKHILAFLEXDFUService */
 {
     public:
 
@@ -74,7 +62,6 @@ class AKHILAFLEXDFUService
       * @param _ble The instance of a BLE device that we're running on.
       */
     AKHILAFLEXDFUService(BLEDevice &_ble);
-    /*AKHILAFLEXDFUService(BLEDevice &_ble); */
 
     /**
       * Callback. Invoked when any of our attributes are written via BLE.
@@ -98,9 +85,6 @@ class AKHILAFLEXDFUService
 
     GattAttribute::Handle_t AKHILAFLEXDFUServiceControlCharacteristicHandle;
     GattAttribute::Handle_t AKHILAFLEXDFUServiceFlashCodeCharacteristicHandle;
-    /*GattAttribute::Handle_t AKHILAFLEXDFUServiceControlCharacteristicHandle;
-    GattAttribute::Handle_t AKHILAFLEXDFUServiceFlashCodeCharacteristicHandle; */
-
 
     // Displays the device's ID code as a histogram on the LED matrix display.
     void showNameHistogram();
@@ -112,8 +96,6 @@ class AKHILAFLEXDFUService
     void releaseFlashCode();
 
     // Event handlers for button clicks.
-   /* void onButtonA(AKHILAFLEXEvent e);
-    void onButtonB(AKHILAFLEXEvent e); */
     void onButtonA(AKHILAFLEXEvent e);
     void onButtonB(AKHILAFLEXEvent e);
 };

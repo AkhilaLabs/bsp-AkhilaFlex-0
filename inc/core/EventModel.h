@@ -54,8 +54,8 @@ DEALINGS IN THE SOFTWARE.
 class EventModel
 {
     protected:
-  /*  void (*listener_deletion_callback)(AKHILAFLEXListener *); */ // if not null, this function is invoked when a listener is removed.
-   void (*listener_deletion_callback)(AKHILAFLEXListener *); 
+    void (*listener_deletion_callback)(AKHILAFLEXListener *); // if not null, this function is invoked when a listener is removed.
+
     public:
 
     static EventModel *defaultEventBus;
@@ -71,12 +71,10 @@ class EventModel
       *
       * @return This default implementation simply returns AKHILAFLEX_NOT_SUPPORTED.
 	  */
-/*	virtual int send(AKHILAFLEXEvent evt) */
-   virtual int send(AKHILAFLEXEvent evt) 
+	virtual int send(AKHILAFLEXEvent evt)
     {
         (void) evt;
-      /*  return AKHILAFLEX_NOT_SUPPORTED; */
-        return AKHILAFLEX_NOT_SUPPORTED; 
+        return AKHILAFLEX_NOT_SUPPORTED;
     }
 
     /**
@@ -86,14 +84,10 @@ class EventModel
      *
      * @return This default implementation simply returns AKHILAFLEX_NOT_SUPPORTED.
      */
-   /* virtual int add(AKHILAFLEXListener *listener) */
-    virtual int add(AKHILAFLEXListener *listener) 
-
+    virtual int add(AKHILAFLEXListener *listener)
     {
         (void) listener;
-      /*  return AKHILAFLEX_NOT_SUPPORTED; */
-        return AKHILAFLEX_NOT_SUPPORTED; 
-
+        return AKHILAFLEX_NOT_SUPPORTED;
     }
 
     /**
@@ -103,13 +97,10 @@ class EventModel
      *
      * @return This default implementation simply returns AKHILAFLEX_NOT_SUPPORTED.
      */
-   /* virtual int remove(AKHILAFLEXListener *listener) */
-   virtual int remove(AKHILAFLEXListener *listener) 
-
+    virtual int remove(AKHILAFLEXListener *listener)
     {
         (void) listener;
-      /*  return AKHILAFLEX_NOT_SUPPORTED;  */
-        return AKHILAFLEX_NOT_SUPPORTED; 
+        return AKHILAFLEX_NOT_SUPPORTED;
     }
 
     /**
@@ -119,8 +110,7 @@ class EventModel
       *
       * @return This default implementation simply returns NULL.
       */
-  /*  AKHILAFLEXListener *elementAt(int n) */
-    AKHILAFLEXListener *elementAt(int n) 
+    AKHILAFLEXListener *elementAt(int n)
     {
         (void) n;
         return NULL;
@@ -143,8 +133,7 @@ class EventModel
 	static int setDefaultEventModel(EventModel &model)
     {
         EventModel::defaultEventBus = &model;
-       /* return AKHILAFLEX_OK; */
-         return AKHILAFLEX_OK; 
+        return AKHILAFLEX_OK;
     }
 
     /**
@@ -152,12 +141,10 @@ class EventModel
       *
       * @returns AKHILAFLEX_OK on success.
       **/
-   /* int setListenerDeletionCallback(void (*listener_deletion_callback)(AKHILAFLEXListener *)) */
-   int setListenerDeletionCallback(void (*listener_deletion_callback)(AKHILAFLEXListener *)) 
+    int setListenerDeletionCallback(void (*listener_deletion_callback)(AKHILAFLEXListener *))
     {
         this->listener_deletion_callback = listener_deletion_callback;
-      /*  return AKHILAFLEX_OK; */
-       return AKHILAFLEX_OK; 
+        return AKHILAFLEX_OK;
     }
 
 	/**
@@ -191,26 +178,19 @@ class EventModel
       * uBit.messageBus.listen(AKHILAFLEX_ID_BUTTON_B, AKHILAFLEX_BUTTON_EVT_CLICK, onButtonBClick);
       * @endcode
 	  */
-/*	int listen(int id, int value, void (*handler)(AKHILAFLEXEvent), uint16_t flags = EVENT_LISTENER_DEFAULT_FLAGS) */
-   int listen(int id, int value, void (*handler)(AKHILAFLEXEvent), uint16_t flags = EVENT_LISTENER_DEFAULT_FLAGS)
-    
+	int listen(int id, int value, void (*handler)(AKHILAFLEXEvent), uint16_t flags = EVENT_LISTENER_DEFAULT_FLAGS)
     {
         if (handler == NULL)
-           /* return AKHILAFLEX_INVALID_PARAMETER; */
-           return AKHILAFLEX_INVALID_PARAMETER;
+            return AKHILAFLEX_INVALID_PARAMETER;
 
-      /*  AKHILAFLEXListener *newListener = new AKHILAFLEXListener(id, value, handler, flags); */
-       AKHILAFLEXListener *newListener = new AKHILAFLEXListener(id, value, handler, flags); 
+        AKHILAFLEXListener *newListener = new AKHILAFLEXListener(id, value, handler, flags);
 
-       /* if(add(newListener) == AKHILAFLEX_OK) */
-       if(add(newListener) == AKHILAFLEX_OK) 
-          /* return AKHILAFLEX_OK; */ 
-          return AKHILAFLEX_OK; 
+        if(add(newListener) == AKHILAFLEX_OK)
+            return AKHILAFLEX_OK;
 
         delete newListener;
 
-       /* return AKHILAFLEX_NOT_SUPPORTED;  */
-         return AKHILAFLEX_NOT_SUPPORTED; 
+        return AKHILAFLEX_NOT_SUPPORTED;
     }
 
     /**
@@ -246,26 +226,19 @@ class EventModel
       * uBit.messageBus.listen(AKHILAFLEX_ID_BUTTON_B, AKHILAFLEX_BUTTON_EVT_CLICK, onButtonBClick);
       * @endcode
 	  */
-   /* int listen(int id, int value, void (*handler)(AKHILAFLEXEvent, void*), void* arg, uint16_t flags = EVENT_LISTENER_DEFAULT_FLAGS) */
-  int listen(int id, int value, void (*handler)(AKHILAFLEXEvent, void*), void* arg, uint16_t flags = EVENT_LISTENER_DEFAULT_FLAGS)
+    int listen(int id, int value, void (*handler)(AKHILAFLEXEvent, void*), void* arg, uint16_t flags = EVENT_LISTENER_DEFAULT_FLAGS)
     {
         if (handler == NULL)
-           /* return AKHILAFLEX_INVALID_PARAMETER; */
-            return AKHILAFLEX_INVALID_PARAMETER; 
+            return AKHILAFLEX_INVALID_PARAMETER;
 
-       /* AKHILAFLEXListener *newListener = new AKHILAFLEXListener(id, value, handler, arg, flags); */
-        AKHILAFLEXListener *newListener = new AKHILAFLEXListener(id, value, handler, arg, flags); 
+        AKHILAFLEXListener *newListener = new AKHILAFLEXListener(id, value, handler, arg, flags);
 
-       /* if(add(newListener) == AKHILAFLEX_OK)
-            return AKHILAFLEX_OK; */
         if(add(newListener) == AKHILAFLEX_OK)
-            return AKHILAFLEX_OK; 
-    
+            return AKHILAFLEX_OK;
 
         delete newListener;
 
-      /* return AKHILAFLEX_NOT_SUPPORTED; */
-       return AKHILAFLEX_NOT_SUPPORTED; 
+        return AKHILAFLEX_NOT_SUPPORTED;
     }
 
 	/**
@@ -297,8 +270,8 @@ class EventModel
       * @endcode
 	  */
     template <typename T>
-	/*int listen(uint16_t id, uint16_t value, T* object, void (T::*handler)(AKHILAFLEXEvent), uint16_t flags = EVENT_LISTENER_DEFAULT_FLAGS); */
- int listen(uint16_t id, uint16_t value, T* object, void (T::*handler)(AKHILAFLEXEvent), uint16_t flags = EVENT_LISTENER_DEFAULT_FLAGS); 
+	int listen(uint16_t id, uint16_t value, T* object, void (T::*handler)(AKHILAFLEXEvent), uint16_t flags = EVENT_LISTENER_DEFAULT_FLAGS);
+
 
 	/**
 	  * Unregister a listener function.
@@ -324,20 +297,15 @@ class EventModel
       * uBit.messageBus.ignore(AKHILAFLEX_ID_BUTTON_B, AKHILAFLEX_BUTTON_EVT_CLICK, onButtonBClick);
       * @endcode
 	  */
-	/*int ignore(int id, int value, void (*handler)(AKHILAFLEXEvent)) */
-    int ignore(int id, int value, void (*handler)(AKHILAFLEXEvent)) 
+	int ignore(int id, int value, void (*handler)(AKHILAFLEXEvent))
     {
         if (handler == NULL)
-           /* return AKHILAFLEX_INVALID_PARAMETER; */
-             return AKHILAFLEX_INVALID_PARAMETER; 
+            return AKHILAFLEX_INVALID_PARAMETER;
 
-        /*AKHILAFLEXListener listener(id, value, handler); */
-       AKHILAFLEXListener listener(id, value, handler); 
+        AKHILAFLEXListener listener(id, value, handler);
         remove(&listener);
 
-      /*  return AKHILAFLEX_OK; */
-       return AKHILAFLEX_OK; 
-
+        return AKHILAFLEX_OK;
     }
 
     /**
@@ -366,19 +334,15 @@ class EventModel
       * uBit.messageBus.ignore(AKHILAFLEX_ID_BUTTON_B, AKHILAFLEX_BUTTON_EVT_CLICK, onButtonBClick);
       * @endcode
 	  */
-	/*int ignore(int id, int value, void (*handler)(AKHILAFLEXEvent, void*), void* arg = NULL) */
-   int ignore(int id, int value, void (*handler)(AKHILAFLEXEvent, void*), void* arg = NULL) 
+	int ignore(int id, int value, void (*handler)(AKHILAFLEXEvent, void*), void* arg = NULL)
     {
         if (handler == NULL)
-          /*  return AKHILAFLEX_INVALID_PARAMETER; */
-             return AKHILAFLEX_INVALID_PARAMETER; 
+            return AKHILAFLEX_INVALID_PARAMETER;
 
-      /* AKHILAFLEXListener listener(id, value, handler, arg);  */
-      AKHILAFLEXListener listener(id, value, handler, arg); 
+        AKHILAFLEXListener listener(id, value, handler, arg);
         remove(&listener);
 
-       /* return AKHILAFLEX_OK; */
-        return AKHILAFLEX_OK; 
+        return AKHILAFLEX_OK;
     }
 
 	/**
@@ -408,7 +372,7 @@ class EventModel
       * @endcode
 	  */
     template <typename T>
-	int ignore(uint16_t id, uint16_t value, T* object, void (T::*handler)(AKHILAFLEXEvent)); 
+	int ignore(uint16_t id, uint16_t value, T* object, void (T::*handler)(AKHILAFLEXEvent));
 
 };
 
@@ -430,25 +394,18 @@ class EventModel
   *         pointers are NULL.
   */
 template <typename T>
-/*int EventModel::listen(uint16_t id, uint16_t value, T* object, void (T::*handler)(AKHILAFLEXEvent), uint16_t flags) */
-int EventModel::listen(uint16_t id, uint16_t value, T* object, void (T::*handler)(AKHILAFLEXEvent), uint16_t flags) 
-
+int EventModel::listen(uint16_t id, uint16_t value, T* object, void (T::*handler)(AKHILAFLEXEvent), uint16_t flags)
 {
 	if (object == NULL || handler == NULL)
-	/*	return AKHILAFLEX_INVALID_PARAMETER; */
-        return AKHILAFLEX_INVALID_PARAMETER; 
+		return AKHILAFLEX_INVALID_PARAMETER;
 
-	/*AKHILAFLEXListener *newListener = new AKHILAFLEXListener(id, value, object, handler, flags); */
-   AKHILAFLEXListener *newListener = new AKHILAFLEXListener(id, value, object, handler, flags); 
+	AKHILAFLEXListener *newListener = new AKHILAFLEXListener(id, value, object, handler, flags);
 
-   /* if(add(newListener) == AKHILAFLEX_OK)
-        return AKHILAFLEX_OK; */
-       if(add(newListener) == AKHILAFLEX_OK)
-        return AKHILAFLEX_OK;    
+    if(add(newListener) == AKHILAFLEX_OK)
+        return AKHILAFLEX_OK;
 
     delete newListener;
-   /* return AKHILAFLEX_NOT_SUPPORTED; */
-   return AKHILAFLEX_NOT_SUPPORTED;
+    return AKHILAFLEX_NOT_SUPPORTED;
 }
 
 /**

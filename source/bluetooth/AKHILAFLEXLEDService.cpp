@@ -38,39 +38,24 @@ DEALINGS IN THE SOFTWARE.
   * @param _ble The instance of a BLE device that we're running on.
   * @param _display An instance of AKHILAFLEXDisplay to interface with.
   */
- AKHILAFLEXLEDService::AKHILAFLEXLEDService(BLEDevice &_ble, AKHILAFLEXDisplay &_display) : 
-/*AKHILAFLEXLEDService::AKHILAFLEXLEDService(BLEDevice &_ble, AKHILAFLEXDisplay &_display) : */
+AKHILAFLEXLEDService::AKHILAFLEXLEDService(BLEDevice &_ble, AKHILAFLEXDisplay &_display) :
         ble(_ble), display(_display),
-   /* matrixCharacteristic(AKHILAFLEXLEDServiceMatrixUUID, (uint8_t *)&matrixCharacteristicBuffer, 0, sizeof(matrixCharacteristicBuffer),
-    GattCharacteristic::BLE_GATT_CHAR_PROPERTIES_WRITE | GattCharacteristic::BLE_GATT_CHAR_PROPERTIES_READ) */
-
-matrixCharacteristic(AKHILAFLEXLEDServiceMatrixUUID, (uint8_t *)&matrixCharacteristicBuffer, 0, sizeof(matrixCharacteristicBuffer),
- GattCharacteristic::BLE_GATT_CHAR_PROPERTIES_WRITE | GattCharacteristic::BLE_GATT_CHAR_PROPERTIES_READ) 
-
+        matrixCharacteristic(AKHILAFLEXLEDServiceMatrixUUID, (uint8_t *)&matrixCharacteristicBuffer, 0, sizeof(matrixCharacteristicBuffer),
+    GattCharacteristic::BLE_GATT_CHAR_PROPERTIES_WRITE | GattCharacteristic::BLE_GATT_CHAR_PROPERTIES_READ)
 {
     // Create the data structures that represent each of our characteristics in Soft Device.
-  /*  GattCharacteristic  textCharacteristic(AKHILAFLEXLEDServiceTextUUID, (uint8_t *)textCharacteristicBuffer, 0, AKHILAFLEX_BLE_MAXIMUM_SCROLLTEXT,
-    GattCharacteristic::BLE_GATT_CHAR_PROPERTIES_WRITE); */
     GattCharacteristic  textCharacteristic(AKHILAFLEXLEDServiceTextUUID, (uint8_t *)textCharacteristicBuffer, 0, AKHILAFLEX_BLE_MAXIMUM_SCROLLTEXT,
-    GattCharacteristic::BLE_GATT_CHAR_PROPERTIES_WRITE); 
+    GattCharacteristic::BLE_GATT_CHAR_PROPERTIES_WRITE);
 
-
-   /* GattCharacteristic  scrollingSpeedCharacteristic(AKHILAFLEXLEDServiceScrollingSpeedUUID, (uint8_t *)&scrollingSpeedCharacteristicBuffer, 0,
-    sizeof(scrollingSpeedCharacteristicBuffer), GattCharacteristic::BLE_GATT_CHAR_PROPERTIES_WRITE | GattCharacteristic::BLE_GATT_CHAR_PROPERTIES_READ); */
-
-GattCharacteristic  scrollingSpeedCharacteristic(AKHILAFLEXLEDServiceScrollingSpeedUUID, (uint8_t *)&scrollingSpeedCharacteristicBuffer, 0,
-sizeof(scrollingSpeedCharacteristicBuffer), GattCharacteristic::BLE_GATT_CHAR_PROPERTIES_WRITE | GattCharacteristic::BLE_GATT_CHAR_PROPERTIES_READ); 
+    GattCharacteristic  scrollingSpeedCharacteristic(AKHILAFLEXLEDServiceScrollingSpeedUUID, (uint8_t *)&scrollingSpeedCharacteristicBuffer, 0,
+    sizeof(scrollingSpeedCharacteristicBuffer), GattCharacteristic::BLE_GATT_CHAR_PROPERTIES_WRITE | GattCharacteristic::BLE_GATT_CHAR_PROPERTIES_READ);
 
     // Initialise our characteristic values.
     memclr(matrixCharacteristicBuffer, sizeof(matrixCharacteristicBuffer));
-    /*memclr(matrixCharacteristicBuffer, sizeof(matrixCharacteristicBuffer)); */
     textCharacteristicBuffer[0] = 0;
-  /*  scrollingSpeedCharacteristicBuffer = AKHILAFLEX_DEFAULT_SCROLL_SPEED; */
-    scrollingSpeedCharacteristicBuffer = AKHILAFLEX_DEFAULT_SCROLL_SPEED; 
+    scrollingSpeedCharacteristicBuffer = AKHILAFLEX_DEFAULT_SCROLL_SPEED;
 
-
-   /* matrixCharacteristic.setReadAuthorizationCallback(this, &AKHILAFLEXLEDService::onDataRead); */
-  matrixCharacteristic.setReadAuthorizationCallback(this, &AKHILAFLEXLEDService::onDataRead); 
+    matrixCharacteristic.setReadAuthorizationCallback(this, &AKHILAFLEXLEDService::onDataRead);
 
     // Set default security requirements
     matrixCharacteristic.requireSecurity(SecurityManager::AKHILAFLEX_BLE_SECURITY_LEVEL);
@@ -87,17 +72,15 @@ sizeof(scrollingSpeedCharacteristicBuffer), GattCharacteristic::BLE_GATT_CHAR_PR
     scrollingSpeedCharacteristicHandle = scrollingSpeedCharacteristic.getValueHandle();
 
     ble.gattServer().write(scrollingSpeedCharacteristicHandle, (const uint8_t *)&scrollingSpeedCharacteristicBuffer, sizeof(scrollingSpeedCharacteristicBuffer));
-   ble.gattServer().write(matrixCharacteristicHandle, (const uint8_t *)&matrixCharacteristicBuffer, sizeof(matrixCharacteristicBuffer));
+    ble.gattServer().write(matrixCharacteristicHandle, (const uint8_t *)&matrixCharacteristicBuffer, sizeof(matrixCharacteristicBuffer));
 
-   /* ble.onDataWritten(this, &AKHILAFLEXLEDService::onDataWritten); */
-    ble.onDataWritten(this, &AKHILAFLEXLEDService::onDataWritten); 
+    ble.onDataWritten(this, &AKHILAFLEXLEDService::onDataWritten);
 }
 
 
 /**
   * Callback. Invoked when any of our attributes are written via BLE.
   */
-/*void AKHILAFLEXLEDService::onDataWritten(const GattWriteCallbackParams *params) */
 void AKHILAFLEXLEDService::onDataWritten(const GattWriteCallbackParams *params)
 {
     uint8_t *data = (uint8_t *)params->data;
@@ -135,8 +118,7 @@ void AKHILAFLEXLEDService::onDataWritten(const GattWriteCallbackParams *params)
 /**
   * Callback. Invoked when any of our attributes are read via BLE.
   */
-/*void AKHILAFLEXLEDService::onDataRead(GattReadAuthCallbackParams *params) */
-void AKHILAFLEXLEDService::onDataRead(GattReadAuthCallbackParams *params) 
+void AKHILAFLEXLEDService::onDataRead(GattReadAuthCallbackParams *params)
 {
     if (params->handle == matrixCharacteristicHandle)
     {
@@ -156,32 +138,19 @@ void AKHILAFLEXLEDService::onDataRead(GattReadAuthCallbackParams *params)
 }
 
 
-/*const uint8_t  AKHILAFLEXLEDServiceUUID[] = {
-    0x00,0x00,0xd9,0x1d,0x25,0x1d,0x47,0x0a,0xa0,0x62,0xfa,0x19,0x22,0xdf,0xa9,0xa8
-};*/
 const uint8_t  AKHILAFLEXLEDServiceUUID[] = {
     0x00,0x00,0xd9,0x1d,0x25,0x1d,0x47,0x0a,0xa0,0x62,0xfa,0x19,0x22,0xdf,0xa9,0xa8
 }; 
 
 
-/*const uint8_t  AKHILAFLEXLEDServiceMatrixUUID[] = {
-    0x00,0x00,0x7b,0x77,0x25,0x1d,0x47,0x0a,0xa0,0x62,0xfa,0x19,0x22,0xdf,0xa9,0xa8
-};*/
 const uint8_t  AKHILAFLEXLEDServiceMatrixUUID[] = {
     0x00,0x00,0x7b,0x77,0x25,0x1d,0x47,0x0a,0xa0,0x62,0xfa,0x19,0x22,0xdf,0xa9,0xa8
 }; 
 
-/*const uint8_t  AKHILAFLEXLEDServiceTextUUID[] = {
-    0x00,0x00,0x93,0xee,0x25,0x1d,0x47,0x0a,0xa0,0x62,0xfa,0x19,0x22,0xdf,0xa9,0xa8
-}; */
 const uint8_t  AKHILAFLEXLEDServiceTextUUID[] = {
     0x00,0x00,0x93,0xee,0x25,0x1d,0x47,0x0a,0xa0,0x62,0xfa,0x19,0x22,0xdf,0xa9,0xa8
 }; 
 
-/*
-const uint8_t  AKHILAFLEXLEDServiceScrollingSpeedUUID[] = {
-    0x00,0x00,0x0d,0x2d,0x25,0x1d,0x47,0x0a,0xa0,0x62,0xfa,0x19,0x22,0xdf,0xa9,0xa8
-}; */
 const uint8_t  AKHILAFLEXLEDServiceScrollingSpeedUUID[] = {
     0x00,0x00,0x0d,0x2d,0x25,0x1d,0x47,0x0a,0xa0,0x62,0xfa,0x19,0x22,0xdf,0xa9,0xa8
 }; 

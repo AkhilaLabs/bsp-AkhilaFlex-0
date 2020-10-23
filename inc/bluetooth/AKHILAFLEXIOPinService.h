@@ -25,9 +25,6 @@ DEALINGS IN THE SOFTWARE.
 
 #ifndef AKHILAFLEX_IO_PIN_SERVICE_H
 #define AKHILAFLEX_IO_PIN_SERVICE_H
-/*#ifndef AKHILAFLEX_IO_PIN_SERVICE_H
-#define AKHILAFLEX_IO_PIN_SERVICE_H */
-
 
 #include "AKHILAFLEXConfig.h"
 #include "ble/BLE.h"
@@ -36,10 +33,6 @@ DEALINGS IN THE SOFTWARE.
 #define AKHILAFLEX_IO_PIN_SERVICE_PINCOUNT       19
 #define AKHILAFLEX_IO_PIN_SERVICE_DATA_SIZE      10
 #define AKHILAFLEX_PWM_PIN_SERVICE_DATA_SIZE     2
-/*#define AKHILAFLEX_IO_PIN_SERVICE_PINCOUNT       19
-#define AKHILAFLEX_IO_PIN_SERVICE_DATA_SIZE      10
-#define AKHILAFLEX_PWM_PIN_SERVICE_DATA_SIZE     2 */
-
 
 // UUIDs for our service and characteristics
 extern const uint8_t  AKHILAFLEXIOPinServiceUUID[];
@@ -48,13 +41,6 @@ extern const uint8_t  AKHILAFLEXIOPinServiceIOConfigurationUUID[];
 extern const uint8_t  AKHILAFLEXIOPinServicePWMControlUUID[];
 extern const uint8_t  AKHILAFLEXIOPinServiceDataUUID[];
 extern AKHILAFLEXPin * const AKHILAFLEXIOPins[];
-/*extern const uint8_t  AKHILAFLEXIOPinServiceUUID[];
-extern const uint8_t  AKHILAFLEXIOPinServiceADConfigurationUUID[];
-extern const uint8_t  AKHILAFLEXIOPinServiceIOConfigurationUUID[];
-extern const uint8_t  AKHILAFLEXIOPinServicePWMControlUUID[];
-extern const uint8_t  AKHILAFLEXIOPinServiceDataUUID[];
-extern AKHILAFLEXPin * const AKHILAFLEXIOPins[]; */
-
 
 /**
   * Name value pair definition, as used to read and write pin values over BLE.
@@ -80,7 +66,6 @@ struct IOPWMData
   * Provides a BLE service to remotely read the state of the I/O Pin, and configure its behaviour.
   */
 class AKHILAFLEXIOPinService : public AKHILAFLEXComponent
-/*class AKHILAFLEXIOPinService : public AKHILAFLEXComponent */
 {
     public:
 
@@ -92,8 +77,6 @@ class AKHILAFLEXIOPinService : public AKHILAFLEXComponent
       *            I/O operations.
       */
     AKHILAFLEXIOPinService(BLEDevice &_ble, AKHILAFLEXIO &_io);
-  /*     AKHILAFLEXIOPinService(BLEDevice &_ble, AKHILAFLEXIO &_io); */
-
 
     /**
      * Periodic callback from AKHILAFLEX scheduler.
@@ -159,13 +142,9 @@ class AKHILAFLEXIOPinService : public AKHILAFLEXComponent
     uint32_t            ioPinServiceIOCharacteristicBuffer;
     IOPWMData           ioPinServicePWMCharacteristicBuffer[AKHILAFLEX_PWM_PIN_SERVICE_DATA_SIZE];
     IOData              ioPinServiceDataCharacteristicBuffer[AKHILAFLEX_IO_PIN_SERVICE_DATA_SIZE];
-   /* IOPWMData           ioPinServicePWMCharacteristicBuffer[AKHILAFLEX_PWM_PIN_SERVICE_DATA_SIZE];
-    IOData              ioPinServiceDataCharacteristicBuffer[AKHILAFLEX_IO_PIN_SERVICE_DATA_SIZE]; */
-
 
     // Historic information about our pin data data.
     uint8_t             ioPinServiceIOData[AKHILAFLEX_IO_PIN_SERVICE_PINCOUNT];
-    /*uint8_t             ioPinServiceIOData[AKHILAFLEX_IO_PIN_SERVICE_PINCOUNT]; */
 
     // Handles to access each characteristic when they are held by Soft Device.
     GattAttribute::Handle_t ioPinServiceADCharacteristicHandle;

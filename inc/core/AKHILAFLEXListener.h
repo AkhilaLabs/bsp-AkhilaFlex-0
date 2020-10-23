@@ -28,9 +28,9 @@ DEALINGS IN THE SOFTWARE.
 
 #include "mbed.h"
 #include "AKHILAFLEXConfig.h"
+#include "AKHILAFLEXLock.h"
 #include "AKHILAFLEXEvent.h"
 #include "MemberFunctionCallback.h"
-#include "AKHILAFLEXConfig.h"
 
 // AKHILAFLEXListener flags...
 #define MESSAGE_BUS_LISTENER_PARAMETERISED          0x0001
@@ -67,7 +67,7 @@ struct AKHILAFLEXListener
 
 	AKHILAFLEXEvent 	            evt;
 	AKHILAFLEXEventQueueItem 	    *evt_queue;
-
+    AKHILAFLEXLock                lock;
 	AKHILAFLEXListener *next;
 
 	/**

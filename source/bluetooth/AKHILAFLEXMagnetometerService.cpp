@@ -38,35 +38,21 @@ DEALINGS IN THE SOFTWARE.
   * @param _ble The instance of a BLE device that we're running on.
   * @param _compass An instance of AKHILAFLEXCompass to use as our Magnetometer source.
   */
-/*AKHILAFLEXMagnetometerService::AKHILAFLEXMagnetometerService(BLEDevice &_ble, AKHILAFLEXCompass &_compass) :
-        ble(_ble), compass(_compass) */
 AKHILAFLEXMagnetometerService::AKHILAFLEXMagnetometerService(BLEDevice &_ble, AKHILAFLEXCompass &_compass) :
-        ble(_ble), compass(_compass) 
-       
+        ble(_ble), compass(_compass)
 {
     // Create the data structures that represent each of our characteristics in Soft Device.
-   /* GattCharacteristic  magnetometerDataCharacteristic(AKHILAFLEXMagnetometerServiceDataUUID, (uint8_t *)magnetometerDataCharacteristicBuffer, 0,
-    sizeof(magnetometerDataCharacteristicBuffer), GattCharacteristic::BLE_GATT_CHAR_PROPERTIES_READ | GattCharacteristic::BLE_GATT_CHAR_PROPERTIES_NOTIFY); */
-GattCharacteristic  magnetometerDataCharacteristic(AKHILAFLEXMagnetometerServiceDataUUID, (uint8_t *)magnetometerDataCharacteristicBuffer, 0,
-sizeof(magnetometerDataCharacteristicBuffer), GattCharacteristic::BLE_GATT_CHAR_PROPERTIES_READ | GattCharacteristic::BLE_GATT_CHAR_PROPERTIES_NOTIFY); 
+    GattCharacteristic  magnetometerDataCharacteristic(AKHILAFLEXMagnetometerServiceDataUUID, (uint8_t *)magnetometerDataCharacteristicBuffer, 0,
+    sizeof(magnetometerDataCharacteristicBuffer), GattCharacteristic::BLE_GATT_CHAR_PROPERTIES_READ | GattCharacteristic::BLE_GATT_CHAR_PROPERTIES_NOTIFY);
 
- /*GattCharacteristic  magnetometerBearingCharacteristic(AKHILAFLEXMagnetometerServiceBearingUUID, (uint8_t *)&magnetometerBearingCharacteristicBuffer, 0,
- sizeof(magnetometerBearingCharacteristicBuffer), GattCharacteristic::BLE_GATT_CHAR_PROPERTIES_READ | GattCharacteristic::BLE_GATT_CHAR_PROPERTIES_NOTIFY); */
-GattCharacteristic  magnetometerBearingCharacteristic(AKHILAFLEXMagnetometerServiceBearingUUID, (uint8_t *)&magnetometerBearingCharacteristicBuffer, 0,
- sizeof(magnetometerBearingCharacteristicBuffer), GattCharacteristic::BLE_GATT_CHAR_PROPERTIES_READ | GattCharacteristic::BLE_GATT_CHAR_PROPERTIES_NOTIFY); 
+    GattCharacteristic  magnetometerBearingCharacteristic(AKHILAFLEXMagnetometerServiceBearingUUID, (uint8_t *)&magnetometerBearingCharacteristicBuffer, 0,
+    sizeof(magnetometerBearingCharacteristicBuffer), GattCharacteristic::BLE_GATT_CHAR_PROPERTIES_READ | GattCharacteristic::BLE_GATT_CHAR_PROPERTIES_NOTIFY);
 
- /*GattCharacteristic  magnetometerPeriodCharacteristic(AKHILAFLEXMagnetometerServicePeriodUUID, (uint8_t *)&magnetometerPeriodCharacteristicBuffer, 0,
+    GattCharacteristic  magnetometerPeriodCharacteristic(AKHILAFLEXMagnetometerServicePeriodUUID, (uint8_t *)&magnetometerPeriodCharacteristicBuffer, 0,
     sizeof(magnetometerPeriodCharacteristicBuffer),
-    GattCharacteristic::BLE_GATT_CHAR_PROPERTIES_READ | GattCharacteristic::BLE_GATT_CHAR_PROPERTIES_WRITE); */
-GattCharacteristic  magnetometerPeriodCharacteristic(AKHILAFLEXMagnetometerServicePeriodUUID, (uint8_t *)&magnetometerPeriodCharacteristicBuffer, 0,
-    sizeof(magnetometerPeriodCharacteristicBuffer),
-GattCharacteristic::BLE_GATT_CHAR_PROPERTIES_READ | GattCharacteristic::BLE_GATT_CHAR_PROPERTIES_WRITE);
+    GattCharacteristic::BLE_GATT_CHAR_PROPERTIES_READ | GattCharacteristic::BLE_GATT_CHAR_PROPERTIES_WRITE);
 
- /*GattCharacteristic  magnetometerCalibrationCharacteristic(AKHILAFLEXMagnetometerServiceCalibrationUUID, (uint8_t *)&magnetometerCalibrationCharacteristicBuffer, 0,
-    sizeof(magnetometerCalibrationCharacteristicBuffer),
-    GattCharacteristic::BLE_GATT_CHAR_PROPERTIES_WRITE | GattCharacteristic::BLE_GATT_CHAR_PROPERTIES_NOTIFY); */
-
- GattCharacteristic  magnetometerCalibrationCharacteristic(AKHILAFLEXMagnetometerServiceCalibrationUUID, (uint8_t *)&magnetometerCalibrationCharacteristicBuffer, 0,
+    GattCharacteristic  magnetometerCalibrationCharacteristic(AKHILAFLEXMagnetometerServiceCalibrationUUID, (uint8_t *)&magnetometerCalibrationCharacteristicBuffer, 0,
     sizeof(magnetometerCalibrationCharacteristicBuffer),
     GattCharacteristic::BLE_GATT_CHAR_PROPERTIES_WRITE | GattCharacteristic::BLE_GATT_CHAR_PROPERTIES_NOTIFY);
 
@@ -79,19 +65,13 @@ GattCharacteristic::BLE_GATT_CHAR_PROPERTIES_READ | GattCharacteristic::BLE_GATT
     magnetometerCalibrationCharacteristicBuffer = 0;
 
     // Set default security requirements
-  /*  magnetometerDataCharacteristic.requireSecurity(SecurityManager::AKHILAFLEX_BLE_SECURITY_LEVEL);
-    magnetometerBearingCharacteristic.requireSecurity(SecurityManager::AKHILAFLEX_BLE_SECURITY_LEVEL);
-    magnetometerPeriodCharacteristic.requireSecurity(SecurityManager::AKHILAFLEX_BLE_SECURITY_LEVEL);
-    magnetometerCalibrationCharacteristic.requireSecurity(SecurityManager::AKHILAFLEX_BLE_SECURITY_LEVEL); */
     magnetometerDataCharacteristic.requireSecurity(SecurityManager::AKHILAFLEX_BLE_SECURITY_LEVEL);
     magnetometerBearingCharacteristic.requireSecurity(SecurityManager::AKHILAFLEX_BLE_SECURITY_LEVEL);
     magnetometerPeriodCharacteristic.requireSecurity(SecurityManager::AKHILAFLEX_BLE_SECURITY_LEVEL);
-    magnetometerCalibrationCharacteristic.requireSecurity(SecurityManager::AKHILAFLEX_BLE_SECURITY_LEVEL); 
-
+    magnetometerCalibrationCharacteristic.requireSecurity(SecurityManager::AKHILAFLEX_BLE_SECURITY_LEVEL);
 
     GattCharacteristic *characteristics[] = {&magnetometerDataCharacteristic, &magnetometerBearingCharacteristic, &magnetometerPeriodCharacteristic, &magnetometerCalibrationCharacteristic};
-   /* GattService         service(AKHILAFLEXMagnetometerServiceUUID, characteristics, sizeof(characteristics) / sizeof(GattCharacteristic *)); */
-GattService      service(AKHILAFLEXMagnetometerServiceUUID, characteristics, sizeof(characteristics) / sizeof(GattCharacteristic *)); 
+    GattService         service(AKHILAFLEXMagnetometerServiceUUID, characteristics, sizeof(characteristics) / sizeof(GattCharacteristic *));
 
     ble.addService(service);
 
@@ -105,23 +85,16 @@ GattService      service(AKHILAFLEXMagnetometerServiceUUID, characteristics, siz
     ble.gattServer().write(magnetometerPeriodCharacteristicHandle, (const uint8_t *)&magnetometerPeriodCharacteristicBuffer, sizeof(magnetometerPeriodCharacteristicBuffer));
     ble.gattServer().write(magnetometerCalibrationCharacteristicHandle, (const uint8_t *)&magnetometerCalibrationCharacteristicBuffer, sizeof(magnetometerCalibrationCharacteristicBuffer));
 
-  /*  ble.onDataWritten(this, &AKHILAFLEXMagnetometerService::onDataWritten); */
-    ble.onDataWritten(this, &AKHILAFLEXMagnetometerService::onDataWritten); 
+    ble.onDataWritten(this, &AKHILAFLEXMagnetometerService::onDataWritten);
     if (EventModel::defaultEventBus)
     {
-       /* EventModel::defaultEventBus->listen(AKHILAFLEX_ID_COMPASS, AKHILAFLEX_COMPASS_EVT_DATA_UPDATE, this, &AKHILAFLEXMagnetometerService::compassEvents, MESSAGE_BUS_LISTENER_IMMEDIATE);
-        EventModel::defaultEventBus->listen(AKHILAFLEX_ID_COMPASS, AKHILAFLEX_COMPASS_EVT_CONFIG_NEEDED, this, &AKHILAFLEXMagnetometerService::compassEvents);
-        EventModel::defaultEventBus->listen(AKHILAFLEX_ID_COMPASS, AKHILAFLEX_COMPASS_EVT_CALIBRATION_NEEDED, this, &AKHILAFLEXMagnetometerService::compassEvents); */
         EventModel::defaultEventBus->listen(AKHILAFLEX_ID_COMPASS, AKHILAFLEX_COMPASS_EVT_DATA_UPDATE, this, &AKHILAFLEXMagnetometerService::compassEvents, MESSAGE_BUS_LISTENER_IMMEDIATE);
         EventModel::defaultEventBus->listen(AKHILAFLEX_ID_COMPASS, AKHILAFLEX_COMPASS_EVT_CONFIG_NEEDED, this, &AKHILAFLEXMagnetometerService::compassEvents);
-        EventModel::defaultEventBus->listen(AKHILAFLEX_ID_COMPASS, AKHILAFLEX_COMPASS_EVT_CALIBRATION_NEEDED, this, &AKHILAFLEXMagnetometerService::compassEvents); 
-   
-        
+        EventModel::defaultEventBus->listen(AKHILAFLEX_ID_COMPASS, AKHILAFLEX_COMPASS_EVT_CALIBRATION_NEEDED, this, &AKHILAFLEXMagnetometerService::compassEvents);
     }
 }
 
-/*void AKHILAFLEXMagnetometerService::calibrateCompass() */
-void AKHILAFLEXMagnetometerService::calibrateCompass()  {
+void AKHILAFLEXMagnetometerService::calibrateCompass() {
     int rc = compass.calibrate();
     if (rc == AKHILAFLEX_OK) {
         magnetometerCalibrationCharacteristicBuffer = COMPASS_CALIBRATION_COMPLETED_OK;
@@ -131,45 +104,30 @@ void AKHILAFLEXMagnetometerService::calibrateCompass()  {
     ble.gattServer().notify(magnetometerCalibrationCharacteristicHandle,(uint8_t *)&magnetometerCalibrationCharacteristicBuffer, sizeof(magnetometerCalibrationCharacteristicBuffer));
 }
 
-/*void AKHILAFLEXMagnetometerService::compassEvents(AKHILAFLEXEvent e) */
 void AKHILAFLEXMagnetometerService::compassEvents(AKHILAFLEXEvent e) {
-   /* if (e.value == AKHILAFLEX_COMPASS_EVT_DATA_UPDATE) {
-        magnetometerUpdate(); 
-        return; */
-       if (e.value == AKHILAFLEX_COMPASS_EVT_DATA_UPDATE) {
+    if (e.value == AKHILAFLEX_COMPASS_EVT_DATA_UPDATE) {
         magnetometerUpdate();
-        return; 
-   
+        return;
     }
-   /* if (e.value == AKHILAFLEX_COMPASS_EVT_CONFIG_NEEDED) {
+    if (e.value == AKHILAFLEX_COMPASS_EVT_CONFIG_NEEDED) {
         samplePeriodUpdateNeeded();
-        return;  */
-         if (e.value == AKHILAFLEX_COMPASS_EVT_CONFIG_NEEDED) {
-        samplePeriodUpdateNeeded();
-        return; 
-   
+        return;
     }
-   /* if (e.value == AKHILAFLEX_COMPASS_EVT_CALIBRATION_NEEDED) {
+    if (e.value == AKHILAFLEX_COMPASS_EVT_CALIBRATION_NEEDED) {
         calibrateCompass();
-        return; */
-        if (e.value == AKHILAFLEX_COMPASS_EVT_CALIBRATION_NEEDED) {
-        calibrateCompass();
-        return; 
-    
+        return;
     }
 }    
 
 /**
   * Callback. Invoked when any of our attributes are written via BLE.
   */
-/*void AKHILAFLEXMagnetometerService::onDataWritten(const GattWriteCallbackParams *params) */
-void AKHILAFLEXMagnetometerService::onDataWritten(const GattWriteCallbackParams *params) 
+void AKHILAFLEXMagnetometerService::onDataWritten(const GattWriteCallbackParams *params)
 {
     if (params->handle == magnetometerPeriodCharacteristicHandle && params->len >= sizeof(magnetometerPeriodCharacteristicBuffer))
     {
         magnetometerPeriodCharacteristicBuffer = *((uint16_t *)params->data);
-        /*AKHILAFLEXEvent evt(AKHILAFLEX_ID_COMPASS, AKHILAFLEX_COMPASS_EVT_CONFIG_NEEDED); */
-        AKHILAFLEXEvent evt(AKHILAFLEX_ID_COMPASS, AKHILAFLEX_COMPASS_EVT_CONFIG_NEEDED); 
+        AKHILAFLEXEvent evt(AKHILAFLEX_ID_COMPASS, AKHILAFLEX_COMPASS_EVT_CONFIG_NEEDED);
         return;
     }
 
@@ -177,8 +135,7 @@ void AKHILAFLEXMagnetometerService::onDataWritten(const GattWriteCallbackParams 
     {
         magnetometerCalibrationCharacteristicBuffer = *((uint8_t *)params->data);
         if (magnetometerCalibrationCharacteristicBuffer == COMPASS_CALIBRATION_REQUESTED) {
-          /*  AKHILAFLEXEvent evt(AKHILAFLEX_ID_COMPASS, AKHILAFLEX_COMPASS_EVT_CALIBRATION_NEEDED); */
-            AKHILAFLEXEvent evt(AKHILAFLEX_ID_COMPASS, AKHILAFLEX_COMPASS_EVT_CALIBRATION_NEEDED); 
+            AKHILAFLEXEvent evt(AKHILAFLEX_ID_COMPASS, AKHILAFLEX_COMPASS_EVT_CALIBRATION_NEEDED);
         }
         return;
     }
@@ -187,8 +144,7 @@ void AKHILAFLEXMagnetometerService::onDataWritten(const GattWriteCallbackParams 
 /**
   * Magnetometer update callback
   */
-/*void AKHILAFLEXMagnetometerService::magnetometerUpdate() */
-void AKHILAFLEXMagnetometerService::magnetometerUpdate() 
+void AKHILAFLEXMagnetometerService::magnetometerUpdate()
 {
     if (ble.getGapState().connected)
     {
@@ -213,8 +169,7 @@ void AKHILAFLEXMagnetometerService::magnetometerUpdate()
  * Reconfiguring the magnetometer can to a REALLY long time (sometimes even seconds to complete)
  * So we do this in the background when necessary, through this event handler.
  */
-/*void AKHILAFLEXMagnetometerService::samplePeriodUpdateNeeded() */
-void AKHILAFLEXMagnetometerService::samplePeriodUpdateNeeded() 
+void AKHILAFLEXMagnetometerService::samplePeriodUpdateNeeded()
 {
     // Reconfigure the compass. This might take a while...
     compass.setPeriod(magnetometerPeriodCharacteristicBuffer);
@@ -228,42 +183,24 @@ void AKHILAFLEXMagnetometerService::samplePeriodUpdateNeeded()
 
 }
 
-/*const uint8_t  AKHILAFLEXMagnetometerServiceUUID[] = {
-    0x00,0x00,0xf2,0xd8,0x25,0x1d,0x47,0x0a,0xa0,0x62,0xfa,0x19,0x22,0xdf,0xa9,0xa8
-}; */
 const uint8_t  AKHILAFLEXMagnetometerServiceUUID[] = {
     0x00,0x00,0xf2,0xd8,0x25,0x1d,0x47,0x0a,0xa0,0x62,0xfa,0x19,0x22,0xdf,0xa9,0xa8
 }; 
 
-
-/*const uint8_t  AKHILAFLEXMagnetometerServiceDataUUID[] = {
-    0x00,0x00,0xfb,0x11,0x25,0x1d,0x47,0x0a,0xa0,0x62,0xfa,0x19,0x22,0xdf,0xa9,0xa8
-}; */
 const uint8_t  AKHILAFLEXMagnetometerServiceDataUUID[] = {
     0x00,0x00,0xfb,0x11,0x25,0x1d,0x47,0x0a,0xa0,0x62,0xfa,0x19,0x22,0xdf,0xa9,0xa8
 };
 
-/*
-const uint8_t  AKHILAFLEXMagnetometerServicePeriodUUID[] = {
-    0x00,0x00,0x38,0x6c,0x25,0x1d,0x47,0x0a,0xa0,0x62,0xfa,0x19,0x22,0xdf,0xa9,0xa8
-};*/
 const uint8_t  AKHILAFLEXMagnetometerServicePeriodUUID[] = {
     0x00,0x00,0x38,0x6c,0x25,0x1d,0x47,0x0a,0xa0,0x62,0xfa,0x19,0x22,0xdf,0xa9,0xa8
 }; 
 
 
-/*
-const uint8_t  AKHILAFLEXMagnetometerServiceBearingUUID[] = {
-    0x00,0x00,0x97,0x15,0x25,0x1d,0x47,0x0a,0xa0,0x62,0xfa,0x19,0x22,0xdf,0xa9,0xa8
-}; */
 const uint8_t  AKHILAFLEXMagnetometerServiceBearingUUID[] = {
     0x00,0x00,0x97,0x15,0x25,0x1d,0x47,0x0a,0xa0,0x62,0xfa,0x19,0x22,0xdf,0xa9,0xa8
 }; 
 
 
-/*const uint8_t  AKHILAFLEXMagnetometerServiceCalibrationUUID[] = {
-    0x00,0x00,0xB3,0x58,0x25,0x1D,0x47,0x0A,0xA0,0x62,0xFA,0x19,0x22,0xDF,0xA9,0xA8
-}; */
 const uint8_t  AKHILAFLEXMagnetometerServiceCalibrationUUID[] = {
     0x00,0x00,0xB3,0x58,0x25,0x1D,0x47,0x0A,0xA0,0x62,0xFA,0x19,0x22,0xDF,0xA9,0xA8
 }; 

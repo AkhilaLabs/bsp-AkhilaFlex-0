@@ -30,14 +30,8 @@ DEALINGS IN THE SOFTWARE.
   * This file contains events used on the general purpose Eventing channel
   * AKHILAFLEX_ID_NOTIFY, new events should be added here, to prevent duplication.
   */
-/*  
 #define AKHILAFLEX_DISPLAY_EVT_FREE           1
 #define AKHILAFLEX_SERIAL_EVT_TX_EMPTY        2
-#define AKHILAFLEX_UART_S_EVT_TX_EMPTY        3 */
-#define AKHILAFLEX_DISPLAY_EVT_FREE           1
-#define AKHILAFLEX_SERIAL_EVT_TX_EMPTY        2
-#define AKHILAFLEX_UART_S_EVT_TX_EMPTY        3 
-
-
+#define AKHILAFLEX_UART_S_EVT_TX_EMPTY        3
 
 #endif

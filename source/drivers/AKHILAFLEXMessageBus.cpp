@@ -95,14 +95,19 @@ void async_callback(void *param)
         // Queue this event up for later, if that's how we've been configured.
         if (listener->flags & MESSAGE_BUS_LISTENER_QUEUE_IF_BUSY)
         {
+#if (MESSAGE_BUS_CONCURRENCY_MODE == MESSAGE_BUS_CONCURRENT_LISTENERS)
             listener->queue(listener->evt);
             return;
+#endif
         }
     }
 
     // Determine the calling convention for the callback, and invoke...
     // C++ is really bad at this! Especially as the ARM compiler is yet to support C++ 11 :-/
 
+#if (MESSAGE_BUS_CONCURRENCY_MODE == MESSAGE_BUS_CONCURRENT_EVENTS)
+    listener->lock.wait();
+#endif
     // Record that we have a fiber going into this listener...
     listener->flags |= MESSAGE_BUS_LISTENER_BUSY;
 
@@ -138,6 +143,10 @@ void async_callback(void *param)
 
     // The fiber of exiting... clear our state.
     listener->flags &= ~MESSAGE_BUS_LISTENER_BUSY;
+
+#if (MESSAGE_BUS_CONCURRENCY_MODE == MESSAGE_BUS_CONCURRENT_EVENTS)
+    listener->lock.notify();
+#endif
 }
 
 /**
@@ -261,6 +270,13 @@ int AKHILAFLEXMessageBus::deleteMarkedListeners()
     return removed;
 }
 
+AKHILAFLEXEvent last_event;
+void process_sequentially(void *param)
+{
+    AKHILAFLEXMessageBus *m = (AKHILAFLEXMessageBus *)param;
+    m->process(last_event);
+}
+
 /**
   * Periodic callback from AKHILAFLEX.
   *
@@ -278,7 +294,12 @@ void AKHILAFLEXMessageBus::idleTick()
     while (item)
     {
         // send the event to all standard event listeners.
+#if (MESSAGE_BUS_CONCURRENCY_MODE == MESSAGE_BUS_CONCURRENT_EVENTS)
+        last_event = item->evt;
+        invoke(process_sequentially,this);
+#else
         this->process(item->evt);
+#endif
 
         // Free the queue item.
         delete item;
@@ -337,7 +358,7 @@ int AKHILAFLEXMessageBus::send(AKHILAFLEXEvent evt)
   * @note It is recommended that all external code uses the send() function instead of this function,
   *       or the constructors provided by AKHILAFLEXEvent.
   */
-int AKHILAFLEXMessageBus::process(AKHILAFLEXEvent &evt, bool urgent)
+int AKHILAFLEXMessageBus::process(AKHILAFLEXEvent evt, bool urgent)
 {
     AKHILAFLEXListener *l;
     int complete = 1;
@@ -365,10 +386,12 @@ int AKHILAFLEXMessageBus::process(AKHILAFLEXEvent &evt, bool urgent)
                 // Otherwise, we invoke it in a 'fork on block' context, that will automatically create a fiber
                 // should the event handler attempt a blocking operation, but doesn't have the overhead
                 // of creating a fiber needlessly. (cool huh?)
-                if (l->flags & MESSAGE_BUS_LISTENER_NONBLOCKING || !fiber_scheduler_running())
-                    async_callback(l);
-                else
+#if (MESSAGE_BUS_CONCURRENCY_MODE == MESSAGE_BUS_CONCURRENT_LISTENERS)
+                if (!(l->flags & MESSAGE_BUS_LISTENER_NONBLOCKING) && fiber_scheduler_running())
                     invoke(async_callback, l);
+                else
+#endif
+                    async_callback(l);
             }
             else
             {

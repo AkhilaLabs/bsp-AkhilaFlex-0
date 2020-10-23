@@ -46,7 +46,6 @@ DEALINGS IN THE SOFTWARE.
   * @endcode
   */
 AKHILAFLEXButton::AKHILAFLEXButton(PinName name, uint16_t id, AKHILAFLEXButtonEventConfiguration eventConfiguration, PinMode mode) : pin(name, mode)
-/*AKHILAFLEXButton::AKHILAFLEXButton(PinName name, uint16_t id, AKHILAFLEXButtonEventConfiguration eventConfiguration, PinMode mode) : pin(name, mode)*/
 {
     this->id = id;
     this->name = name;
@@ -73,7 +72,6 @@ AKHILAFLEXButton::AKHILAFLEXButton(PinName name, uint16_t id, AKHILAFLEXButtonEv
   * @endcode
   */
 void AKHILAFLEXButton::setEventConfiguration(AKHILAFLEXButtonEventConfiguration config)
-/*void AKHILAFLEXButton::setEventConfiguration(AKHILAFLEXEventConfiguration config)*/
 {
     this->eventConfiguration = config;
 }
@@ -84,7 +82,6 @@ void AKHILAFLEXButton::setEventConfiguration(AKHILAFLEXButtonEventConfiguration 
   * Check for state change for this button, and fires various events on a state change.
   */
 void AKHILAFLEXButton::systemTick()
-/*void AKHILAFLEXButton::systemTick() */
 {
     //
     // If the pin is pulled low (touched), increment our culumative counter.
@@ -95,27 +92,20 @@ void AKHILAFLEXButton::systemTick()
     if(!pin)
     {
         if (sigma < AKHILAFLEX_BUTTON_SIGMA_MAX)
-      /*  if (sigma < AKHILAFLEX_BUTTON_SIGMA_MAX) */
             sigma++;
     }
     else
     {
         if (sigma > AKHILAFLEX_BUTTON_SIGMA_MIN)
-      /*  if (sigma > AKHILAFLEX_BUTTON_SIGMA_MIN) */
             sigma--;
     }
 
     // Check to see if we have off->on state change.
     if(sigma > AKHILAFLEX_BUTTON_SIGMA_THRESH_HI && !(status & AKHILAFLEX_BUTTON_STATE))
-  /*  if(sigma > AKHILAFLEX_BUTTON_SIGMA_THRESH_HI && !(status & AKHILAFLEX_BUTTON_STATE)) */
-
     {
         // Record we have a state change, and raise an event.
         status |= AKHILAFLEX_BUTTON_STATE;
         AKHILAFLEXEvent evt(id,AKHILAFLEX_BUTTON_EVT_DOWN);
-     /*   status |= AKHILAFLEX_BUTTON_STATE;
-        AKHILAFLEXEvent evt(id,AKHILAFLEX_BUTTON_EVT_DOWN); */
-
 
         //Record the time the button was pressed.
         downStartTime = system_timer_current_time();
@@ -123,40 +113,28 @@ void AKHILAFLEXButton::systemTick()
 
     // Check to see if we have on->off state change.
     if(sigma < AKHILAFLEX_BUTTON_SIGMA_THRESH_LO && (status & AKHILAFLEX_BUTTON_STATE))
-    /*if(sigma < AKHILAFLEX_BUTTON_SIGMA_THRESH_LO && (status & AKHILAFLEX_BUTTON_STATE)) */
     {
         status = 0;
         AKHILAFLEXEvent evt(id,AKHILAFLEX_BUTTON_EVT_UP);
-     /*   AKHILAFLEXEvent evt(id,AKHILAFLEX_BUTTON_EVT_UP); */
 
        if (eventConfiguration == AKHILAFLEX_BUTTON_ALL_EVENTS)
-      /* if (eventConfiguration == AKHILAFLEX_BUTTON_ALL_EVENTS) */
        {
            //determine if this is a long click or a normal click and send event
            if((system_timer_current_time() - downStartTime) >= AKHILAFLEX_BUTTON_LONG_CLICK_TIME)
                AKHILAFLEXEvent evt(id,AKHILAFLEX_BUTTON_EVT_LONG_CLICK);
-           /* if((system_timer_current_time() - downStartTime) >= AKHILAFLEX_BUTTON_LONG_CLICK_TIME)
-               AKHILAFLEXEvent evt(id,AKHILAFLEX_BUTTON_EVT_LONG_CLICK); */
-              
            else
                AKHILAFLEXEvent evt(id,AKHILAFLEX_BUTTON_EVT_CLICK);
-              /* AKHILAFLEXEvent evt(id,AKHILAFLEX_BUTTON_EVT_CLICK); */
        }
     }
 
     //if button is pressed and the hold triggered event state is not triggered AND we are greater than the button debounce value
     if((status & AKHILAFLEX_BUTTON_STATE) && !(status & AKHILAFLEX_BUTTON_STATE_HOLD_TRIGGERED) && (system_timer_current_time() - downStartTime) >= AKHILAFLEX_BUTTON_HOLD_TIME)
-/*if((status & AKHILAFLEX_BUTTON_STATE) && !(status & AKHILAFLEX_BUTTON_STATE_HOLD_TRIGGERED) && (system_timer_current_time() - downStartTime) >= AKHILAFLEX_BUTTON_HOLD_TIME)*/
-   
     {
         //set the hold triggered event flag
         status |= AKHILAFLEX_BUTTON_STATE_HOLD_TRIGGERED;
-       /*  status |= AKHILAFLEX_BUTTON_STATE_HOLD_TRIGGERED; */
 
         //fire hold event
         AKHILAFLEXEvent evt(id,AKHILAFLEX_BUTTON_EVT_HOLD);
-     /* AKHILAFLEXEvent evt(id,AKHILAFLEX_BUTTON_EVT_HOLD); */
-
     }
 }
 
@@ -171,16 +149,13 @@ void AKHILAFLEXButton::systemTick()
   * @return 1 if this button is pressed, 0 otherwise.
   */
 int AKHILAFLEXButton::isPressed()
-/*int AKHILAFLEXButton::isPressed() */
 {
     return status & AKHILAFLEX_BUTTON_STATE ? 1 : 0;
-    /*return status & AKHILAFLEX_BUTTON_STATE ? 1 : 0; */
 }
 
 /**
   * Destructor for AKHILAFLEXButton, where we deregister this instance from the array of fiber components.
   */
- /*AKHILFLEXButton::~AKHILAFLEXButton() */
 AKHILAFLEXButton::~AKHILAFLEXButton()
 {
     system_timer_remove_component(this);

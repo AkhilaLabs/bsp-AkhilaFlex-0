@@ -40,32 +40,22 @@ DEALINGS IN THE SOFTWARE.
   * @param _io An instance of AKHILAFLEXIO that this service will use to perform
   *            I/O operations.
   */
-/*AKHILAFLEXIOPinService::AKHILAFLEXIOPinService(BLEDevice &_ble, AKHILAFLEXIO &_io) :
-        ble(_ble), io(_io) */
 AKHILAFLEXIOPinService::AKHILAFLEXIOPinService(BLEDevice &_ble, AKHILAFLEXIO &_io) :
-        ble(_ble), io(_io) 
-
+        ble(_ble), io(_io)
 {
     // Create the AD characteristic, that defines whether each pin is treated as analogue or digital
-  /*  GattCharacteristic ioPinServiceADCharacteristic(AKHILAFLEXIOPinServiceADConfigurationUUID, (uint8_t *)&ioPinServiceADCharacteristicBuffer, 0, sizeof(ioPinServiceADCharacteristicBuffer), GattCharacteristic::BLE_GATT_CHAR_PROPERTIES_READ | GattCharacteristic::BLE_GATT_CHAR_PROPERTIES_WRITE); */
- GattCharacteristic ioPinServiceADCharacteristic(AKHILAFLEXIOPinServiceADConfigurationUUID, (uint8_t *)&ioPinServiceADCharacteristicBuffer, 0, sizeof(ioPinServiceADCharacteristicBuffer), GattCharacteristic::BLE_GATT_CHAR_PROPERTIES_READ | GattCharacteristic::BLE_GATT_CHAR_PROPERTIES_WRITE);
-
+    GattCharacteristic ioPinServiceADCharacteristic(AKHILAFLEXIOPinServiceADConfigurationUUID, (uint8_t *)&ioPinServiceADCharacteristicBuffer, 0, sizeof(ioPinServiceADCharacteristicBuffer), GattCharacteristic::BLE_GATT_CHAR_PROPERTIES_READ | GattCharacteristic::BLE_GATT_CHAR_PROPERTIES_WRITE);
 
     // Create the IO characteristic, that allows the user to define one or more pins as inputs. These will then be monitored by this service and reported via the ioPinSeriveData characterisitic. 
-  /*  GattCharacteristic ioPinServiceIOCharacteristic(AKHILAFLEXIOPinServiceIOConfigurationUUID, (uint8_t *)&ioPinServiceIOCharacteristicBuffer, 0, sizeof(ioPinServiceIOCharacteristicBuffer), GattCharacteristic::BLE_GATT_CHAR_PROPERTIES_READ | GattCharacteristic::BLE_GATT_CHAR_PROPERTIES_WRITE); */
-GattCharacteristic ioPinServiceIOCharacteristic(AKHILAFLEXIOPinServiceIOConfigurationUUID, (uint8_t *)&ioPinServiceIOCharacteristicBuffer, 0, sizeof(ioPinServiceIOCharacteristicBuffer), GattCharacteristic::BLE_GATT_CHAR_PROPERTIES_READ | GattCharacteristic::BLE_GATT_CHAR_PROPERTIES_WRITE); 
+    GattCharacteristic ioPinServiceIOCharacteristic(AKHILAFLEXIOPinServiceIOConfigurationUUID, (uint8_t *)&ioPinServiceIOCharacteristicBuffer, 0, sizeof(ioPinServiceIOCharacteristicBuffer), GattCharacteristic::BLE_GATT_CHAR_PROPERTIES_READ | GattCharacteristic::BLE_GATT_CHAR_PROPERTIES_WRITE);
 
     // Create the PWM characteristic, that allows up to 3 compatible pins to be used for PWM
-   /* GattCharacteristic ioPinServicePWMCharacteristic(AKHILAFLEXIOPinServicePWMControlUUID, (uint8_t *)&ioPinServicePWMCharacteristicBuffer, 0, sizeof(ioPinServicePWMCharacteristicBuffer), GattCharacteristic::BLE_GATT_CHAR_PROPERTIES_WRITE);*/
-GattCharacteristic ioPinServicePWMCharacteristic(AKHILAFLEXIOPinServicePWMControlUUID, (uint8_t *)&ioPinServicePWMCharacteristicBuffer, 0, sizeof(ioPinServicePWMCharacteristicBuffer), GattCharacteristic::BLE_GATT_CHAR_PROPERTIES_WRITE); 
+    GattCharacteristic ioPinServicePWMCharacteristic(AKHILAFLEXIOPinServicePWMControlUUID, (uint8_t *)&ioPinServicePWMCharacteristicBuffer, 0, sizeof(ioPinServicePWMCharacteristicBuffer), GattCharacteristic::BLE_GATT_CHAR_PROPERTIES_WRITE);
 
     // Create the Data characteristic, that allows the actual read and write operations.
-  /*ioPinServiceDataCharacteristic = new GattCharacteristic(AKHILAFLEXIOPinServiceDataUUID, (uint8_t *)ioPinServiceDataCharacteristicBuffer, 0, sizeof(ioPinServiceDataCharacteristicBuffer), GattCharacteristic::BLE_GATT_CHAR_PROPERTIES_READ | GattCharacteristic::BLE_GATT_CHAR_PROPERTIES_WRITE | GattCharacteristic::BLE_GATT_CHAR_PROPERTIES_NOTIFY);*/
-ioPinServiceDataCharacteristic = new GattCharacteristic(AKHILAFLEXIOPinServiceDataUUID, (uint8_t *)ioPinServiceDataCharacteristicBuffer, 0, sizeof(ioPinServiceDataCharacteristicBuffer), GattCharacteristic::BLE_GATT_CHAR_PROPERTIES_READ | GattCharacteristic::BLE_GATT_CHAR_PROPERTIES_WRITE | GattCharacteristic::BLE_GATT_CHAR_PROPERTIES_NOTIFY); 
+    ioPinServiceDataCharacteristic = new GattCharacteristic(AKHILAFLEXIOPinServiceDataUUID, (uint8_t *)ioPinServiceDataCharacteristicBuffer, 0, sizeof(ioPinServiceDataCharacteristicBuffer), GattCharacteristic::BLE_GATT_CHAR_PROPERTIES_READ | GattCharacteristic::BLE_GATT_CHAR_PROPERTIES_WRITE | GattCharacteristic::BLE_GATT_CHAR_PROPERTIES_NOTIFY);
 
-/*ioPinServiceDataCharacteristic->setReadAuthorizationCallback(this, &AKHILAFLEXIOPinService::onDataRead); */
-ioPinServiceDataCharacteristic->setReadAuthorizationCallback(this, &AKHILAFLEXIOPinService::onDataRead); 
-
+    ioPinServiceDataCharacteristic->setReadAuthorizationCallback(this, &AKHILAFLEXIOPinService::onDataRead);
 
     ioPinServiceADCharacteristicBuffer = 0;
     ioPinServiceIOCharacteristicBuffer = 0;
@@ -73,19 +63,12 @@ ioPinServiceDataCharacteristic->setReadAuthorizationCallback(this, &AKHILAFLEXIO
     memset(ioPinServicePWMCharacteristicBuffer, 0, sizeof(ioPinServicePWMCharacteristicBuffer));
 
     // Set default security requirements
-   /* ioPinServiceADCharacteristic.requireSecurity(SecurityManager::AKHILAFLEX_BLE_SECURITY_LEVEL);
-    ioPinServiceIOCharacteristic.requireSecurity(SecurityManager::AKHILAFLEX_BLE_SECURITY_LEVEL);
-    ioPinServicePWMCharacteristic.requireSecurity(SecurityManager::AKHILAFLEX_BLE_SECURITY_LEVEL);
-    ioPinServiceDataCharacteristic->requireSecurity(SecurityManager::AKHILAFLEX_BLE_SECURITY_LEVEL); */
     ioPinServiceADCharacteristic.requireSecurity(SecurityManager::AKHILAFLEX_BLE_SECURITY_LEVEL);
     ioPinServiceIOCharacteristic.requireSecurity(SecurityManager::AKHILAFLEX_BLE_SECURITY_LEVEL);
     ioPinServicePWMCharacteristic.requireSecurity(SecurityManager::AKHILAFLEX_BLE_SECURITY_LEVEL);
-    ioPinServiceDataCharacteristic->requireSecurity(SecurityManager::AKHILAFLEX_BLE_SECURITY_LEVEL); 
+    ioPinServiceDataCharacteristic->requireSecurity(SecurityManager::AKHILAFLEX_BLE_SECURITY_LEVEL);
 
-
-   /* GattCharacteristic *characteristics[] = {&ioPinServiceADCharacteristic, &ioPinServiceIOCharacteristic, &ioPinServicePWMCharacteristic, ioPinServiceDataCharacteristic};
-    GattService         service(AKHILAFLEXIOPinServiceUUID, characteristics, sizeof(characteristics) / sizeof(GattCharacteristic *)); */
-GattCharacteristic *characteristics[] = {&ioPinServiceADCharacteristic, &ioPinServiceIOCharacteristic, &ioPinServicePWMCharacteristic, ioPinServiceDataCharacteristic};
+    GattCharacteristic *characteristics[] = {&ioPinServiceADCharacteristic, &ioPinServiceIOCharacteristic, &ioPinServicePWMCharacteristic, ioPinServiceDataCharacteristic};
     GattService         service(AKHILAFLEXIOPinServiceUUID, characteristics, sizeof(characteristics) / sizeof(GattCharacteristic *));
 
     ble.addService(service);
@@ -98,9 +81,7 @@ GattCharacteristic *characteristics[] = {&ioPinServiceADCharacteristic, &ioPinSe
     ble.gattServer().write(ioPinServiceIOCharacteristicHandle, (const uint8_t *)&ioPinServiceIOCharacteristicBuffer, sizeof(ioPinServiceIOCharacteristicBuffer));
     ble.gattServer().write(ioPinServicePWMCharacteristicHandle, (const uint8_t *)&ioPinServicePWMCharacteristicBuffer, sizeof(ioPinServicePWMCharacteristicBuffer));
 
-    /*ble.onDataWritten(this, &AKHILAFLEXIOPinService::onDataWritten); */
-    ble.onDataWritten(this, &AKHILAFLEXIOPinService::onDataWritten); 
- 
+    ble.onDataWritten(this, &AKHILAFLEXIOPinService::onDataWritten);
     fiber_add_idle_component(this);
 }
 
@@ -110,8 +91,7 @@ GattCharacteristic *characteristics[] = {&ioPinServiceADCharacteristic, &ioPinSe
   * @param i the enumeration of the pin to test
   * @return 1 if this pin is configured as digital, 0 otherwise
   */
-/*int AKHILAFLEXIOPinService::isDigital(int i) */
-int AKHILAFLEXIOPinService::isDigital(int i) 
+int AKHILAFLEXIOPinService::isDigital(int i)
 {
     return ((ioPinServiceADCharacteristicBuffer & (1 << i)) == 0);
 }
@@ -122,9 +102,7 @@ int AKHILAFLEXIOPinService::isDigital(int i)
   * @param i the enumeration of the pin to test
   * @return 1 if this pin is configured as analog, 0 otherwise
   */
-/*int AKHILAFLEXIOPinService::isAnalog(int i) */
-int AKHILAFLEXIOPinService::isAnalog(int i) 
-
+int AKHILAFLEXIOPinService::isAnalog(int i)
 {
     return ((ioPinServiceADCharacteristicBuffer & (1 << i)) != 0);
 }
@@ -135,8 +113,7 @@ int AKHILAFLEXIOPinService::isAnalog(int i)
   * @param i the enumeration of the pin to test
   * @return 1 if this pin is configured as an input, 0 otherwise
   */
-/*int AKHILAFLEXIOPinService::isActiveInput(int i) */
-int AKHILAFLEXIOPinService::isActiveInput(int i) 
+int AKHILAFLEXIOPinService::isActiveInput(int i)
 {
     return ((ioPinServiceIOCharacteristicBuffer & (1 << i)) != 0);
 }
@@ -145,13 +122,11 @@ int AKHILAFLEXIOPinService::isActiveInput(int i)
  * Scans through all pins that our BLE client have registered an interest in. 
  * For each pin that has changed value, update the BLE characteristic, and NOTIFY our client.
  */
-/*void AKHILAFLEXIOPinService::updateBLEInputs(bool updateAll) */
-void AKHILAFLEXIOPinService::updateBLEInputs(bool updateAll) 
+void AKHILAFLEXIOPinService::updateBLEInputs(bool updateAll)
 {
     int pairs = 0;
 
-    /*for (int i=0; i < AKHILAFLEX_IO_PIN_SERVICE_PINCOUNT; i++) */
- for (int i=0; i < AKHILAFLEX_IO_PIN_SERVICE_PINCOUNT; i++) 
+    for (int i=0; i < AKHILAFLEX_IO_PIN_SERVICE_PINCOUNT; i++)
     {
         if (isActiveInput(i))
         {
@@ -172,8 +147,7 @@ void AKHILAFLEXIOPinService::updateBLEInputs(bool updateAll)
 
                 pairs++;
 
-               /* if (pairs >= AKHILAFLEX_IO_PIN_SERVICE_DATA_SIZE) */
-                if (pairs >= AKHILAFLEX_IO_PIN_SERVICE_DATA_SIZE) 
+                if (pairs >= AKHILAFLEX_IO_PIN_SERVICE_DATA_SIZE)
                     break;
             }
         }
@@ -187,8 +161,7 @@ void AKHILAFLEXIOPinService::updateBLEInputs(bool updateAll)
 /**
   * Callback. Invoked when any of our attributes are written via BLE.
   */
-/*void AKHILAFLEXIOPinService::onDataWritten(const GattWriteCallbackParams *params) */
-void AKHILAFLEXIOPinService::onDataWritten(const GattWriteCallbackParams *params) 
+void AKHILAFLEXIOPinService::onDataWritten(const GattWriteCallbackParams *params)
 {
     // Check for writes to the IO configuration characteristic
     if (params->handle == ioPinServiceIOCharacteristicHandle && params->len >= sizeof(ioPinServiceIOCharacteristicBuffer))
@@ -200,8 +173,7 @@ void AKHILAFLEXIOPinService::onDataWritten(const GattWriteCallbackParams *params
         ble.gattServer().write(ioPinServiceIOCharacteristicHandle, (const uint8_t *)&ioPinServiceIOCharacteristicBuffer, sizeof(ioPinServiceIOCharacteristicBuffer));
 
         // Also, drop any selected pins into input mode, so we can pick up changes later
-       /* for (int i=0; i < AKHILAFLEX_IO_PIN_SERVICE_PINCOUNT; i++) */
-        for (int i=0; i < AKHILAFLEX_IO_PIN_SERVICE_PINCOUNT; i++) 
+        for (int i=0; i < AKHILAFLEX_IO_PIN_SERVICE_PINCOUNT; i++)
         {
             if(isDigital(i) && isActiveInput(i))
                 io.pin[i].getDigitalValue();
@@ -221,9 +193,7 @@ void AKHILAFLEXIOPinService::onDataWritten(const GattWriteCallbackParams *params
         ble.gattServer().write(ioPinServiceADCharacteristicHandle, (const uint8_t *)&ioPinServiceADCharacteristicBuffer, sizeof(ioPinServiceADCharacteristicBuffer));
 
         // Also, drop any selected pins into input mode, so we can pick up changes later
-       /* for (int i=0; i < AKHILAFLEX_IO_PIN_SERVICE_PINCOUNT; i++) */
-      for (int i=0; i < AKHILAFLEX_IO_PIN_SERVICE_PINCOUNT; i++) 
-
+        for (int i=0; i < AKHILAFLEX_IO_PIN_SERVICE_PINCOUNT; i++)
         {
             if(isDigital(i) && isActiveInput(i))
                io.pin[i].getDigitalValue();
@@ -288,8 +258,7 @@ void AKHILAFLEXIOPinService::onDataWritten(const GattWriteCallbackParams *params
  *
  * Reads all the pins marked as inputs, and updates the data stored in the characteristic.
  */
-void AKHILAFLEXIOPinService::onDataRead(GattReadAuthCallbackParams *params) 
-/*void AKHILAFLEXIOPinService::onDataRead(GattReadAuthCallbackParams *params) */
+void AKHILAFLEXIOPinService::onDataRead(GattReadAuthCallbackParams *params)
 {
     if (params->handle == ioPinServiceDataCharacteristic->getValueHandle())
         updateBLEInputs(true);
@@ -302,51 +271,27 @@ void AKHILAFLEXIOPinService::onDataRead(GattReadAuthCallbackParams *params)
  * Check if any of the pins we're watching need updating. Notify any connected
  * device with any changes.
  */
-/*void AKHILAFLEXIOPinService::idleTick() */
-void AKHILAFLEXIOPinService::idleTick() 
-
+void AKHILAFLEXIOPinService::idleTick()
 {
     if (ble.getGapState().connected)
         updateBLEInputs();
 }
 
-/*const uint8_t  AKHILAFLEXIOPinServiceUUID[] = {
-    0x00,0x00,0x12,0x7b,0x25,0x1d,0x47,0x0a,0xa0,0x62,0xfa,0x19,0x22,0xdf,0xa9,0xa8
-};*/
-
 const uint8_t  AKHILAFLEXIOPinServiceUUID[] = {
     0x00,0x00,0x12,0x7b,0x25,0x1d,0x47,0x0a,0xa0,0x62,0xfa,0x19,0x22,0xdf,0xa9,0xa8
 }; 
-
-/*
-const uint8_t  AKHILAFLEXIOPinServiceIOConfigurationUUID[] = {
-    0x00,0x00,0xb9,0xfe,0x25,0x1d,0x47,0x0a,0xa0,0x62,0xfa,0x19,0x22,0xdf,0xa9,0xa8
-}; */
 
 const uint8_t  AKHILAFLEXIOPinServiceIOConfigurationUUID[] = {
     0x00,0x00,0xb9,0xfe,0x25,0x1d,0x47,0x0a,0xa0,0x62,0xfa,0x19,0x22,0xdf,0xa9,0xa8
 };
 
-/*
-const uint8_t  AKHILAFLEXIOPinServiceADConfigurationUUID[] = {
-    0x00,0x00,0x58,0x99,0x25,0x1d,0x47,0x0a,0xa0,0x62,0xfa,0x19,0x22,0xdf,0xa9,0xa8
-};*/
 const uint8_t  AKHILAFLEXIOPinServiceADConfigurationUUID[] = {
     0x00,0x00,0x58,0x99,0x25,0x1d,0x47,0x0a,0xa0,0x62,0xfa,0x19,0x22,0xdf,0xa9,0xa8
 }; 
 
-/*
-const uint8_t  AKHILAFLEXIOPinServicePWMControlUUID[] = {
-    0x00,0x00,0xd8,0x22,0x25,0x1d,0x47,0x0a,0xa0,0x62,0xfa,0x19,0x22,0xdf,0xa9,0xa8
-};*/
 const uint8_t  AKHILAFLEXIOPinServicePWMControlUUID[] = {
     0x00,0x00,0xd8,0x22,0x25,0x1d,0x47,0x0a,0xa0,0x62,0xfa,0x19,0x22,0xdf,0xa9,0xa8
 }; 
-
-/*
-const uint8_t AKHILAFLEXIOPinServiceDataUUID[] = {
-    0x00,0x00,0x8d,0x00,0x25,0x1d,0x47,0x0a,0xa0,0x62,0xfa,0x19,0x22,0xdf,0xa9,0xa8
-}; */
 
 const uint8_t AKHILAFLEXIOPinServiceDataUUID[] = {
     0x00,0x00,0x8d,0x00,0x25,0x1d,0x47,0x0a,0xa0,0x62,0xfa,0x19,0x22,0xdf,0xa9,0xa8

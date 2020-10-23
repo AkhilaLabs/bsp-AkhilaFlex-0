@@ -49,7 +49,6 @@ DEALINGS IN THE SOFTWARE.
   * @param r The underlying radio module used to send and receive data.
   */
 AKHILAFLEXRadioEvent::AKHILAFLEXRadioEvent(AKHILAFLEXRadio &r) : radio(r)
-/*AKHILAFLEXRadioEvent::AKHILAFLEXRadioEvent(AKHILAFLEXRadio &r) : radio(r) */
 {
     this->suppressForwarding = false;
 }
@@ -70,13 +69,11 @@ AKHILAFLEXRadioEvent::AKHILAFLEXRadioEvent(AKHILAFLEXRadio &r) : radio(r)
   *       id and value fields.
   */
 int AKHILAFLEXRadioEvent::listen(uint16_t id, uint16_t value)
-/*int AKHILAFLEXRadioEvent::listen(uint16_t id, uint16_t value) */
 {
     if (EventModel::defaultEventBus)
         return listen(id, value, *EventModel::defaultEventBus);
 
     return AKHILAFLEX_NO_RESOURCES;
-   /* return AKHILAFLEX_NO_RESOURCES; */
 }
 
 /**
@@ -97,10 +94,8 @@ int AKHILAFLEXRadioEvent::listen(uint16_t id, uint16_t value)
   *       id and value fields.
   */
 int AKHILAFLEXRadioEvent::listen(uint16_t id, uint16_t value, EventModel &eventBus)
-/*int AKHILAFLEXRadioEvent::listen(uint16_t id, uint16_t value,EventModel &eventBus) */
 {
     return eventBus.listen(id, value, this, &AKHILAFLEXRadioEvent::eventReceived, MESSAGE_BUS_LISTENER_IMMEDIATE);
-  /*  return eventBus.listen(id, value, this, &AKHILAFLEXRadioEvent::eventReceived, MESSAGE_BUS_LISTENER_IMMEDIATE); */
 }
 
 /**
@@ -115,13 +110,11 @@ int AKHILAFLEXRadioEvent::listen(uint16_t id, uint16_t value, EventModel &eventB
   * @note AKHILAFLEX_EVT_ANY can be used to deregister all event values matching the given id.
   */
 int AKHILAFLEXRadioEvent::ignore(uint16_t id, uint16_t value)
-/*int AKHILAFLEXRadioEvent::ignore(uint16_t id, uint16_t value) */
 {
     if (EventModel::defaultEventBus)
         return ignore(id, value, *EventModel::defaultEventBus);
 
     return AKHILAFLEX_INVALID_PARAMETER;
-   /* return AKHILAFLEX_INVALID_PARAMETER; */
 }
 
 /**
@@ -138,10 +131,8 @@ int AKHILAFLEXRadioEvent::ignore(uint16_t id, uint16_t value)
   * @note AKHILAFLEX_EVT_ANY can be used to deregister all event values matching the given id.
   */
 int AKHILAFLEXRadioEvent::ignore(uint16_t id, uint16_t value, EventModel &eventBus)
-/*int AKHILAFLEXRadioEvent::ignore(uint16_t id, uint16_t value, EventModel &eventBus) */
 {
     return eventBus.ignore(id, value, this, &AKHILAFLEXRadioEvent::eventReceived);
-   /* return eventBus.ignore(id, value, this, &AKHILAFLEXRadioEvent::eventReceived); */
 }
 
 
@@ -151,11 +142,9 @@ int AKHILAFLEXRadioEvent::ignore(uint16_t id, uint16_t value, EventModel &eventB
   * This function process this packet, and fires the event contained inside onto the default EventModel.
   */
 void AKHILAFLEXRadioEvent::packetReceived()
-/*void AKHILAFLEXRadioEvent::packetReceived() */
 {
     FrameBuffer *p = radio.recv();
     AKHILAFLEXEvent *e = (AKHILAFLEXEvent *) p->payload;
-   /* AKHILAFLEXEvent *e = (AKHILAFLEXEvent *) p->payload; */
 
     suppressForwarding = true;
     e->fire();
@@ -170,7 +159,6 @@ void AKHILAFLEXRadioEvent::packetReceived()
   * a radio packet and transmitted to any other AKHILAFLEXs in the same group.
   */
 void AKHILAFLEXRadioEvent::eventReceived(AKHILAFLEXEvent e)
-/*void AKHILAFLEXRadioEvent::eventReceived(AKHILAFLEXEvent e) */
 {
     if(suppressForwarding)
         return;
@@ -178,14 +166,10 @@ void AKHILAFLEXRadioEvent::eventReceived(AKHILAFLEXEvent e)
     FrameBuffer buf;
 
     buf.length = sizeof(AKHILAFLEXEvent) + AKHILAFLEX_RADIO_HEADER_SIZE - 1;
-  /*  buf.length = sizeof(AKHILAFLEXEvent) + AKHILAFLEX_RADIO_HEADER_SIZE - 1; */
     buf.version = 1;
     buf.group = 0;
     buf.protocol = AKHILAFLEX_RADIO_PROTOCOL_EVENTBUS;
     memcpy(buf.payload, (const uint8_t *)&e, sizeof(AKHILAFLEXEvent));
-    /*buf.protocol = AKHILAFLEX_RADIO_PROTOCOL_EVENTBUS;
-    memcpy(buf.payload, (const uint8_t *)&e, sizeof(AKHILAFLEXEvent)); */
-
 
     radio.send(&buf);
 }

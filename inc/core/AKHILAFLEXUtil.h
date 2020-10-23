@@ -26,12 +26,9 @@ DEALINGS IN THE SOFTWARE.
  * This file contains functions used to maintain compatability and portability.
  * It also contains constants that are used elsewhere in the DAL.
  */
-/*
-#ifndef AKHILAFLEX_UTIL_H
-#define AKHILAFLEX_UTIL_H */
-#ifndef AKHILAFLEX_UTIL_H
-#define AKHILAFLEX_UTIL_H 
 
+#ifndef AKHILAFLEX_UTIL_H
+#define AKHILAFLEX_UTIL_H
 
 #include "AKHILAFLEXConfig.h"
 

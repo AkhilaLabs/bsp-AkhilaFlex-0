@@ -25,9 +25,6 @@ DEALINGS IN THE SOFTWARE.
 
 #ifndef AKHILAFLEX_UART_SERVICE_H
 #define AKHILAFLEX_UART_SERVICE_H
-/*#ifndef AKHILA_UART_SERVICE_H
-#define AKHILA_UART_SERVICE_H  */
-
 
 #include "mbed.h"
 #include "ble/UUID.h"
@@ -41,21 +38,12 @@ DEALINGS IN THE SOFTWARE.
 #define AKHILAFLEX_UART_S_EVT_HEAD_MATCH      2
 #define AKHILAFLEX_UART_S_EVT_RX_FULL         3
 
-/*#define AKHILAFLEX_UART_S_DEFAULT_BUF_SIZE    20
-
-#define AKHILAFLEX_UART_S_EVT_DELIM_MATCH     1
-#define AKHILAFLEX_UART_S_EVT_HEAD_MATCH      2
-#define AKHILAFLEX_UART_S_EVT_RX_FULL         3 */
-
-
-
 /**
   * Class definition for the custom AKHILAFLEX UART Service.
   * Provides a BLE service that acts as a UART port, enabling the reception and transmission
   * of an arbitrary number of bytes.
   */
 class AKHILAFLEXUARTService
-/*class AKHILAFLEXUARTService */
 {
     uint8_t* rxBuffer;
 
@@ -108,7 +96,7 @@ class AKHILAFLEXUARTService
      * @note The default size is AKHILAFLEX_UART_S_DEFAULT_BUF_SIZE (20 bytes).
      */
     AKHILAFLEXUARTService(BLEDevice &_ble, uint8_t rxBufferSize = AKHILAFLEX_UART_S_DEFAULT_BUF_SIZE, uint8_t txBufferSize = AKHILAFLEX_UART_S_DEFAULT_BUF_SIZE);
-/*AKHILAFLEXUARTService(BLEDevice &_ble, uint8_t rxBufferSize = AKHILAFLEX_UART_S_DEFAULT_BUF_SIZE, uint8_t txBufferSize = AKHILAFLEX_UART_S_DEFAULT_BUF_SIZE); */
+
     /**
       * Retreives a single character from our RxBuffer.
       *
@@ -125,7 +113,6 @@ class AKHILAFLEXUARTService
       * @return AKHILAFLEX_INVALID_PARAMETER if the mode given is SYNC_SPINWAIT, a character or AKHILAFLEX_NO_DATA
       */
     int getc(AKHILAFLEXSerialMode mode = SYNC_SLEEP);
-      /*int getc(AKHILAFLEXSerialMode mode = SYNC_SLEEP); */
 
     /**
       * Places a single character into our transmission buffer,
@@ -148,7 +135,7 @@ class AKHILAFLEXUARTService
       *         no connected device, or the connected device has not enabled indications.
       */
     int putc(char c, AKHILAFLEXSerialMode mode = SYNC_SLEEP);
-   /* int putc(char c, AKHILAFLEXSerialMode mode = SYNC_SLEEP); */
+
     /**
       * Copies characters into the buffer used for Transmitting to the central device.
       *
@@ -170,7 +157,6 @@ class AKHILAFLEXUARTService
       *         no connected device, or the connected device has not enabled indications.
       */
     int send(const uint8_t *buf, int length, AKHILAFLEXSerialMode mode = SYNC_SLEEP);
-   /* int send(const uint8_t *buf, int length, AKHILAFLEXSerialMode mode = SYNC_SLEEP); */
 
     /**
       * Copies characters into the buffer used for Transmitting to the central device.
@@ -192,7 +178,6 @@ class AKHILAFLEXUARTService
       *         no connected device, or the connected device has not enabled indications.
       */
     int send(ManagedString s, AKHILAFLEXSerialMode mode = SYNC_SLEEP);
-  /*  int send(ManagedString s, AKHILAFLEXSerialMode mode = SYNC_SLEEP); */
 
     /**
       * Reads a number of characters from the rxBuffer and fills user given buffer.
@@ -214,7 +199,7 @@ class AKHILAFLEXUARTService
       * @return the number of characters digested
       */
     int read(uint8_t *buf, int len, AKHILAFLEXSerialMode mode = SYNC_SLEEP);
-   /* int read(uint8_t *buf, int len, AKHILAFLEXSerialMode mode = SYNC_SLEEP); */
+
     /**
       * Reads a number of characters from the rxBuffer and returns them as a ManagedString
       *
@@ -234,7 +219,6 @@ class AKHILAFLEXUARTService
       * @return an empty ManagedString on error, or a ManagedString containing characters
       */
     ManagedString read(int len, AKHILAFLEXSerialMode mode = SYNC_SLEEP);
-     /* ManagedString read(int len, AKHILAFLEXSerialMode mode = SYNC_SLEEP);*/
 
     /**
       * Reads characters until a character matches one of the given delimeters
@@ -255,7 +239,6 @@ class AKHILAFLEXUARTService
       * @return an empty ManagedString on error, or a ManagedString containing characters
       */
     ManagedString readUntil(ManagedString delimeters, AKHILAFLEXSerialMode mode = SYNC_SLEEP);
-   /* ManagedString readUntil(ManagedString delimeters, AKHILAFLEXSerialMode mode = SYNC_SLEEP); */
 
     /**
       * Configures an event to be fired on a match with one of the delimeters.
@@ -276,7 +259,7 @@ class AKHILAFLEXUARTService
       * @note delimeters are matched on a per byte basis.
       */
     int eventOn(ManagedString delimeters, AKHILAFLEXSerialMode mode = ASYNC);
-    /*int eventOn(ManagedString delimeters, AKHILAFLEXSerialMode mode = ASYNC); */
+
     /**
       * Configures an event to be fired after "len" characters.
       *
@@ -294,7 +277,6 @@ class AKHILAFLEXUARTService
       * @return AKHILAFLEX_INVALID_PARAMETER if the mode given is SYNC_SPINWAIT, otherwise AKHILAFLEX_OK.
       */
     int eventAfter(int len, AKHILAFLEXSerialMode mode = ASYNC);
-    /*int eventAfter(int len, AKHILAFLEXSerialMode mode = ASYNC); */
 
     /**
       * Determines if we have space in our rxBuff.

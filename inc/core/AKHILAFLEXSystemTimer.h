@@ -37,8 +37,6 @@ DEALINGS IN THE SOFTWARE.
 
 #ifndef AKHILAFLEX_SYSTEM_TIMER_H
 #define AKHILAFLEX_SYSTEM_TIMER_H
-/*#ifndef AKHILAFLEX_SYSTEM_TIMER_H
-#define AKHILAFLEX_SYSTEM_TIMER_H */
 
 #include "mbed.h"
 #include "AKHILAFLEXConfig.h"
@@ -135,14 +133,12 @@ int system_timer_add_component(AKHILAFLEXComponent *component);
   * system_timer_remove_component(display);
   * @endcode
   */
-int system_timer_remove_component(AKHILAFLEXComponent *component); 
-/*int system_timer_remove_component(AKHILAFLEXComponent *component); */
+int system_timer_remove_component(AKHILAFLEXComponent *component);
 
 /**
   * A simple C/C++ wrapper to allow periodic callbacks to standard C functions transparently.
   */
 class AKHILAFLEXSystemTimerCallback : AKHILAFLEXComponent
-/*class AKHILAFLEXSystemTimerCallback : AKHILAFLEXComponent */
 {
     void (*fn)(void);
 
@@ -154,7 +150,6 @@ class AKHILAFLEXSystemTimerCallback : AKHILAFLEXComponent
      */
     public:
     AKHILAFLEXSystemTimerCallback(void (*function)(void))
-   /* AKHILAFLEXSystemTimerCallback(void (*function)(void)) */
     {
         fn = function;
         system_timer_add_component(this);

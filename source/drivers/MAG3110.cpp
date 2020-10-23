@@ -70,9 +70,6 @@ int MAG3110::configure()
     result = i2c.writeRegister(address, MAG_CTRL_REG1, 0x00);
     if (result != AKHILAFLEX_OK)
         return AKHILAFLEX_I2C_ERROR;
-/*    if (result != AKHILAFLEX_OK)
-        return AKHILAFLEX_I2C_ERROR; */
-    
 
     // Wait for the part to enter standby mode...
     while(1)
@@ -82,9 +79,6 @@ int MAG3110::configure()
         result = i2c.readRegister(address,MAG_SYSMOD, &value, 1);
         if (result == AKHILAFLEX_I2C_ERROR)
             return AKHILAFLEX_I2C_ERROR;
-       /* if (result == AKHILAFLEX_I2C_ERROR)    
-            return AKHILAFLEX_I2C_ERROR; */
-
 
         // if the part in in standby, we're good to carry on.
         if((value & 0x03) == 0)

@@ -53,9 +53,6 @@ const unsigned char pendolino3[475] = {
 
 const unsigned char* AKHILAFLEXFont::defaultFont = pendolino3;
 AKHILAFLEXFont AKHILAFLEXFont::systemFont = AKHILAFLEXFont(defaultFont, AKHILAFLEX_FONT_ASCII_END);
-/*const unsigned char* AKHILAFLEXFont::defaultFont = pendolino3;
-AKHILAFLEXFont AKHILAFLEXFont::systemFont = AKHILAFLEXFont(defaultFont, AKHILAFLEX_FONT_ASCII_END); */
-
 
 /**
   * Constructor.
@@ -67,7 +64,6 @@ AKHILAFLEXFont AKHILAFLEXFont::systemFont = AKHILAFLEXFont(defaultFont, AKHILAFL
   * @param asciiEnd the char value at which this font finishes.
   */
 AKHILAFLEXFont::AKHILAFLEXFont(const unsigned char* characters, int asciiEnd)
-/*AKHILAFLEXFont::AKHILAFLEXFont(const unsigned char* characters, int asciiEnd) */
 {
     this->characters = characters;
     this->asciiEnd = asciiEnd;
@@ -79,11 +75,9 @@ AKHILAFLEXFont::AKHILAFLEXFont(const unsigned char* characters, int asciiEnd)
   * Configures the default font for the display to use.
   */
 AKHILAFLEXFont::AKHILAFLEXFont()
-/*AKHILAFLEXFont::AKHILAFLEXFont() */
 {
     this->characters = defaultFont;
     this->asciiEnd = AKHILAFLEX_FONT_ASCII_END;
-   /* this->asciiEnd = AKHILAFLEX_FONT_ASCII_END; */
 }
 
 /**
@@ -92,18 +86,14 @@ AKHILAFLEXFont::AKHILAFLEXFont()
   * @param font the new font that will be used to render characters on the display.
   */
 void AKHILAFLEXFont::setSystemFont(AKHILAFLEXFont font)
-/*void AKHILAFLEXFont::setSystemFont(AKHILAFLEXFont font) */
 {
 	AKHILAFLEXFont::systemFont = font;
-  /*AKHILAFLEXFont::systemFont = font; */
 }
 
 /**
   * Retrieves the font object used for rendering characters on the display.
   */
 AKHILAFLEXFont AKHILAFLEXFont::getSystemFont()
-/*AKHILAFLEXFont AKHILAFLEXFont::getSystemFont() */
 {
     return AKHILAFLEXFont::systemFont;
-   /* return AKHILAFLEXFont::systemFont; */
 }

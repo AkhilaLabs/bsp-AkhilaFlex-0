@@ -38,11 +38,8 @@ DEALINGS IN THE SOFTWARE.
   * @param _ble The instance of a BLE device that we're running on.
   * @param _messageBus The instance of a EventModel that we're running on.
   */
-/*AKHILAFLEXPartialFlashingService::AKHILAFLEXPartialFlashingService(BLEDevice &_ble, EventModel &_messageBus) :
-        ble(_ble), messageBus(_messageBus) */
 AKHILAFLEXPartialFlashingService::AKHILAFLEXPartialFlashingService(BLEDevice &_ble, EventModel &_messageBus) :
-        ble(_ble), messageBus(_messageBus) 
-
+        ble(_ble), messageBus(_messageBus)
 {
     // Set up partial flashing characteristic
     uint8_t initCharacteristicValue = 0x00;
@@ -50,8 +47,7 @@ AKHILAFLEXPartialFlashingService::AKHILAFLEXPartialFlashingService(BLEDevice &_b
     20, GattCharacteristic::BLE_GATT_CHAR_PROPERTIES_WRITE_WITHOUT_RESPONSE | GattCharacteristic::BLE_GATT_CHAR_PROPERTIES_NOTIFY);
 
     // Set default security requirements
-    /*partialFlashCharacteristic.requireSecurity(SecurityManager::AKHILAFLEX_BLE_SECURITY_LEVEL); */
-  partialFlashCharacteristic.requireSecurity(SecurityManager::AKHILAFLEX_BLE_SECURITY_LEVEL); 
+    partialFlashCharacteristic.requireSecurity(SecurityManager::AKHILAFLEX_BLE_SECURITY_LEVEL);
 
     // Create Partial Flashing Service
     GattCharacteristic *characteristics[] = {&partialFlashCharacteristic};
@@ -60,12 +56,10 @@ AKHILAFLEXPartialFlashingService::AKHILAFLEXPartialFlashingService(BLEDevice &_b
 
     // Get characteristic handle for future use
     partialFlashCharacteristicHandle = partialFlashCharacteristic.getValueHandle();
-   /* ble.gattServer().onDataWritten(this, &AKHILAFLEXPartialFlashingService::onDataWritten); */
-    ble.gattServer().onDataWritten(this, &AKHILAFLEXPartialFlashingService::onDataWritten); 
+    ble.gattServer().onDataWritten(this, &AKHILAFLEXPartialFlashingService::onDataWritten);
 
     // Set up listener for SD writing
-   /* messageBus.listen(AKHILAFLEX_ID_PARTIAL_FLASHING, AKHILAFLEX_EVT_ANY, this, &AKHILAFLEXPartialFlashingService::partialFlashingEvent); */
-messageBus.listen(AKHILAFLEX_ID_PARTIAL_FLASHING, AKHILAFLEX_EVT_ANY, this, &AKHILAFLEXPartialFlashingService::partialFlashingEvent); 
+    messageBus.listen(AKHILAFLEX_ID_PARTIAL_FLASHING, AKHILAFLEX_EVT_ANY, this, &AKHILAFLEXPartialFlashingService::partialFlashingEvent);
 
 }
 
@@ -73,8 +67,7 @@ messageBus.listen(AKHILAFLEX_ID_PARTIAL_FLASHING, AKHILAFLEX_EVT_ANY, this, &AKH
 /**
   * Callback. Invoked when any of our attributes are written via BLE.
   */
-/*void AKHILAFLEXPartialFlashingService::onDataWritten(const GattWriteCallbackParams *params) */
-void AKHILAFLEXPartialFlashingService::onDataWritten(const GattWriteCallbackParams *params) 
+void AKHILAFLEXPartialFlashingService::onDataWritten(const GattWriteCallbackParams *params)
 {
     // Get data from BLE callback params
     uint8_t *data = (uint8_t *)params->data;
@@ -87,7 +80,6 @@ void AKHILAFLEXPartialFlashingService::onDataWritten(const GattWriteCallbackPara
         {
           // Create instance of Memory Map to return info
           AKHILAFLEXMemoryMap memoryMap;
-          /*AKHILAFLEXMemoryMap memoryMap; */
 
           uint8_t buffer[18];
           // Response:
@@ -134,44 +126,32 @@ void AKHILAFLEXPartialFlashingService::onDataWritten(const GattWriteCallbackPara
            * - Write final packet
            * The END_OF_TRANSMISSION packet contains no data. Write any data left in the buffer.
            */
-          /* AKHILAFLEXEvent evt(AKHILAFLEX_ID_PARTIAL_FLASHING, END_OF_TRANSMISSION); */
-         AKHILAFLEXEvent evt(AKHILAFLEX_ID_PARTIAL_FLASHING, END_OF_TRANSMISSION); 
+           AKHILAFLEXEvent evt(AKHILAFLEX_ID_PARTIAL_FLASHING, END_OF_TRANSMISSION);
            break;
         }
-       /* case AKHILAFLEX_STATUS: */
-        case AKHILAFLEX_STATUS: 
-        
+        case AKHILAFLEX_STATUS:
         {
           /*
            * Return the version of the Partial Flashing Service and the current BLE mode (application / pairing)
            */
-        /*  uint8_t flashNotificationBuffer[] = {AKHILAFLEX_STATUS, PARTIAL_FLASHING_VERSION, AKHILAFLEXBLEManager::manager->getCurrentMode()};
+          uint8_t flashNotificationBuffer[] = {AKHILAFLEX_STATUS, PARTIAL_FLASHING_VERSION, AKHILAFLEXBLEManager::manager->getCurrentMode()};
           ble.gattServer().notify(partialFlashCharacteristicHandle, (const uint8_t *)flashNotificationBuffer, sizeof(flashNotificationBuffer));
-          break; */
-       uint8_t flashNotificationBuffer[] = {AKHILAFLEX_STATUS, PARTIAL_FLASHING_VERSION, AKHILAFLEXBLEManager::manager->getCurrentMode()};
-          ble.gattServer().notify(partialFlashCharacteristicHandle, (const uint8_t *)flashNotificationBuffer, sizeof(flashNotificationBuffer));
-          break; 
-           
+          break;
         }
-      /*  case AKHILAFLEX_RESET: */
-        case AKHILAFLEX_RESET: 
+        case AKHILAFLEX_RESET:
         {
           /*
            * data[1] determines which mode to reset into: AKHILAFLEX_MODE_PAIRING or AKHILAFLEX_MODE_APPLICATION
            */
            switch(data[1]) {
-            /* case AKHILAFLEX_MODE_PAIRING: */
-             case AKHILAFLEX_MODE_PAIRING: 
+             case AKHILAFLEX_MODE_PAIRING:
              {
-              /* AKHILAFLEXEvent evt(AKHILAFLEX_ID_PARTIAL_FLASHING, AKHILAFLEX_RESET ); */
-               AKHILAFLEXEvent evt(AKHILAFLEX_ID_PARTIAL_FLASHING, AKHILAFLEX_RESET ); 
+               AKHILAFLEXEvent evt(AKHILAFLEX_ID_PARTIAL_FLASHING, AKHILAFLEX_RESET );
                break;
              }
-           /*  case AKHILAFLEX_MODE_APPLICATION: */
-            case AKHILAFLEX_MODE_APPLICATION: 
+             case AKHILAFLEX_MODE_APPLICATION:
              {
-              /* AKHILAFLEX_reset(); */
-              AKHILAFLEX_reset();
+               AKHILAFLEX_reset();
                break;
              }
            }
@@ -187,8 +167,7 @@ void AKHILAFLEXPartialFlashingService::onDataWritten(const GattWriteCallbackPara
   * @param data - A pointer to the data to process
   *
   */
-/*void AKHILAFLEXPartialFlashingService::flashData(uint8_t *data) */
-void AKHILAFLEXPartialFlashingService::flashData(uint8_t *data) 
+void AKHILAFLEXPartialFlashingService::flashData(uint8_t *data)
 {
         // Receive 16 bytes per packet
         // Buffer 4 packets
@@ -244,8 +223,7 @@ void AKHILAFLEXPartialFlashingService::flashData(uint8_t *data)
             case 3:
                 {
                     // Fire write event
-                   /* AKHILAFLEXEvent evt(AKHILAFLEX_ID_PARTIAL_FLASHING, FLASH_DATA ); */
-                    AKHILAFLEXEvent evt(AKHILAFLEX_ID_PARTIAL_FLASHING, FLASH_DATA ); 
+                    AKHILAFLEXEvent evt(AKHILAFLEX_ID_PARTIAL_FLASHING, FLASH_DATA );
                     // Reset blockNum
                     blockNum = 0;
                     blockPacketCount += 4;
@@ -265,11 +243,9 @@ void AKHILAFLEXPartialFlashingService::flashData(uint8_t *data)
   * Write Event
   * Used the write data to the flash outside of the BLE ISR
   */
-/*void AKHILAFLEXPartialFlashingService::partialFlashingEvent(AKHILAFLEXEvent e) */
-void AKHILAFLEXPartialFlashingService::partialFlashingEvent(AKHILAFLEXEvent e) 
+void AKHILAFLEXPartialFlashingService::partialFlashingEvent(AKHILAFLEXEvent e)
 {
- /* AKHILAFLEXFlash flash; */
-  AKHILAFLEXFlash flash; 
+  AKHILAFLEXFlash flash;
 
   switch(e.value){
     case FLASH_DATA:
@@ -278,8 +254,7 @@ void AKHILAFLEXPartialFlashingService::partialFlashingEvent(AKHILAFLEXEvent e)
        * Set flashIncomplete flag if not already set to boot into BLE mode
        * upon a failed flash.
        */
-       /*AKHILAFLEXStorage storage; */
-       AKHILAFLEXStorage storage; 
+       AKHILAFLEXStorage storage;
        KeyValuePair* flashIncomplete = storage.get("flashIncomplete");
        if(flashIncomplete == NULL){
          uint8_t flashIncompleteVal = 0x01;
@@ -336,35 +311,24 @@ void AKHILAFLEXPartialFlashingService::partialFlashingEvent(AKHILAFLEXEvent e)
 
       // Once the final packet has been written remove the BLE mode flag and reset
       // the AKHILAFLEX
-        /* AKHILAFLEXStorage storage; */
-        AKHILAFLEXStorage storage; 
-
+        AKHILAFLEXStorage storage;
         storage.remove("flashIncomplete");
-      /*  AKHILAFLEX_reset(); */
-      AKHILAFLEX_reset();
+        AKHILAFLEX_reset();
       break;
     }
-   /* case AKHILAFLEX_RESET: */
-   case AKHILAFLEX_RESET:
+    case AKHILAFLEX_RESET:
     {
-      /*AKHILAFLEXBLEManager::manager->restartInBLEMode(); */
-      AKHILAFLEXBLEManager::manager->restartInBLEMode(); 
+      AKHILAFLEXBLEManager::manager->restartInBLEMode();
       break;
     }
   }
 
 }
 
-/*const uint8_t  AKHILAFLEXPartialFlashingServiceUUID[] = {
-    0x00,0x00,0xd9,0x1d,0x25,0x1d,0x47,0x0a,0xa0,0x62,0xfa,0x19,0x22,0xdf,0xa9,0xa8
-}; */
 const uint8_t  AKHILAFLEXPartialFlashingServiceUUID[] = {
     0x00,0x00,0xd9,0x1d,0x25,0x1d,0x47,0x0a,0xa0,0x62,0xfa,0x19,0x22,0xdf,0xa9,0xa8
 }; 
 
-/*const uint8_t  AKHILAFLEXPartialFlashingServiceCharacteristicUUID[] = {
-    0x00,0x00,0x3b,0x10,0x25,0x1d,0x47,0x0a,0xa0,0x62,0xfa,0x19,0x22,0xdf,0xa9,0xa8
-}; */
 const uint8_t  AKHILAFLEXPartialFlashingServiceCharacteristicUUID[] = {
     0x00,0x00,0x3b,0x10,0x25,0x1d,0x47,0x0a,0xa0,0x62,0xfa,0x19,0x22,0xdf,0xa9,0xa8
 }; 

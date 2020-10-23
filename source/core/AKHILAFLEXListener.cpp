@@ -46,8 +46,6 @@ DEALINGS IN THE SOFTWARE.
   * to be tuned.
   */
 AKHILAFLEXListener::AKHILAFLEXListener(uint16_t id, uint16_t value, void (*handler)(AKHILAFLEXEvent), uint16_t flags)
-/*AKHILAFLEXListener::AKHILAFLEXListener(uint16_t id, uint16_t value, void (*handler)(AKHILAFLEXEvent), uint16_t flags) */
-
 {
 	this->id = id;
 	this->value = value;
@@ -76,7 +74,6 @@ AKHILAFLEXListener::AKHILAFLEXListener(uint16_t id, uint16_t value, void (*handl
   * to be tuned.
   */
 AKHILAFLEXListener::AKHILAFLEXListener(uint16_t id, uint16_t value, void (*handler)(AKHILAFLEXEvent, void *), void* arg, uint16_t flags)
-/*AKHILAFLEXListener::AKHILAFLEXListener(uint16_t id, uint16_t value, void (*handler)(AKHILAFLEXEvent, void *), void* arg, uint16_t flags)*/
 {
 	this->id = id;
 	this->value = value;
@@ -91,7 +88,6 @@ AKHILAFLEXListener::AKHILAFLEXListener(uint16_t id, uint16_t value, void (*handl
   * Destructor. Ensures all resources used by this listener are freed.
   */
 AKHILAFLEXListener::~AKHILAFLEXListener()
-/*AKHILAFLEXBitListener::~AKHILAFLEXListener()*/
 {
     if(this->flags & MESSAGE_BUS_LISTENER_METHOD)
         delete cb_method;
@@ -103,16 +99,13 @@ AKHILAFLEXListener::~AKHILAFLEXListener()
   * @param e The event to queue
   */
 void AKHILAFLEXListener::queue(AKHILAFLEXEvent e)
-/*void AKHILAFLEXListener::queue(AKHILAFLEXEvent e) */
 {
     int queueDepth;
 
     AKHILAFLEXEventQueueItem *p = evt_queue;
-    /*AKHILAFLEXEventQueueItem *p = evt_queue; */
 
     if (evt_queue == NULL)
         evt_queue = new AKHILAFLEXEventQueueItem(e);
-       /* evt_queue = new AKHILAFLEXEventQueueItem(e); */
     else
     {
         queueDepth = 1;
@@ -125,6 +118,5 @@ void AKHILAFLEXListener::queue(AKHILAFLEXEvent e)
 
         if (queueDepth < MESSAGE_BUS_LISTENER_MAX_QUEUE_DEPTH)
             p->next = new AKHILAFLEXEventQueueItem(e);
-           /*  p->next = new AKHILAFLEXEventQueueItem(e); */
     }
 }

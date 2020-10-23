@@ -41,7 +41,6 @@ DEALINGS IN THE SOFTWARE.
   * that allows the retrieval, addition and deletion of KeyValuePairs.
   */
 AKHILAFLEXStorage::AKHILAFLEXStorage()
-/*AKHILAFLEXStorage::AKHILAFLEXStorage() */
 {
     //initialise our magic block, if required.
     size();
@@ -53,7 +52,6 @@ AKHILAFLEXStorage::AKHILAFLEXStorage()
   * @param page_address Address of the first word in the page to be erased.
   */
 void AKHILAFLEXStorage::flashPageErase(uint32_t * page_address)
-/*void AKHILAFLEXStorage::flashPageErase(uint32_t * page_address) */
 {
     AKHILAFLEXFlash flash;
     flash.erase_page(page_address);
@@ -69,10 +67,8 @@ void AKHILAFLEXStorage::flashPageErase(uint32_t * page_address)
   * @param sizeInWords the number of words to copy
   */
 void AKHILAFLEXStorage::flashCopy(uint32_t* from, uint32_t* to, int sizeInWords)
-/*void AKHILAFLEXStorage::flashCopy(uint32_t* from, uint32_t* to, int sizeInWords) */
 {
     AKHILAFLEXFlash flash;
-   /* AKHILAFLEXFlash flash;*/
     flash.flash_burn(to, from, sizeInWords);
 }
 
@@ -84,7 +80,6 @@ void AKHILAFLEXStorage::flashCopy(uint32_t* from, uint32_t* to, int sizeInWords)
   * @param value Value to be written to flash.
   */
 void AKHILAFLEXStorage::flashWordWrite(uint32_t * address, uint32_t value)
-/*void AKHILAFLEXStorage::flashWordWrite(uint32_t * address, uint32_t value) */
 {
     flashCopy(&value, address, 1);
 }
@@ -95,7 +90,6 @@ void AKHILAFLEXStorage::flashWordWrite(uint32_t * address, uint32_t value)
   * @param store the KeyValueStore struct to write to the scratch page.
   */
 void AKHILAFLEXStorage::scratchKeyValueStore(KeyValueStore store)
-/*void AKHILAFLEXStorage::scratchKeyValueStore(KeyValueStore store) */
 {
     //calculate our various offsets
     uint32_t *s = (uint32_t *) &store;
@@ -116,7 +110,6 @@ void AKHILAFLEXStorage::scratchKeyValueStore(KeyValueStore store)
   * be written.
   */
 void AKHILAFLEXStorage::scratchKeyValuePair(KeyValuePair pair, uint32_t* flashPointer)
-/*void AKHILAFLEXStorage::scratchKeyValuePair(KeyValuePair pair, uint32_t* flashPointer) */
 {
     //we can only write using words
     uint32_t *p = (uint32_t *) &pair;
@@ -124,10 +117,8 @@ void AKHILAFLEXStorage::scratchKeyValuePair(KeyValuePair pair, uint32_t* flashPo
     //calculate our various offsets
     uint32_t pg_size = NRF_FICR->CODEPAGESIZE;
     uint32_t pg_num  = NRF_FICR->CODESIZE - AKHILAFLEX_STORAGE_STORE_PAGE_OFFSET;
-   /* uint32_t pg_num  = NRF_FICR->CODESIZE - AKHILAFLEX_STORAGE_STORE_PAGE_OFFSET; */
 
     uint32_t *scratchPointer = (uint32_t *)(pg_size * (NRF_FICR->CODESIZE - AKHILAFLEX_STORAGE_SCRATCH_PAGE_OFFSET));
-    /*uint32_t *scratchPointer = (uint32_t *)(pg_size * (NRF_FICR->CODESIZE - AKHILAFLEX_STORAGE_SCRATCH_PAGE_OFFSET)); */
     uint32_t *flashBlockPointer = (uint32_t *)(pg_size * pg_num);
 
     uint32_t flashPointerOffset = flashPointer - flashBlockPointer;
@@ -155,7 +146,6 @@ void AKHILAFLEXStorage::scratchKeyValuePair(KeyValuePair pair, uint32_t* flashPo
   *         AKHILAFLEX_NO_RESOURCES if the storage page is full
   */
 int AKHILAFLEXStorage::put(const char *key, uint8_t *data, int dataSize)
-/*int AKHILAFLEXStorage::put(const char *key, uint8_t *data, int dataSize) */
 {
     KeyValuePair pair = KeyValuePair();
 
@@ -163,7 +153,6 @@ int AKHILAFLEXStorage::put(const char *key, uint8_t *data, int dataSize)
 
     if(keySize > (int)sizeof(pair.key) || dataSize > (int)sizeof(pair.value) || dataSize < 0)
         return AKHILAFLEX_INVALID_PARAMETER;
-        /*return AKHILAFLEX_INVALID_PARAMETER; */
 
     KeyValuePair *currentValue = get(key);
 
@@ -181,10 +170,8 @@ int AKHILAFLEXStorage::put(const char *key, uint8_t *data, int dataSize)
     //calculate our various offsets.
     uint32_t pg_size = NRF_FICR->CODEPAGESIZE;
     uint32_t *flashPointer = (uint32_t *)(pg_size * (NRF_FICR->CODESIZE - AKHILAFLEX_STORAGE_STORE_PAGE_OFFSET));
-   /* uint32_t *flashPointer = (uint32_t *)(pg_size * (NRF_FICR->CODESIZE - AKHILAFLEX_STORAGE_STORE_PAGE_OFFSET)); */
     uint32_t *flashBlockPointer = flashPointer;
     uint32_t *scratchPointer = (uint32_t *)(pg_size * (NRF_FICR->CODESIZE - AKHILAFLEX_STORAGE_SCRATCH_PAGE_OFFSET));
-   /* uint32_t *scratchPointer = (uint32_t *)(pg_size * (NRF_FICR->CODESIZE - AKHILAFLEX_STORAGE_SCRATCH_PAGE_OFFSET)); */
 
     uint32_t kvStoreSize = sizeof(KeyValueStore) / 4;
     uint32_t kvPairSize = sizeof(KeyValuePair) / 4;
@@ -212,7 +199,6 @@ int AKHILAFLEXStorage::put(const char *key, uint8_t *data, int dataSize)
             found = 1;
             //scratch our KeyValueStore struct so that it is preserved.
             scratchKeyValueStore(KeyValueStore(AKHILAFLEX_STORAGE_MAGIC, storeSize));
-           /* scratchKeyValueStore(KeyValueStore(AKHILAFLEX_STORAGE_MAGIC, storeSize)); */
             scratchKeyValuePair(pair, flashPointer);
         }
         else
@@ -228,9 +214,6 @@ int AKHILAFLEXStorage::put(const char *key, uint8_t *data, int dataSize)
         //if we haven't got a match for the key, check we can add a new KeyValuePair
         if(storeSize == (int)((pg_size - kvStoreSize) / AKHILAFLEX_STORAGE_BLOCK_SIZE))
             return AKHILAFLEX_NO_RESOURCES;
-        /*if(storeSize == (int)((pg_size - kvStoreSize) / AKHILAFLEX_STORAGE_BLOCK_SIZE))
-            return AKHILAFLEX_NO_RESOURCES; */
-    
 
         storeSize += 1;
 
@@ -244,10 +227,8 @@ int AKHILAFLEXStorage::put(const char *key, uint8_t *data, int dataSize)
 
     //copy from scratch to storage.
     flashCopy((uint32_t *)(pg_size * (NRF_FICR->CODESIZE - AKHILAFLEX_STORAGE_SCRATCH_PAGE_OFFSET)), flashBlockPointer, kvStoreSize + (storeSize * kvPairSize));
-   /* flashCopy((uint32_t *)(pg_size * (NRF_FICR->CODESIZE - AKHILAFLEX_STORAGE_SCRATCH_PAGE_OFFSET)), flashBlockPointer, kvStoreSize + (storeSize * kvPairSize)); */
 
     return AKHILAFLEX_OK;
-    /*return AKHILAFLEX_OK; */
 }
 
 /**
@@ -264,7 +245,6 @@ int AKHILAFLEXStorage::put(const char *key, uint8_t *data, int dataSize)
   *         AKHILAFLEX_NO_RESOURCES if the storage page is full
   */
 int AKHILAFLEXStorage::put(ManagedString key, uint8_t* data, int dataSize)
-/*int AKHILAFLEXStorage::put(ManagedString key, uint8_t* data, int dataSize) */
 {
     return put((char *)key.toCharArray(), data, dataSize);
 }
@@ -280,12 +260,10 @@ int AKHILAFLEXStorage::put(ManagedString key, uint8_t* data, int dataSize)
   * @note it is up to the user to free memory after use.
   */
 KeyValuePair* AKHILAFLEXStorage::get(const char* key)
-/*KeyValuePair* AKHILAFLEXStorage::get(const char* key) */
 {
     //calculate our offsets for our storage page
     uint32_t pg_size = NRF_FICR->CODEPAGESIZE;
     uint32_t pg_num  = NRF_FICR->CODESIZE - AKHILAFLEX_STORAGE_STORE_PAGE_OFFSET;
-  /*  uint32_t pg_num  = NRF_FICR->CODESIZE - AKHILAFLEX_STORAGE_STORE_PAGE_OFFSET; */
 
     uint32_t *flashBlockPointer = (uint32_t *)(pg_size * pg_num);
 
@@ -334,8 +312,6 @@ KeyValuePair* AKHILAFLEXStorage::get(const char* key)
   * @note it is up to the user to free memory after use.
   */
 KeyValuePair* AKHILAFLEXStorage::get(ManagedString key)
-/*KeyValuePair* AKHILAFLEXStorage::get(ManagedString key) */
-
 {
     return get((char *)key.toCharArray());
 }
@@ -349,15 +325,12 @@ KeyValuePair* AKHILAFLEXStorage::get(ManagedString key)
   *         was not found in flash.
   */
 int AKHILAFLEXStorage::remove(const char* key)
-/*int AKHILAFLEXStorage::remove(const char* key) */
 {
     //calculate our various offsets
     uint32_t pg_size = NRF_FICR->CODEPAGESIZE;
     uint32_t *flashPointer = (uint32_t *)(pg_size * (NRF_FICR->CODESIZE - AKHILAFLEX_STORAGE_STORE_PAGE_OFFSET));
-  /*  uint32_t *flashPointer = (uint32_t *)(pg_size * (NRF_FICR->CODESIZE - AKHILAFLEX_STORAGE_STORE_PAGE_OFFSET)); */
     uint32_t *flashBlockPointer = flashPointer;
     uint32_t *scratchPointer = (uint32_t *)(pg_size * (NRF_FICR->CODESIZE - AKHILAFLEX_STORAGE_SCRATCH_PAGE_OFFSET));
-   /* uint32_t *scratchPointer = (uint32_t *)(pg_size * (NRF_FICR->CODESIZE - AKHILAFLEX_STORAGE_SCRATCH_PAGE_OFFSET)); */
 
     uint32_t kvStoreSize = sizeof(KeyValueStore) / 4;
     uint32_t kvPairSize = sizeof(KeyValuePair) / 4;
@@ -367,8 +340,6 @@ int AKHILAFLEXStorage::remove(const char* key)
     //if we have no data, we have nothing to do.
     if(storeSize == 0)
         return AKHILAFLEX_NO_DATA;
-       /* return AKHILAFLEX_NO_DATA; */
-
 
     //our KeyValueStore struct is always at 0
     flashPointer += kvStoreSize;
@@ -392,7 +363,6 @@ int AKHILAFLEXStorage::remove(const char* key)
             found = 1;
             //write our new KeyValueStore data
             scratchKeyValueStore(KeyValueStore(AKHILAFLEX_STORAGE_MAGIC, storeSize - 1));
-            /*scratchKeyValueStore(KeyValueStore(AKHILAFLEX_STORAGE_MAGIC, storeSize - 1)); */
         }
         else
         {
@@ -408,17 +378,14 @@ int AKHILAFLEXStorage::remove(const char* key)
     if(!found)
     {
         scratchKeyValueStore(KeyValueStore(AKHILAFLEX_STORAGE_MAGIC, storeSize));
-        /*scratchKeyValueStore(KeyValueStore(AKHILAFLEX_STORAGE_MAGIC, storeSize)); */
         return AKHILAFLEX_NO_DATA;
     }
 
     //copy scratch to our storage page
     flashPageErase((uint32_t *)flashBlockPointer);
     flashCopy((uint32_t *)(pg_size * (NRF_FICR->CODESIZE - AKHILAFLEX_STORAGE_SCRATCH_PAGE_OFFSET)), flashBlockPointer, kvStoreSize + (storeSize * kvPairSize));
-   /* flashCopy((uint32_t *)(pg_size * (NRF_FICR->CODESIZE - AKHILAFLEX_STORAGE_SCRATCH_PAGE_OFFSET)), flashBlockPointer, kvStoreSize + (storeSize * kvPairSize)); */
 
     return AKHILAFLEX_OK;
-    /*return AKHILAFLEX_OK; */
 }
 
 /**
@@ -430,7 +397,6 @@ int AKHILAFLEXStorage::remove(const char* key)
   *         was not found in flash.
   */
 int AKHILAFLEXStorage::remove(ManagedString key)
-/*int AKHILAFLEXStorage::remove(ManagedString key) */
 {
     return remove((char *)key.toCharArray());
 }
@@ -441,11 +407,9 @@ int AKHILAFLEXStorage::remove(ManagedString key)
   * @return the number of entries in the key value store
   */
 int AKHILAFLEXStorage::size()
-/*int AKHILAFLEXStorage::size() */
 {
     uint32_t pg_size = NRF_FICR->CODEPAGESIZE;
     uint32_t pg_num  = NRF_FICR->CODESIZE - AKHILAFLEX_STORAGE_STORE_PAGE_OFFSET;
-   /* uint32_t pg_num  = NRF_FICR->CODESIZE - AKHILAFLEX_STORAGE_STORE_PAGE_OFFSET; */
 
     uint32_t *flashBlockPointer = (uint32_t *)(pg_size * pg_num);
 
@@ -456,21 +420,17 @@ int AKHILAFLEXStorage::size()
 
     //if we haven't used flash before, we need to configure it
     if(store.magic != AKHILAFLEX_STORAGE_MAGIC)
-   /* if(store.magic != AKHILAFLEX_STORAGE_MAGIC) */
     {
         store.magic = AKHILAFLEX_STORAGE_MAGIC;
-       /* store.magic = AKHILAFLEX_STORAGE_MAGIC; */
         store.size = 0;
 
         //erase the scratch page and write our new KeyValueStore
         flashPageErase((uint32_t *)(pg_size * (NRF_FICR->CODESIZE - AKHILAFLEX_STORAGE_SCRATCH_PAGE_OFFSET)));
-        /*flashPageErase((uint32_t *)(pg_size * (NRF_FICR->CODESIZE - AKHILAFLEX_STORAGE_SCRATCH_PAGE_OFFSET))); */
         scratchKeyValueStore(store);
 
         //erase flash, and copy the scratch page over
         flashPageErase((uint32_t *)flashBlockPointer);
         flashCopy((uint32_t *)(pg_size * (NRF_FICR->CODESIZE - AKHILAFLEX_STORAGE_SCRATCH_PAGE_OFFSET)), flashBlockPointer, pg_size/4);
-       /* flashCopy((uint32_t *)(pg_size * (NRF_FICR->CODESIZE - AKHILAFLEX_STORAGE_SCRATCH_PAGE_OFFSET)), flashBlockPointer, pg_size/4); */
     }
 
     return store.size;

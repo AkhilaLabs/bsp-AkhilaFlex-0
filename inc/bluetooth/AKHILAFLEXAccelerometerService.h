@@ -22,9 +22,8 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
 FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 */
-/*#ifndef AKHILAFLEX_ACCELEROMETER_SERVICE_h */
+
 #ifndef AKHILAFLEX_ACCELEROMETER_SERVICE_H
-/*#define AKHILAFLEX_ACCELEROMETER_SERVICE_H */
 #define AKHILAFLEX_ACCELEROMETER_SERVICE_H
 
 #include "AKHILAFLEXConfig.h"
@@ -34,18 +33,14 @@ DEALINGS IN THE SOFTWARE.
 
 // UUIDs for our service and characteristics
 extern const uint8_t  AKHILAFLEXAccelerometerServiceUUID[];
-/*extern const uint8_t  AKHILAFLEXAccelerometerServiceUUID[]; */
 extern const uint8_t  AKHILAFLEXAccelerometerServiceDataUUID[];
-/*extern const uint8_t  AKHILAFLEXAccelerometerServiceDataUUID[]; */
 extern const uint8_t  AKHILAFLEXAccelerometerServicePeriodUUID[];
-/*extern const uint8_t  AKHILAFLEXAccelerometerServiceperiodUUID[]; */
 
 
 /**
   * Class definition for a AKHILAFLEX BLE Accelerometer Service.
   * Provides access to live accelerometer data via Bluetooth, and provides basic configuration options.
   */
- /*class AKHILAFLEXAccelerometerService */
 class AKHILAFLEXAccelerometerService
 {
     public:
@@ -57,7 +52,7 @@ class AKHILAFLEXAccelerometerService
       * @param _accelerometer An instance of AKHILAFLEXAccelerometer.
       */
     AKHILAFLEXAccelerometerService(BLEDevice &_ble, AKHILAFLEXAccelerometer &_acclerometer);
-    /*AKHILAFLEXAccelerometerService(BLEDevice &_ble, AKHILAFLEXAccelerometer &_acclerometer); */
+
 
     private:
 
@@ -70,12 +65,10 @@ class AKHILAFLEXAccelerometerService
      * Accelerometer update callback
      */
     void accelerometerUpdate(AKHILAFLEXEvent e);
-   /* void accelerometerUpdate(AKHILAFLEXBitEvent e); */
 
     // Bluetooth stack we're running on.
     BLEDevice           	&ble;
 	AKHILAFLEXAccelerometer	&accelerometer;
-  /*AKHILAFLEXAccelerometer	&accelerometer; */
 
     // memory for our 8 bit control characteristics.
     uint16_t            accelerometerDataCharacteristicBuffer[3];

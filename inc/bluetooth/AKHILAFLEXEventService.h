@@ -25,9 +25,6 @@ DEALINGS IN THE SOFTWARE.
 
 #ifndef AKHILAFLEX_EVENT_SERVICE_H
 #define AKHILAFLEX_EVENT_SERVICE_H
-/*#ifndef AKHILAFLEX_EVENT_SERVICE_H
-#define AKHILAFLEX_EVENT_SERVICE_H */
-
 
 #include "AKHILAFLEXConfig.h"
 #include "ble/BLE.h"
@@ -40,12 +37,6 @@ extern const uint8_t  AKHILAFLEXEventServiceAKHILAFLEXEventCharacteristicUUID[];
 extern const uint8_t  AKHILAFLEXEventServiceClientEventCharacteristicUUID[];
 extern const uint8_t  AKHILAFLEXEventServiceAKHILAFLEXRequirementsCharacteristicUUID[];
 extern const uint8_t  AKHILAFLEXEventServiceClientRequirementsCharacteristicUUID[];
-/*extern const uint8_t  AKHILAFLEXEventServiceUUID[];
-extern const uint8_t  AKHILAFLEXEventServiceAKHILAFLEXEventCharacteristicUUID[];
-extern const uint8_t  AKHILAFLEXEventServiceClientEventCharacteristicUUID[];
-extern const uint8_t  AKHILAFLEXEventServiceAKHILAFLEXRequirementsCharacteristicUUID[];
-extern const uint8_t  AKHILAFLEXEventServiceClientRequirementsCharacteristicUUID[]; */
-
 
 struct EventServiceEvent
 {
@@ -59,7 +50,6 @@ struct EventServiceEvent
   * Provides a BLE gateway onto an Event Model.
   */
 class AKHILAFLEXEventService : public AKHILAFLEXComponent
-/*class AKHILAFLEXEventService : public AKHILAFLEXComponent */
 {
     public:
 
@@ -70,8 +60,6 @@ class AKHILAFLEXEventService : public AKHILAFLEXComponent
       * @param _messageBus An instance of an EventModel which events will be mirrored from.
       */
     AKHILAFLEXEventService(BLEDevice &_ble, EventModel &_messageBus);
-    /*AKHILAFLEXEventService(BLEDevice &_ble, EventModel &_messageBus);*/
-
 
     /**
      * Periodic callback from AKHILAFLEX scheduler.
@@ -88,7 +76,6 @@ class AKHILAFLEXEventService : public AKHILAFLEXComponent
       * Callback. Invoked when any events are sent on the AKHILAFLEX message bus.
       */
     void onAKHILAFLEXEvent(AKHILAFLEXEvent evt);
-   /* void onAKHILAFLEXEvent(AKHILAFLEXEvent evt); */
 
     /**
       * Read callback on AKHILAFLEXRequirements characteristic.
@@ -108,21 +95,12 @@ class AKHILAFLEXEventService : public AKHILAFLEXComponent
     EventServiceEvent   AKHILAFLEXEventBuffer;
     EventServiceEvent   AKHILAFLEXRequirementsBuffer;
     EventServiceEvent   clientRequirementsBuffer;
-    /*EventServiceEvent   clientEventBuffer;
-    EventServiceEvent   AKHILAFLEXEventBuffer;
-    EventServiceEvent   AKHILAFLEXRequirementsBuffer;
-    EventServiceEvent   clientRequirementsBuffer; */
 
     // handles on this service's characterisitics.
     GattAttribute::Handle_t AKHILAFLEXEventCharacteristicHandle;
     GattAttribute::Handle_t clientRequirementsCharacteristicHandle;
     GattAttribute::Handle_t clientEventCharacteristicHandle;
     GattCharacteristic *AKHILAFLEXRequirementsCharacteristic;
-   /*     GattAttribute::Handle_t AKHILAFLEXEventCharacteristicHandle;
-    GattAttribute::Handle_t clientRequirementsCharacteristicHandle;
-    GattAttribute::Handle_t clientEventCharacteristicHandle;
-    GattCharacteristic *AKHILAFLEXRequirementsCharacteristic; */
-
 
     // Message bus offset last sent to the client...
     uint16_t messageBusListenerOffset;

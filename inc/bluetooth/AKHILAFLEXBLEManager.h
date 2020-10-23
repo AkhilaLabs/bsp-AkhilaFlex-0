@@ -25,12 +25,9 @@ DEALINGS IN THE SOFTWARE.
 
 #ifndef AKHILAFLEX_BLE_MANAGER_H
 #define AKHILAFLEX_BLE_MANAGER_H
-/*#ifndef AKHILAFLEX_BLE_MANAGER_H
-#define AKHIALAFLEX_BLE_MANAGER_H */
 
 #include "mbed.h"
 #include "AKHILAFLEXConfig.h"
-/*#include "AKHILAFLEXConfig.h" */
 
 /*
  * The underlying Nordic libraries that support BLE do not compile cleanly with the stringent GCC settings we employ
@@ -64,57 +61,25 @@ DEALINGS IN THE SOFTWARE.
 #include "ExternalEvents.h"
 #include "AKHILAFLEXButton.h"
 #include "AKHILAFLEXStorage.h"
-/*#include "AKHILAFLEXDFUService.h"
-#include "AKHILAFLEXEventService.h"
-#include "AKHILAFLEXLEDService.h"
-#include "AKHILAFLEXAccelerometerService.h"
-#include "AKHILAFLEXMagnetometerService.h"
-#include "AKHILAFLEXButtonService.h"
-#include "AKHILAFLEXIOPinService.h"
-#include "AKHILAFLEXTemperatureService.h"
-#include "AKHILAFLEXPartialFlashingService.h"
-#include "ExternalEvents.h"
-#include "AKHILAFLEXButton.h"
-#include "AKHILAFLEXStorage.h" */
-
 
 #define AKHILAFLEX_BLE_PAIR_REQUEST 0x01
 #define AKHILAFLEX_BLE_PAIR_COMPLETE 0x02
 #define AKHILAFLEX_BLE_PAIR_PASSCODE 0x04
 #define AKHILAFLEX_BLE_PAIR_SUCCESSFUL 0x08
-/*#define AKHILAFLEX_BLE_PAIR_REQUEST 0x01
-#define AKHILAFLEX_BLE_PAIR_COMPLETE 0x02
-#define AKHILAFLEX_BLE_PAIR_PASSCODE 0x04
-#define AKHILAFLEX_BLE_PAIR_SUCCESSFUL 0x08 */
-
 
 #define AKHILAFLEX_BLE_PAIRING_TIMEOUT 90
 #define AKHILAFLEX_BLE_POWER_LEVELS 8
 #define AKHILAFLEX_BLE_MAXIMUM_BONDS 4
 #define AKHILAFLEX_BLE_ENABLE_BONDING true
-/*
-#define AKHILAFLEX_BLE_PAIRING_TIMEOUT 90
-#define AKHILAFLEX_BLE_POWER_LEVELS 8
-#define AKHILAFLEX_BLE_MAXIMUM_BONDS 4
-#define AKHILAFLEX_BLE_ENABLE_BONDING true */
-
 
 #define AKHILAFLEX_BLE_EDDYSTONE_ADV_INTERVAL     400
 #define AKHILAFLEX_BLE_EDDYSTONE_DEFAULT_POWER    0xF0
-/*#define AKHILAFLEX_BLE_EDDYSTONE_ADV_INTERVAL     400
-#define AKHILAFLEX_BLE_EDDYSTONE_DEFAULT_POWER    0xF0 */
-
 
 // AKHILAFLEXComponent status flags
 #define AKHILAFLEX_BLE_STATUS_STORE_SYSATTR       0x02
 #define AKHILAFLEX_BLE_STATUS_DISCONNECT          0x04
-/*#define AKHILAFLEX_BLE_STATUS_STORE_SYSATTR       0x02
-#define AKHILAFLEX_BLE_STATUS_DISCONNECT          0x04 */
-
 
 extern const int8_t AKHILAFLEX_BLE_POWER_LEVEL[];
-/*extern const int8_t AKHILAFLEX_BLE_POWER_LEVEL[]; */
-
 
 struct BLESysAttribute
 {
@@ -124,7 +89,6 @@ struct BLESysAttribute
 struct BLESysAttributeStore
 {
     BLESysAttribute sys_attrs[AKHILAFLEX_BLE_MAXIMUM_BONDS];
-   /* BLESysAttribute sys_attrs[AKHILAFLEX_BLE_MAXIMUM_BONDS]; */
 };
 
 /**
@@ -132,18 +96,15 @@ struct BLESysAttributeStore
   *
   */
 class AKHILAFLEXBLEManager : AKHILAFLEXComponent
-/*class AKHILAFLEXBLEManager : AKHILAFLEXComponent */
 {
   public:
     static AKHILAFLEXBLEManager *manager;
-   /* static AKHILAFLEXBLEManager *manager; */
 
     // The mbed abstraction of the BlueTooth Low Energy (BLE) hardware
     BLEDevice *ble;
 
     //an instance of AKHILAFLEXStorage used to store sysAttrs from softdevice
     AKHILAFLEXStorage *storage;
-    /*AKHILAFLEXStorage *storage; */
 
     /**
      * Constructor.
@@ -156,7 +117,6 @@ class AKHILAFLEXBLEManager : AKHILAFLEXComponent
      * Hence, the init() member function should be used to initialise the BLE stack.
      */
     AKHILAFLEXBLEManager(AKHILAFLEXStorage &_storage);
-    /*AKHILAFLEXBLEManager(AKHILAFLEXStorage &_storage); */
 
     /**
      * Constructor.
@@ -167,8 +127,6 @@ class AKHILAFLEXBLEManager : AKHILAFLEXComponent
      * Hence, the init() member function should be used to initialise the BLE stack.
      */
     AKHILAFLEXBLEManager();
-    /*AKHILAFLEXBLEManager();*/
-
 
     /**
      * getInstance
@@ -178,7 +136,6 @@ class AKHILAFLEXBLEManager : AKHILAFLEXComponent
      *
      */
     static AKHILAFLEXBLEManager *getInstance();
-    /*static AKHILAFLEXBLEManager *getInstance();*/
 
     /**
       * Post constructor initialisation method as the BLE stack cannot be brought
@@ -194,7 +151,7 @@ class AKHILAFLEXBLEManager : AKHILAFLEXComponent
       * @endcode
       */
     void init(ManagedString deviceName, ManagedString serialNumber, EventModel &messageBus, bool enableBonding);
-                                                                                                                              
+
     /**
      * Change the output power level of the transmitter to the given value.
      *
@@ -222,8 +179,6 @@ class AKHILAFLEXBLEManager : AKHILAFLEXComponent
      * @endcode
      */
     void pairingMode(AKHILAFLEXDisplay &display, AKHILAFLEXButton &authorisationButton);
-    /*void pairingMode(AKHILAFLEXDisplay &display, AKHILAFLEXButton &authorisationButton); */
-
 
     /**
      * When called, the AKHILAFLEX will begin advertising for a predefined period,
@@ -273,7 +228,6 @@ class AKHILAFLEXBLEManager : AKHILAFLEXComponent
     void deferredSysAttrWrite(Gap::Handle_t handle);
 
 #if CONFIG_ENABLED(AKHILAFLEX_BLE_EDDYSTONE_URL)
-/*#if CONFIG_ENABLED(AKHILAFLEX_BLE_EDDYSTONE_URL) */
 
     /**
       * Set the content of Eddystone URL frames
@@ -290,8 +244,6 @@ class AKHILAFLEXBLEManager : AKHILAFLEXComponent
       * More information can be found at https://github.com/google/eddystone/tree/master/eddystone-uid#tx-power
       */
     int advertiseEddystoneUrl(const char *url, int8_t calibratedPower = AKHILAFLEX_BLE_EDDYSTONE_DEFAULT_POWER, bool connectable = true, uint16_t interval = AKHILAFLEX_BLE_EDDYSTONE_ADV_INTERVAL);
-     
-    /*int advertiseEddystoneUrl(const char *url, int8_t calibratedPower = AKHILAFLEX_BLE_EDDYSTONE_DEFAULT_POWER, bool connectable = true, uint16_t interval = AKHILAFLEX_BLE_EDDYSTONE_ADV_INTERVAL);*/
 
     /**
       * Set the content of Eddystone URL frames, but accepts a ManagedString as a url.
@@ -308,11 +260,9 @@ class AKHILAFLEXBLEManager : AKHILAFLEXComponent
       * More information can be found at https://github.com/google/eddystone/tree/master/eddystone-uid#tx-power
       */
     int advertiseEddystoneUrl(ManagedString url, int8_t calibratedPower = AKHILAFLEX_BLE_EDDYSTONE_DEFAULT_POWER, bool connectable = true, uint16_t interval = AKHILAFLEX_BLE_EDDYSTONE_ADV_INTERVAL);
-  /*int advertiseEddystoneUrl(ManagedString url, int8_t calibratedPower = AKHILAFLEX_BLE_EDDYSTONE_DEFAULT_POWER, bool connectable = true, uint16_t interval = AKHILAFLEX_BLE_EDDYSTONE_ADV_INTERVAL);*/
 #endif
 
 #if CONFIG_ENABLED(AKHILAFLEX_BLE_EDDYSTONE_UID)
-/*#if CONFIG_ENABLED(AKHILAFLEX_BLE_EDDYSTONE_UID) */
     /**
       * Set the content of Eddystone UID frames
       *
@@ -330,9 +280,6 @@ class AKHILAFLEXBLEManager : AKHILAFLEXComponent
       * More information can be found at https://github.com/google/eddystone/tree/master/eddystone-uid#tx-power
       */
     int advertiseEddystoneUid(const char* uid_namespace, const char* uid_instance, int8_t calibratedPower = AKHILAFLEX_BLE_EDDYSTONE_DEFAULT_POWER, bool connectable = true, uint16_t interval = AKHILAFLEX_BLE_EDDYSTONE_ADV_INTERVAL);
-/*int advertiseEddystoneUid(const char* uid_namespace, const char* uid_instance, int8_t calibratedPower = AKHILAFLEX_BLE_EDDYSTONE_DEFAULT_POWER, bool connectable = true, uint16_t interval = AKHILAFLEX_BLE_EDDYSTONE_ADV_INTERVAL); */
-
-
 #endif
 
   /**
@@ -355,8 +302,6 @@ class AKHILAFLEXBLEManager : AKHILAFLEXComponent
     * @param display The display instance used for displaying the histogram.
 	*/
     void showNameHistogram(AKHILAFLEXDisplay &display);
-   /* void showNameHistogram(AKHILAFLEXDisplay &display); */
-
 
 
     /**
@@ -365,10 +310,8 @@ class AKHILAFLEXBLEManager : AKHILAFLEXComponent
     * @param display The display instance used for displaying the histogram.
     */
     void showManagementModeAnimation(AKHILAFLEXDisplay &display);
-    /*void showManagementModeAnimation(AKHILAFLEXDisplay &display);*/
 
     #define AKHILAFLEX_BLE_DISCONNECT_AFTER_PAIRING_DELAY  500
-  /*   #define AKHILAFLEX_BLE_DISCONNECT_AFTER_PAIRING_DELAY  500 */
     unsigned long pairing_completed_at_time;   
 
     int pairingStatus;
@@ -380,7 +323,6 @@ class AKHILAFLEXBLEManager : AKHILAFLEXComponent
      * This variable will be set to AKHILAFLEX_MODE_PAIRING if pairingMode() is executed.
      */
     uint8_t currentMode = AKHILAFLEX_MODE_APPLICATION;
-    /*uint8_t currentMode = AKHILAFLEX_MODE_APPLICATION; */
 
 };
 

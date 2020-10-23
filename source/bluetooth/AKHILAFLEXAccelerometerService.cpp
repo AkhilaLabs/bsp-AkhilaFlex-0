@@ -38,16 +38,14 @@ DEALINGS IN THE SOFTWARE.
   * @param _ble The instance of a BLE device that we're running on.
   * @param _accelerometer An instance of AKHILAFLEXAccelerometer.
   */
-/*AKHILAFLEXAccelerometerService::AKHILAFLEXAccelerometerService(BLEDevice &_ble, AKHILAFLEXAccelerometer &_accelerometer) :
-        ble(_ble), accelerometer(_accelerometer) */
-AKHILAFLEXAccelerometerService::AKHILAFLEXAccelerometerService(BLEDevice &_ble,AKHILAFLEXAccelerometer &_accelerometer) :      
-  ble(_ble), accelerometer(_accelerometer)  
+AKHILAFLEXAccelerometerService::AKHILAFLEXAccelerometerService(BLEDevice &_ble, AKHILAFLEXAccelerometer &_accelerometer) :
+        ble(_ble), accelerometer(_accelerometer)
 {
     // Create the data structures that represent each of our characteristics in Soft Device.
     GattCharacteristic  accelerometerDataCharacteristic(AKHILAFLEXAccelerometerServiceDataUUID, (uint8_t *)accelerometerDataCharacteristicBuffer, 0,
     sizeof(accelerometerDataCharacteristicBuffer), GattCharacteristic::BLE_GATT_CHAR_PROPERTIES_READ | GattCharacteristic::BLE_GATT_CHAR_PROPERTIES_NOTIFY);
 
-   GattCharacteristic  accelerometerPeriodCharacteristic(AKHILAFLEXAccelerometerServicePeriodUUID, (uint8_t *)&accelerometerPeriodCharacteristicBuffer, 0,
+    GattCharacteristic  accelerometerPeriodCharacteristic(AKHILAFLEXAccelerometerServicePeriodUUID, (uint8_t *)&accelerometerPeriodCharacteristicBuffer, 0,
     sizeof(accelerometerPeriodCharacteristicBuffer),
     GattCharacteristic::BLE_GATT_CHAR_PROPERTIES_READ | GattCharacteristic::BLE_GATT_CHAR_PROPERTIES_WRITE);
 
@@ -58,30 +56,29 @@ AKHILAFLEXAccelerometerService::AKHILAFLEXAccelerometerService(BLEDevice &_ble,A
     accelerometerPeriodCharacteristicBuffer = accelerometer.getPeriod();
 
     // Set default security requirements
-   accelerometerDataCharacteristic.requireSecurity(SecurityManager::AKHILAFLEX_BLE_SECURITY_LEVEL);
-    accelerometerPeriodCharacteristic.requireSecurity(SecurityManager::AKHILAFLEX_BLE_SECURITY_LEVEL); 
+    accelerometerDataCharacteristic.requireSecurity(SecurityManager::AKHILAFLEX_BLE_SECURITY_LEVEL);
+    accelerometerPeriodCharacteristic.requireSecurity(SecurityManager::AKHILAFLEX_BLE_SECURITY_LEVEL);
 
-   GattCharacteristic *characteristics[] = {&accelerometerDataCharacteristic, &accelerometerPeriodCharacteristic};
+    GattCharacteristic *characteristics[] = {&accelerometerDataCharacteristic, &accelerometerPeriodCharacteristic};
     GattService         service(AKHILAFLEXAccelerometerServiceUUID, characteristics, sizeof(characteristics) / sizeof(GattCharacteristic *));
-   
+
     ble.addService(service);
 
     accelerometerDataCharacteristicHandle = accelerometerDataCharacteristic.getValueHandle();
     accelerometerPeriodCharacteristicHandle = accelerometerPeriodCharacteristic.getValueHandle();
 
-   ble.gattServer().write(accelerometerDataCharacteristicHandle,(uint8_t *)accelerometerDataCharacteristicBuffer, sizeof(accelerometerDataCharacteristicBuffer));
-   ble.gattServer().write(accelerometerPeriodCharacteristicHandle, (const uint8_t *)&accelerometerPeriodCharacteristicBuffer, sizeof(accelerometerPeriodCharacteristicBuffer));
+    ble.gattServer().write(accelerometerDataCharacteristicHandle,(uint8_t *)accelerometerDataCharacteristicBuffer, sizeof(accelerometerDataCharacteristicBuffer));
+    ble.gattServer().write(accelerometerPeriodCharacteristicHandle, (const uint8_t *)&accelerometerPeriodCharacteristicBuffer, sizeof(accelerometerPeriodCharacteristicBuffer));
 
-  ble.onDataWritten(this, &AKHILAFLEXAccelerometerService::onDataWritten); 
+    ble.onDataWritten(this, &AKHILAFLEXAccelerometerService::onDataWritten);
 
     if (EventModel::defaultEventBus)
-   EventModel::defaultEventBus->listen(AKHILAFLEX_ID_ACCELEROMETER, AKHILAFLEX_ACCELEROMETER_EVT_DATA_UPDATE, this, &AKHILAFLEXAccelerometerService::accelerometerUpdate,  MESSAGE_BUS_LISTENER_IMMEDIATE);
+        EventModel::defaultEventBus->listen(AKHILAFLEX_ID_ACCELEROMETER, AKHILAFLEX_ACCELEROMETER_EVT_DATA_UPDATE, this, &AKHILAFLEXAccelerometerService::accelerometerUpdate,  MESSAGE_BUS_LISTENER_IMMEDIATE);
 }
 
 /**
   * Callback. Invoked when any of our attributes are written via BLE.
   */
-
 void AKHILAFLEXAccelerometerService::onDataWritten(const GattWriteCallbackParams *params)
 {
     if (params->handle == accelerometerPeriodCharacteristicHandle && params->len >= sizeof(accelerometerPeriodCharacteristicBuffer))
@@ -96,11 +93,9 @@ void AKHILAFLEXAccelerometerService::onDataWritten(const GattWriteCallbackParams
     }
 }
 
-
 /**
   * Accelerometer update callback
   */
-
 void AKHILAFLEXAccelerometerService::accelerometerUpdate(AKHILAFLEXEvent)
 {
     if (ble.getGapState().connected)
@@ -113,19 +108,14 @@ void AKHILAFLEXAccelerometerService::accelerometerUpdate(AKHILAFLEXEvent)
     }
 }
 
-const uint8_t  AKHILAFLEXAccelerometerServiceDataUUID[] = {
+const uint8_t  AKHILAFLEXAccelerometerServiceUUID[] = {
     0x00,0x00,0x07,0x53,0x25,0x1d,0x47,0x0a,0xa0,0x62,0xfa,0x19,0x22,0xdf,0xa9,0xa8
 };
 
-/*const uint8_t  AKHILAFLEXAccelerometerServiceDataUUID[] = {
+const uint8_t  AKHILAFLEXAccelerometerServiceDataUUID[] = {
     0x00,0x00,0xca,0x4b,0x25,0x1d,0x47,0x0a,0xa0,0x62,0xfa,0x19,0x22,0xdf,0xa9,0xa8
 };
 
 const uint8_t  AKHILAFLEXAccelerometerServicePeriodUUID[] = {
     0x00,0x00,0xfb,0x24,0x25,0x1d,0x47,0x0a,0xa0,0x62,0xfa,0x19,0x22,0xdf,0xa9,0xa8
-};*/
-
-const uint8_t  AKHILAFLEXAccelerometerServicePeriodUUID[] = {
-    0x00,0x00,0xfb,0x24,0x25,0x1d,0x47,0x0a,0xa0,0x62,0xfa,0x19,0x22,0xdf,0xa9,0xa8
 };
-

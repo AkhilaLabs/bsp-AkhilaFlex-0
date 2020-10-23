@@ -50,8 +50,7 @@ void on_confirmation(uint16_t handle)
     if(handle == txCharacteristic->getValueAttribute().getHandle())
     {
         txBufferTail = txBufferHead;
-       /* AKHILAFLEXEvent(AKHILAFLEX_ID_NOTIFY, AKHILAFLEX_UART_S_EVT_TX_EMPTY); */
-         AKHILAFLEXEvent(AKHILAFLEX_ID_NOTIFY, AKHILAFLEX_UART_S_EVT_TX_EMPTY); 
+        AKHILAFLEXEvent(AKHILAFLEX_ID_NOTIFY, AKHILAFLEX_UART_S_EVT_TX_EMPTY);
     }
 }
 
@@ -63,9 +62,7 @@ void on_confirmation(uint16_t handle)
  *
  * @note defaults to 20
  */
-/*AKHILAFLEXUARTService::AKHILAFLEXUARTService(BLEDevice &_ble, uint8_t rxBufferSize, uint8_t txBufferSize) : ble(_ble) */
-AKHILAFLEXUARTService::AKHILAFLEXUARTService(BLEDevice &_ble, uint8_t rxBufferSize, uint8_t txBufferSize) : ble(_ble) 
-
+AKHILAFLEXUARTService::AKHILAFLEXUARTService(BLEDevice &_ble, uint8_t rxBufferSize, uint8_t txBufferSize) : ble(_ble)
 {
     rxBufferSize += 1;
     txBufferSize += 1;
@@ -81,13 +78,13 @@ AKHILAFLEXUARTService::AKHILAFLEXUARTService(BLEDevice &_ble, uint8_t rxBufferSi
     txBufferTail = 0;
     this->txBufferSize = txBufferSize;
 
-GattCharacteristic rxCharacteristic(UARTServiceRXCharacteristicUUID, rxBuffer, 1, rxBufferSize, GattCharacteristic::BLE_GATT_CHAR_PROPERTIES_WRITE | GattCharacteristic::BLE_GATT_CHAR_PROPERTIES_WRITE_WITHOUT_RESPONSE);
+    GattCharacteristic rxCharacteristic(UARTServiceRXCharacteristicUUID, rxBuffer, 1, rxBufferSize, GattCharacteristic::BLE_GATT_CHAR_PROPERTIES_WRITE | GattCharacteristic::BLE_GATT_CHAR_PROPERTIES_WRITE_WITHOUT_RESPONSE);
 
- txCharacteristic = new GattCharacteristic(UARTServiceTXCharacteristicUUID, txBuffer, 1, txBufferSize, GattCharacteristic::BLE_GATT_CHAR_PROPERTIES_INDICATE);
+    txCharacteristic = new GattCharacteristic(UARTServiceTXCharacteristicUUID, txBuffer, 1, txBufferSize, GattCharacteristic::BLE_GATT_CHAR_PROPERTIES_INDICATE);
 
     GattCharacteristic *charTable[] = {txCharacteristic, &rxCharacteristic};
 
- GattService uartService(UARTServiceUUID, charTable, sizeof(charTable) / sizeof(GattCharacteristic *));
+    GattService uartService(UARTServiceUUID, charTable, sizeof(charTable) / sizeof(GattCharacteristic *));
 
     _ble.addService(uartService);
 
@@ -100,9 +97,7 @@ GattCharacteristic rxCharacteristic(UARTServiceRXCharacteristicUUID, rxBuffer, 1
 /**
   * A callback function for whenever a Bluetooth device writes to our RX characteristic.
   */
-/*void AKHILAFLEXUARTService::onDataWritten(const GattWriteCallbackParams *params) */
-void AKHILAFLEXUARTService::onDataWritten(const GattWriteCallbackParams *params) 
- {
+void AKHILAFLEXUARTService::onDataWritten(const GattWriteCallbackParams *params) {
     if (params->handle == this->rxCharacteristicHandle)
     {
         uint16_t bytesWritten = params->len;
@@ -123,8 +118,7 @@ void AKHILAFLEXUARTService::onDataWritten(const GattWriteCallbackParams *params)
                 {
                     //fire an event if there is to block any waiting fibers
                     if(this->delimeters.charAt(delimeterOffset) == c)
-                      /*  AKHILAFLEXEvent(AKHILAFLEX_ID_BLE_UART, AKHILAFLEX_UART_S_EVT_DELIM_MATCH); */
-                       AKHILAFLEXEvent(AKHILAFLEX_ID_BLE_UART, AKHILAFLEX_UART_S_EVT_DELIM_MATCH); 
+                        AKHILAFLEXEvent(AKHILAFLEX_ID_BLE_UART, AKHILAFLEX_UART_S_EVT_DELIM_MATCH);
 
                     delimeterOffset++;
                 }
@@ -136,13 +130,11 @@ void AKHILAFLEXUARTService::onDataWritten(const GattWriteCallbackParams *params)
                 if(rxBufferHead == rxBuffHeadMatch)
                 {
                     rxBuffHeadMatch = -1;
-                  /*  AKHILAFLEXEvent(AKHILAFLEX_ID_BLE_UART, AKHILAFLEX_UART_S_EVT_HEAD_MATCH); */
-                     AKHILAFLEXEvent(AKHILAFLEX_ID_BLE_UART, AKHILAFLEX_UART_S_EVT_HEAD_MATCH); 
+                    AKHILAFLEXEvent(AKHILAFLEX_ID_BLE_UART, AKHILAFLEX_UART_S_EVT_HEAD_MATCH);
                 }
             }
             else
-               /* AKHILAFLEXEvent(AKHILAFLEX_ID_BLE_UART, AKHILAFLEX_UART_S_EVT_RX_FULL); */
-              AKHILAFLEXEvent(AKHILAFLEX_ID_BLE_UART, AKHILAFLEX_UART_S_EVT_RX_FULL); 
+                AKHILAFLEXEvent(AKHILAFLEX_ID_BLE_UART, AKHILAFLEX_UART_S_EVT_RX_FULL);
         }
     }
 }
@@ -159,9 +151,7 @@ void AKHILAFLEXUARTService::onDataWritten(const GattWriteCallbackParams *params)
   * @note this method assumes that the linear buffer has the appropriate amount of
   *       memory to contain the copy operation
   */
-/*void AKHILAFLEXUARTService::circularCopy(uint8_t *circularBuff, uint8_t circularBuffSize, uint8_t *linearBuff, uint16_t tailPosition, uint16_t headPosition) */
 void AKHILAFLEXUARTService::circularCopy(uint8_t *circularBuff, uint8_t circularBuffSize, uint8_t *linearBuff, uint16_t tailPosition, uint16_t headPosition)
-
 {
     int toBuffIndex = 0;
 
@@ -188,20 +178,15 @@ void AKHILAFLEXUARTService::circularCopy(uint8_t *circularBuff, uint8_t circular
   *
   * @return AKHILAFLEX_INVALID_PARAMETER if the mode given is SYNC_SPINWAIT, a character or AKHILAFLEX_NO_DATA
   */
-/*int AKHILAFLEXUARTService::getc(AKHILAFLEXSerialMode mode) */
-int AKHILAFLEXUARTService::getc(AKHILAFLEXSerialMode mode) 
+int AKHILAFLEXUARTService::getc(AKHILAFLEXSerialMode mode)
 {
     if(mode == SYNC_SPINWAIT)
-      /*  return AKHILAFLEX_INVALID_PARAMETER; */
-        return AKHILAFLEX_INVALID_PARAMETER; 
-
-
+        return AKHILAFLEX_INVALID_PARAMETER;
 
     if(mode == ASYNC)
     {
         if(!isReadable())
-           /* return AKHILAFLEX_NO_DATA; */
-            return AKHILAFLEX_NO_DATA; 
+            return AKHILAFLEX_NO_DATA;
     }
 
     if(mode == SYNC_SLEEP)
@@ -237,8 +222,7 @@ int AKHILAFLEXUARTService::getc(AKHILAFLEXSerialMode mode)
   * @return the number of characters written, or AKHILAFLEX_NOT_SUPPORTED if there is
   *         no connected device, or the connected device has not enabled indications.
   */
-/*int AKHILAFLEXUARTService::putc(char c, AKHILAFLEXSerialMode mode) */
-int AKHILAFLEXUARTService::putc(char c, AKHILAFLEXSerialMode mode) 
+int AKHILAFLEXUARTService::putc(char c, AKHILAFLEXSerialMode mode)
 {
     return (send((uint8_t *)&c, 1, mode) == 1) ? 1 : EOF;
 }
@@ -263,20 +247,17 @@ int AKHILAFLEXUARTService::putc(char c, AKHILAFLEXSerialMode mode)
   * @return the number of characters written, or AKHILAFLEX_NOT_SUPPORTED if there is
   *         no connected device, or the connected device has not enabled indications.
   */
-/*int AKHILAFLEXUARTService::send(const uint8_t *buf, int length, AKHILAFLEXSerialMode mode) */
-int AKHILAFLEXUARTService::send(const uint8_t *buf, int length, AKHILAFLEXSerialMode mode) 
+int AKHILAFLEXUARTService::send(const uint8_t *buf, int length, AKHILAFLEXSerialMode mode)
 {
     if(length < 1 || mode == SYNC_SPINWAIT)
-       /* return AKHILAFLEX_INVALID_PARAMETER; */
-       return AKHILAFLEX_INVALID_PARAMETER; 
+        return AKHILAFLEX_INVALID_PARAMETER;
 
     bool updatesEnabled = false;
 
     ble.gattServer().areUpdatesEnabled(*txCharacteristic, &updatesEnabled);
 
     if(!ble.getGapState().connected && !updatesEnabled)
-       /* return AKHILAFLEX_NOT_SUPPORTED; */
-       return AKHILAFLEX_NOT_SUPPORTED; 
+        return AKHILAFLEX_NOT_SUPPORTED;
 
     int bytesWritten = 0;
 
@@ -306,8 +287,7 @@ int AKHILAFLEXUARTService::send(const uint8_t *buf, int length, AKHILAFLEXSerial
 
 
         if(mode == SYNC_SLEEP)
-          /*  fiber_wake_on_event(AKHILAFLEX_ID_NOTIFY, AKHILAFLEX_UART_S_EVT_TX_EMPTY); */
-            fiber_wake_on_event(AKHILAFLEX_ID_NOTIFY, AKHILAFLEX_UART_S_EVT_TX_EMPTY); 
+            fiber_wake_on_event(AKHILAFLEX_ID_NOTIFY, AKHILAFLEX_UART_S_EVT_TX_EMPTY);
 
         ble.gattServer().write(txCharacteristic->getValueAttribute().getHandle(), temp, size);
 
@@ -341,8 +321,7 @@ int AKHILAFLEXUARTService::send(const uint8_t *buf, int length, AKHILAFLEXSerial
   * @return the number of characters written, or AKHILAFLEX_NOT_SUPPORTED if there is
   *         no connected device, or the connected device has not enabled indications.
   */
-/*int AKHILAFLEXUARTService::send(ManagedString s, AKHILAFLEXSerialMode mode) */
-int AKHILAFLEXUARTService::send(ManagedString s, AKHILAFLEXSerialMode mode) 
+int AKHILAFLEXUARTService::send(ManagedString s, AKHILAFLEXSerialMode mode)
 {
     return send((uint8_t *)s.toCharArray(), s.length(), mode);
 }
@@ -366,12 +345,10 @@ int AKHILAFLEXUARTService::send(ManagedString s, AKHILAFLEXSerialMode mode)
   *
   * @return the number of characters digested
   */
-/*int AKHILAFLEXUARTService::read(uint8_t *buf, int len, AKHILAFLEXSerialMode mode) */
-int AKHILAFLEXUARTService::read(uint8_t *buf, int len, AKHILAFLEXSerialMode mode) 
+int AKHILAFLEXUARTService::read(uint8_t *buf, int len, AKHILAFLEXSerialMode mode)
 {
     if(mode == SYNC_SPINWAIT)
-       /* return AKHILAFLEX_INVALID_PARAMETER; */
-        return AKHILAFLEX_INVALID_PARAMETER; 
+        return AKHILAFLEX_INVALID_PARAMETER;
 
     int i = 0;
 
@@ -419,9 +396,7 @@ int AKHILAFLEXUARTService::read(uint8_t *buf, int len, AKHILAFLEXSerialMode mode
   *
   * @return an empty ManagedString on error, or a ManagedString containing characters
   */
-/*ManagedString AKHILAFLEXUARTService::read(int len, AKHILAFLEXSerialMode mode) */
-ManagedString AKHILAFLEXUARTService::read(int len, AKHILAFLEXSerialMode mode) 
-
+ManagedString AKHILAFLEXUARTService::read(int len, AKHILAFLEXSerialMode mode)
 {
     uint8_t buf[len + 1];
 
@@ -453,12 +428,10 @@ ManagedString AKHILAFLEXUARTService::read(int len, AKHILAFLEXSerialMode mode)
   *
   * @return an empty ManagedString on error, or a ManagedString containing characters
   */
-/*ManagedString AKHILAFLEXUARTService::readUntil(ManagedString delimeters, AKHILAFLEXSerialMode mode) */
-ManagedString AKHILAFLEXUARTService::readUntil(ManagedString delimeters, AKHILAFLEXSerialMode mode) 
+ManagedString AKHILAFLEXUARTService::readUntil(ManagedString delimeters, AKHILAFLEXSerialMode mode)
 {
     if(mode == SYNC_SPINWAIT)
-      /*  return AKHILAFLEX_INVALID_PARAMETER; */
-        return AKHILAFLEX_INVALID_PARAMETER; 
+        return AKHILAFLEX_INVALID_PARAMETER;
 
     int localTail = rxBufferTail;
     int preservedTail = rxBufferTail;
@@ -492,7 +465,7 @@ ManagedString AKHILAFLEXUARTService::readUntil(ManagedString delimeters, AKHILAF
     if(foundIndex >= 0)
     {
         //calculate our local buffer size
-     int localBuffSize = (preservedTail > foundIndex) ? (rxBufferSize - preservedTail) + foundIndex : foundIndex - preservedTail;
+        int localBuffSize = (preservedTail > foundIndex) ? (rxBufferSize - preservedTail) + foundIndex : foundIndex - preservedTail;
 
         uint8_t localBuff[localBuffSize + 1];
 
@@ -527,23 +500,19 @@ ManagedString AKHILAFLEXUARTService::readUntil(ManagedString delimeters, AKHILAF
   *
   * @note delimeters are matched on a per byte basis.
   */
-/*int AKHILAFLEXUARTService::eventOn(ManagedString delimeters, AKHILAFLEXSerialMode mode) */
-int AKHILAFLEXUARTService::eventOn(ManagedString delimeters, AKHILAFLEXSerialMode mode) 
+int AKHILAFLEXUARTService::eventOn(ManagedString delimeters, AKHILAFLEXSerialMode mode)
 {
     if(mode == SYNC_SPINWAIT)
-       /* return AKHILAFLEX_INVALID_PARAMETER; */
-        return AKHILAFLEX_INVALID_PARAMETER; 
+        return AKHILAFLEX_INVALID_PARAMETER;
 
     //configure our head match...
     this->delimeters = delimeters;
 
     //block!
     if(mode == SYNC_SLEEP)
-      /*  fiber_wait_for_event(AKHILAFLEX_ID_BLE_UART, AKHILAFLEX_UART_S_EVT_DELIM_MATCH); */
-        fiber_wait_for_event(AKHILAFLEX_ID_BLE_UART, AKHILAFLEX_UART_S_EVT_DELIM_MATCH); 
+        fiber_wait_for_event(AKHILAFLEX_ID_BLE_UART, AKHILAFLEX_UART_S_EVT_DELIM_MATCH);
 
-   /* return AKHILAFLEX_OK; */
-    return AKHILAFLEX_OK; 
+    return AKHILAFLEX_OK;
 }
 
 /**
@@ -562,24 +531,19 @@ int AKHILAFLEXUARTService::eventOn(ManagedString delimeters, AKHILAFLEXSerialMod
   *
   * @return AKHILAFLEX_INVALID_PARAMETER if the mode given is SYNC_SPINWAIT, otherwise AKHILAFLEX_OK.
   */
-/*int AKHILAFLEXUARTService::eventAfter(int len, AKHILAFLEXSerialMode mode) */
-int AKHILAFLEXUARTService::eventAfter(int len, AKHILAFLEXSerialMode mode) 
+int AKHILAFLEXUARTService::eventAfter(int len, AKHILAFLEXSerialMode mode)
 {
     if(mode == SYNC_SPINWAIT)
-       /* return AKHILAFLEX_INVALID_PARAMETER; */
-        return AKHILAFLEX_INVALID_PARAMETER; 
+        return AKHILAFLEX_INVALID_PARAMETER;
 
     //configure our head match...
     this->rxBuffHeadMatch = (rxBufferHead + len) % rxBufferSize;
 
     //block!
     if(mode == SYNC_SLEEP)
-       /* fiber_wait_for_event(AKHILAFLEX_ID_BLE_UART, AKHILAFLEX_UART_S_EVT_HEAD_MATCH); */
-        fiber_wait_for_event(AKHILAFLEX_ID_BLE_UART, AKHILAFLEX_UART_S_EVT_HEAD_MATCH); 
+        fiber_wait_for_event(AKHILAFLEX_ID_BLE_UART, AKHILAFLEX_UART_S_EVT_HEAD_MATCH);
 
-   /* return AKHILAFLEX_OK; */
-    return  AKHILAFLEX_OK;
-
+    return AKHILAFLEX_OK;
 }
 
 /**
@@ -590,8 +554,7 @@ int AKHILAFLEXUARTService::eventAfter(int len, AKHILAFLEXSerialMode mode)
   * @note the reason we do not wrap the super's readable() method is so that we
   *       don't interfere with communities that use manual calls to uBit.serial.readable()
   */
-/*int AKHILAFLEXUARTService::isReadable() */
-int AKHILAFLEXUARTService::isReadable() 
+int AKHILAFLEXUARTService::isReadable()
 {
     return (rxBufferTail != rxBufferHead) ? 1 : 0;
 }
@@ -599,8 +562,7 @@ int AKHILAFLEXUARTService::isReadable()
 /**
   * @return The currently buffered number of bytes in our rxBuff.
   */
-/*int AKHILAFLEXUARTService::rxBufferedSize() */
-int AKHILAFLEXUARTService::rxBufferedSize() 
+int AKHILAFLEXUARTService::rxBufferedSize()
 {
     if(rxBufferTail > rxBufferHead)
         return (rxBufferSize - rxBufferTail) + rxBufferHead;
@@ -611,8 +573,7 @@ int AKHILAFLEXUARTService::rxBufferedSize()
 /**
   * @return The currently buffered number of bytes in our txBuff.
   */
-/*int AKHILAFLEXUARTService::txBufferedSize() */
-int AKHILAFLEXUARTService::txBufferedSize() 
+int AKHILAFLEXUARTService::txBufferedSize()
 {
     if(txBufferTail > txBufferHead)
         return (txBufferSize - txBufferTail) + txBufferHead;

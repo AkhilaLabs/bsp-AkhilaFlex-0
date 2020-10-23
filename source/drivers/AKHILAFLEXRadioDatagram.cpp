@@ -47,8 +47,7 @@ DEALINGS IN THE SOFTWARE.
 * @param r The underlying radio module used to send and receive data.
 */
 AKHILAFLEXRadioDatagram::AKHILAFLEXRadioDatagram(AKHILAFLEXRadio &r) : radio(r)
-/*AKHILAFLEXRadioDatagram::AKHILAFLEXRadioDatagram(AKHILAFLEXRadio &r) : radio(r) */
-{ 
+{
     this->rxQueue = NULL;
 }
 

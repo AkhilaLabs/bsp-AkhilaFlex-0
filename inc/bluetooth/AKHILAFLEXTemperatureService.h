@@ -25,9 +25,6 @@ DEALINGS IN THE SOFTWARE.
 
 #ifndef AKHILAFLEX_TEMPERATURE_SERVICE_H
 #define AKHILAFLEX_TEMPERATURE_SERVICE_H
-/*#ifndef AKHILAFLEX_TEMPERATURE_SERVICE_H
-#define AKHILAFLEX_TEMPERATURE_SERVICE_H */
-
 
 #include "AKHILAFLEXConfig.h"
 #include "ble/BLE.h"
@@ -38,10 +35,6 @@ DEALINGS IN THE SOFTWARE.
 extern const uint8_t  AKHILAFLEXTemperatureServiceUUID[];
 extern const uint8_t  AKHILAFLEXTemperatureServiceDataUUID[];
 extern const uint8_t  AKHILAFLEXTemperatureServicePeriodUUID[];
-/*extern const uint8_t  AKHILAFLEXTemperatureServiceUUID[];
-extern const uint8_t  AKHILAFLEXTemperatureServiceDataUUID[];
-extern const uint8_t  AKHILAFLEXTemperatureServicePeriodUUID[]; */
-
 
 
 /**
@@ -49,7 +42,6 @@ extern const uint8_t  AKHILAFLEXTemperatureServicePeriodUUID[]; */
   * Provides a BLE service to remotely read the silicon temperature of the nRF51822.
   */
 class AKHILAFLEXTemperatureService
-/*class AKHILAFLEXTemperatureService */
 {
     public:
 
@@ -60,9 +52,6 @@ class AKHILAFLEXTemperatureService
       * @param _thermometer An instance of AKHILAFLEXThermometer to use as our temperature source.
       */
     AKHILAFLEXTemperatureService(BLEDevice &_ble, AKHILAFLEXThermometer &_thermometer);
-    /*AKHILAFLEXTemperatureService(BLEDevice &_ble, AKHILAFLEXThermometer &_thermometer); */
-
-
 
     /**
       * Callback. Invoked when any of our attributes are written via BLE.
@@ -73,15 +62,12 @@ class AKHILAFLEXTemperatureService
      * Temperature update callback
      */
     void temperatureUpdate(AKHILAFLEXEvent e);
-    /*void temperatureUpdate(AKHILAFLEXEvent e); */
-
 
     private:
 
     // Bluetooth stack we're running on.
     BLEDevice           	&ble;
     AKHILAFLEXThermometer     &thermometer;
-    /*AKHILAFLEXThermometer     &thermometer; */
 
     // memory for our 8 bit temperature characteristic.
     int8_t             temperatureDataCharacteristicBuffer;

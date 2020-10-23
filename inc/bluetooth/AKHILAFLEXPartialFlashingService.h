@@ -24,8 +24,7 @@ DEALINGS IN THE SOFTWARE.
 
 #ifndef AKHILAFLEX_PARTIAL_FLASH_SERVICE_H
 #define AKHILAFLEX_PARTIAL_FLASH_SERVICE_H
-/*#ifndef AKHILAFLEX_PARTIAL_FLASH_SERVICE_H
-#define AKHILAFLEX_PARTIAL_FLASH_SERVICE_H  */
+
 #include "AKHILAFLEXConfig.h"
 #include "AKHILAFLEXBLEManager.h"
 #include "ble/BLE.h"
@@ -49,22 +48,16 @@ DEALINGS IN THE SOFTWARE.
 // BLE Utilities
 #define AKHILAFLEX_STATUS 0xEE
 #define AKHILAFLEX_RESET  0xFF
-/*#define AKHILAFLEX_STATUS 0xEE
-#define AKHILAFLEX_RESET  0xFF */
-
 
 // UUIDs for our service and characteristics
 extern const uint8_t  AKHILAFLEXPartialFlashingServiceUUID[];
 extern const uint8_t  AKHILAFLEXPartialFlashingServiceCharacteristicUUID[];
-/*extern const uint8_t  AKHILAFLEXPartialFlashingServiceUUID[];
-extern const uint8_t  AKHILAFLEXPartialFlashingServiceCharacteristicUUID[]; */
 
 /**
   * Class definition for the custom AKHILAFLEX Partial Flash Service.
   * Provides a BLE service to remotely read the memory map and flash the PXT program.
   */
 class AKHILAFLEXPartialFlashingService
-/*class AKHILAFLEXPartialFlashingService  */
 {
     public:
     /**
@@ -74,8 +67,6 @@ class AKHILAFLEXPartialFlashingService
       * @param _memoryMap An instance of AKHILAFLEXeMemoryMap to interface with.
       */
     AKHILAFLEXPartialFlashingService(BLEDevice &_ble, EventModel &_messageBus);
-        /*AKHILAFLEXPartialFlashingService(BLEDevice &_ble, EventModel &_messageBus); */
-
 
     /**
       * Callback. Invoked when any of our attributes are written via BLE.
@@ -96,7 +87,6 @@ class AKHILAFLEXPartialFlashingService
       * Writing to flash inside AKHILAFLEXEvent rather than in the ISR
       */
     void partialFlashingEvent(AKHILAFLEXEvent e);
-   /* void partialFlashingEvent(AKHILAFLEXEvent e); */
 
     // Handles to access each characteristic when they are held by Soft Device.
     GattAttribute::Handle_t partialFlashCharacteristicHandle;

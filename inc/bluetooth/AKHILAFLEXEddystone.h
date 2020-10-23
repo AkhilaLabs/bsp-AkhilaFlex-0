@@ -25,9 +25,6 @@ DEALINGS IN THE SOFTWARE.
 
 #ifndef AKHILAFLEX_EDDYSTONE_H
 #define AKHILAFLEX_EDDYSTONE_H
-/*#ifndef AKHILAFLEX_EDDYSTONE_H
-#define AKHILAFLEX_EDDYSTONE_H  */
-
 
 #include "AKHILAFLEXConfig.h"
 
@@ -45,15 +42,12 @@ DEALINGS IN THE SOFTWARE.
   *
   */
 class AKHILAFLEXEddystone
-/*class AKHILAFLEXEddystone */
 {
   public:
 
     static AKHILAFLEXEddystone* getInstance();
-   /* static AKHILAFLEXEddystone* getInstance(); */
 
 #if CONFIG_ENABLED(AKHILAFLEX_BLE_EDDYSTONE_URL)
-/*#if CONFIG_ENABLED(AKHILAFLEX_BLE_EDDYSTONE_URL) */
 
     /**
       * Set the content of Eddystone URL frames
@@ -82,7 +76,6 @@ class AKHILAFLEXEddystone
 #endif
 
 #if CONFIG_ENABLED(AKHILAFLEX_BLE_EDDYSTONE_UID)
-/*#if CONFIG_ENABLED(AKHILAFLEX_BLE_EDDYSTONE_UID) */
     /**
       * Set the content of Eddystone UID frames
       *
@@ -96,8 +89,6 @@ class AKHILAFLEXEddystone
       * More information can be found at https://github.com/google/eddystone/tree/master/eddystone-uid#tx-power
       */
     int setUID(BLEDevice* ble, const char* uid_namespace, const char* uid_instance, int8_t calibratedPower = 0xF0);
-/*int setUID(BLEDevice* ble, const char* uid_namespace, const char* uid_instance, int8_t calibratedPower = 0xF0);*/
-
 #endif
 
   private:
@@ -106,10 +97,8 @@ class AKHILAFLEXEddystone
       * Private constructor.
       */
     AKHILAFLEXEddystone();
-  /* AKHILAFLEXEddystone(); */
 
     static AKHILAFLEXEddystone *_instance;
-   /* static AKHILAFLEXEddystone *_instance; */
 };
 
 #endif

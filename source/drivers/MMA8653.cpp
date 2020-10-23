@@ -72,8 +72,6 @@ CREATE_KEY_VALUE_TABLE(accelerometerPeriod, accelerometerPeriodData);
  *
  */
 MMA8653::MMA8653(AKHILAFLEXI2C& _i2c, AKHILAFLEXPin _int1, CoordinateSpace &coordinateSpace, uint16_t address, uint16_t id) : AKHILAFLEXAccelerometer(coordinateSpace, id), i2c(_i2c), int1(_int1)
-/*MMA8653::MMA8653(AKHILAFLEXI2C& _i2c, AKHILAFLEXPin _int1, CoordinateSpace &coordinateSpace, uint16_t address, uint16_t id) : AKHILAFLEXAccelerometer(coordinateSpace, id), i2c(_i2c), int1(_int1)
-*/
 {
     // Store our identifiers.
     this->status = 0;
@@ -109,42 +107,35 @@ int MMA8653::configure()
     result = i2c.writeRegister(address, MMA8653_CTRL_REG1, 0x00);
     if (result != 0)
         return AKHILAFLEX_I2C_ERROR;
-      /*  return AKHILAFLEX_I2C_ERROR; */
 
     // Enable high precisiosn mode. This consumes a bit more power, but still only 184 uA!
     result = i2c.writeRegister(address, MMA8653_CTRL_REG2, 0x10);
     if (result != 0)
         return AKHILAFLEX_I2C_ERROR;
-        /*  return AKHILAFLEX_I2C_ERROR; */
 
     // Enable the INT1 interrupt pin.
     result = i2c.writeRegister(address, MMA8653_CTRL_REG4, 0x01);
     if (result != 0)
         return AKHILAFLEX_I2C_ERROR;
-        /*  return AKHILAFLEX_I2C_ERROR; */
 
     // Select the DATA_READY event source to be routed to INT1
     result = i2c.writeRegister(address, MMA8653_CTRL_REG5, 0x01);
     if (result != 0)
         return AKHILAFLEX_I2C_ERROR;
-        /*  return AKHILAFLEX_I2C_ERROR; */
 
     // Configure for the selected g range.
     value = accelerometerRange.get(sampleRange);
     result = i2c.writeRegister(address, MMA8653_XYZ_DATA_CFG, value);
     if (result != 0)
         return AKHILAFLEX_I2C_ERROR;
-        /*  return AKHILAFLEX_I2C_ERROR; */
 
     // Bring the device back online, with 10bit wide samples at the requested frequency.
     value = accelerometerPeriod.get(samplePeriod * 1000);
     result = i2c.writeRegister(address, MMA8653_CTRL_REG1, value | 0x01);
     if (result != 0)
         return AKHILAFLEX_I2C_ERROR;
-        /*  return AKHILAFLEX_I2C_ERROR; */
 
     return AKHILAFLEX_OK;
-  /*  return AKHILAFLEX_OK; */
 }
 
 /**
@@ -162,11 +153,9 @@ int MMA8653::requestUpdate()
 {
     // Ensure we're scheduled to update the data periodically
     if(!(status & AKHILAFLEX_ACCEL_ADDED_TO_IDLE))
-   /* if(!(status & AKHILAFLEX_ACCEL_ADDED_TO_IDLE)) */
     {
         fiber_add_idle_component(this);
         status |= AKHILAFLEX_ACCEL_ADDED_TO_IDLE;
-       /* status |= AKHILAFLEX_ACCEL_ADDED_TO_IDLE; */
     }
 
     // Poll interrupt line from device (ACTIVE LO)
@@ -181,8 +170,6 @@ int MMA8653::requestUpdate()
 
         if (result !=0)
             return AKHILAFLEX_I2C_ERROR;
-           /* return AKHILAFLEX_I2C_ERROR; */
-
 
         // read MSB values and normalize the data in the -1024...1024 range
         s.x = 8 * data[0];
@@ -206,7 +193,6 @@ int MMA8653::requestUpdate()
     }
 
     return AKHILAFLEX_OK;
-   /* return AKHILAFLEX_OK; */
 }
 
 /**
@@ -225,7 +211,6 @@ void MMA8653::idleTick()
  * @return true if the WHO_AM_I value is succesfully read. false otherwise.
  */
 int MMA8653::isDetected(AKHILAFLEXI2C &i2c, uint16_t address)
-/*int MMA8653::isDetected(AKHILAFLEXI2C &i2c, uint16_t address) */
 {
     return i2c.readRegister(address, MMA8653_WHOAMI) == MMA8653_WHOAMI_VAL;
 }

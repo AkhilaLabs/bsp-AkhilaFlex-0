@@ -25,9 +25,6 @@ DEALINGS IN THE SOFTWARE.
 
 #ifndef AKHILAFLEX_LED_SERVICE_H
 #define AKHILAFLEX_LED_SERVICE_H
-/*#ifndef AKHILAFLEX_LED_SERVICE_H
-#define AKHILAFLEX_LED_SERVICE_H */
-
 
 #include "AKHILAFLEXConfig.h"
 #include "ble/BLE.h"
@@ -36,19 +33,12 @@ DEALINGS IN THE SOFTWARE.
 // Defines the buffer size for scrolling text over BLE, hence also defines
 // the maximum string length that can be scrolled via the BLE service.
 #define AKHILAFLEX_BLE_MAXIMUM_SCROLLTEXT         20
-/*#define AKHILAFLEX_BLE_MAXIMUM_SCROLLTEXT         20 */
-
 
 // UUIDs for our service and characteristics
 extern const uint8_t  AKHILAFLEXLEDServiceUUID[];
 extern const uint8_t  AKHILAFLEXLEDServiceMatrixUUID[];
 extern const uint8_t  AKHILAFLEXLEDServiceTextUUID[];
 extern const uint8_t  AKHILAFLEXLEDServiceScrollingSpeedUUID[];
-/*extern const uint8_t  AKHILAFLEXLEDServiceUUID[];
-extern const uint8_t  AKHILAFLEXLEDServiceMatrixUUID[];
-extern const uint8_t  AKHILAFLEXLEDServiceTextUUID[];
-extern const uint8_t  AKHILAFLEXLEDServiceScrollingSpeedUUID[]; */
-
 
 
 /**
@@ -56,8 +46,6 @@ extern const uint8_t  AKHILAFLEXLEDServiceScrollingSpeedUUID[]; */
   * Provides a BLE service to remotely read and write the state of the LED display.
   */
 class AKHILAFLEXLEDService
-/*class AKHILAFLEXLEDService */
-
 {
     public:
 
@@ -68,8 +56,6 @@ class AKHILAFLEXLEDService
       * @param _display An instance of AKHILAFLEXDisplay to interface with.
       */
     AKHILAFLEXLEDService(BLEDevice &_ble, AKHILAFLEXDisplay &_display);
-   /* AKHILAFLEXLEDService(BLEDevice &_ble, AKHILAFLEXDisplay &_display); */
-
 
     /**
       * Callback. Invoked when any of our attributes are written via BLE.
@@ -86,13 +72,11 @@ class AKHILAFLEXLEDService
     // Bluetooth stack we're running on.
     BLEDevice           &ble;
     AKHILAFLEXDisplay     &display;
-   /* AKHILAFLEXDisplay     &display; */
 
     // memory for our 8 bit control characteristics.
     uint8_t             matrixCharacteristicBuffer[5];
     uint16_t            scrollingSpeedCharacteristicBuffer;
     uint8_t             textCharacteristicBuffer[AKHILAFLEX_BLE_MAXIMUM_SCROLLTEXT];
-    /*uint8_t             textCharacteristicBuffer[AKHILAFLEX_BLE_MAXIMUM_SCROLLTEXT]; */
 
     // Handles to access each characteristic when they are held by Soft Device.
     GattAttribute::Handle_t matrixCharacteristicHandle;

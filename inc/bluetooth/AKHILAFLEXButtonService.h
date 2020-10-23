@@ -25,9 +25,6 @@ DEALINGS IN THE SOFTWARE.
 
 #ifndef AKHILAFLEX_BUTTON_SERVICE_H
 #define AKHILAFLEX_BUTTON_SERVICE_H
-/*#ifndef AKHILAFLEX_BUTTON_SERVICE_H
-#define AKHILAFLEX_BUTTON_SERVICE_H  */
-
 
 #include "AKHILAFLEXConfig.h"
 #include "ble/BLE.h"
@@ -37,10 +34,6 @@ DEALINGS IN THE SOFTWARE.
 extern const uint8_t  AKHILAFLEXButtonServiceUUID[];
 extern const uint8_t  AKHILAFLEXButtonAServiceDataUUID[];
 extern const uint8_t  AKHILAFLEXButtonBServiceDataUUID[];
-/*extern const uint8_t  AKHILAFLEXButtonServiceUUID[];
-extern const uint8_t   AKHILAFLEXButtonAServiceDataUUID[];
-extern const uint8_t   AKHILAFLEXButtonBServiceDataUUID[]; */
-
 
 
 /**
@@ -48,7 +41,6 @@ extern const uint8_t   AKHILAFLEXButtonBServiceDataUUID[]; */
   * Provides access to live button data via BLE, and provides basic configuration options.
   */
 class AKHILAFLEXButtonService
-/*class AKHILAFLEXBitButtonService */
 {
     public:
 
@@ -58,7 +50,6 @@ class AKHILAFLEXButtonService
       * @param _ble The instance of a BLE device that we're running on.
       */
     AKHILAFLEXButtonService(BLEDevice &_ble);
-    /*AKHILAFLEXButtonService(BLEDevice &_ble); */
 
 
     private:
@@ -67,13 +58,11 @@ class AKHILAFLEXButtonService
      * Button A update callback
      */
     void buttonAUpdate(AKHILAFLEXEvent e);
-    /*void buttonAUpdate(AKHILAFLEXEvent e); */
 
     /**
      * Button B update callback
      */
     void buttonBUpdate(AKHILAFLEXEvent e);
-   /* void buttonBUpdate(AKHILAFLEXEvent e); */
 
     // Bluetooth stack we're running on.
     BLEDevice           &ble;
