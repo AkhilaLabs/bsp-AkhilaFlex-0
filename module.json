@@ -1,5 +1,5 @@
 {
-  "name": "bsp-AkhilaFlex-0",
+  "name": "AkhilaFlex",
   "version": "1.0.1",
   "description": "A simple to use collection of the most commonly used components in the bsp-AkhilaFlex-0 runtime",
   "dependencies": {
