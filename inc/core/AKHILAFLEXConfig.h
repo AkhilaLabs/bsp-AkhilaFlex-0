@@ -151,7 +151,7 @@ extern uint32_t __etext;
 
 // Enable used_data field in Fiber structure (for thread-local data)
 #ifndef AKHILAFLEX_FIBER_USER_DATA
-#define AKHILAFLEX_FIBER_USER_DATA                0
+#define AKHILAFLEX_FIBER_USER_DATA                1
 #endif
 
 // Indicate get_fiber_list() API is supported
