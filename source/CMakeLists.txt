@@ -98,14 +98,14 @@ set(YOTTA_AUTO_AKHILAFLEX-DAL_S_FILES
     "asm/CortexContextSwitch.s"
 )
 
-add_library(bsp-AkhilaFlex-0
+add_library(AKHILAFLEX
     ${YOTTA_AUTO_AKHILAFLEX-DAL_CPP_FILES}
     ${YOTTA_AUTO_AKHILAFLEX-DAL_S_FILES}
 )
 
-yotta_postprocess_target(LIBRARY bsp-AkhilaFlex-0)
+yotta_postprocess_target(LIBRARY AKHILAFLEX)
 
-target_link_libraries(bsp-AkhilaFlex-0
+target_link_libraries(AKHILAFLEX
     mbed-classic
     ble
     ble-nrf51822
