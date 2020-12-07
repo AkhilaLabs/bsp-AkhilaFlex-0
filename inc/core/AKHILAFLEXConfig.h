@@ -136,7 +136,7 @@ extern uint32_t __etext;
 // For standard S110 builds, this should be word aligned and in the range 0x300 - 0x700.
 // Any unused memory will be automatically reclaimed as HEAP memory if both AKHILAFLEX_HEAP_REUSE_SD and AKHILAFLEX_HEAP_ALLOCATOR are enabled.
 #ifndef AKHILAFLEX_SD_GATT_TABLE_SIZE
-#define AKHILAFLEX_SD_GATT_TABLE_SIZE             0x300
+#define AKHILAFLEX_SD_GATT_TABLE_SIZE             0x700
 #endif
 
 //
@@ -392,7 +392,7 @@ extern uint32_t __etext;
 // Selects the matrix configuration for the display driver.
 // Known, acceptable options are:
 //
-#define MICROBUG_REFERENCE_DEVICE               1
+#define MICROBUG_REFERENCE_DEVICE                 1
 #define AKHILAFLEX_3X9                            2
 #define AKHILAFLEX_SB1                            3
 #define AKHILAFLEX_SB2                            4
