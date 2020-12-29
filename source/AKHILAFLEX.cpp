@@ -234,3 +234,14 @@ void AKHILAFLEX::onListenerRegisteredEvent(AKHILAFLEXEvent evt)
             break;
     }
 }
+
+/*
+AKHILAFLEX uBit;
+
+int main()
+{
+    uBit.init();
+
+    uBit.display.scroll("Hello world!");
+}
+*/
